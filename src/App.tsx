@@ -1,0 +1,74 @@
+
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import Services from "./pages/Services";
+import BuyCar from "./pages/BuyCar";
+import BuyBikes from "./pages/BuyBikes";
+import Sell from "./pages/Sell";
+import UsedCars from "./pages/UsedCars";
+import BikeBuySection from "./pages/BikeBuySection";
+import AI from "./pages/AI";
+import { createCSSVariables } from "./lib/utils";
+import { VehicleProvider } from "./context/VehicleContext";
+import { AuthProvider } from "./context/AuthContext";
+import CarDetail from "./pages/CarDetail";
+import BikeDetail from "./pages/BikeDetail";
+import SellCity from "./pages/SellCity";
+import Contact from "./pages/Contact";
+import FAQs from "./pages/FAQs";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import AdminUploads from "@/pages/AdminUploads";
+import Appointment from "@/pages/appointment";
+
+const queryClient = new QueryClient();
+
+function App() {
+  useEffect(() => {
+    // Initialize CSS variables for animations
+    createCSSVariables();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <VehicleProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<Services />} />
+              <Route path="/search" element={<BuyCar />} />
+              <Route path="/bikes" element={<BuyBikes />} />
+              <Route path="/sell-car" element={<Sell />} />
+              <Route path="/sell" element={<Sell />} /> {/* Route alias */}
+              <Route path="/sell/:city" element={<SellCity />} />
+              <Route path="/used-cars" element={<UsedCars />} />
+              <Route path="/bike-buy-section" element={<BikeBuySection />} />
+              <Route path="/ai" element={<AI />} />
+              <Route path="/buy/:id" element={<CarDetail />} /> {/* Car details route */}
+              <Route path="/bike/:id" element={<BikeDetail />} /> {/* Bike details route */}
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faqs" element={<FAQs />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/admin-uploads" element={<AdminUploads />} />
+              <Route path="/appointment" element={<Appointment />} /> {/* New appointment route */}
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </VehicleProvider>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
