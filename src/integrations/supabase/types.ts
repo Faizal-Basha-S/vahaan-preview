@@ -165,48 +165,78 @@ export type Database = {
           },
         ]
       }
-      sell_requests: {
+      seller_listings: {
         Row: {
+          airbags: number | null
           brand: string
-          city: string | null
+          cc: number | null
+          city: string
           created_at: string | null
-          fuel_type: string | null
+          cylinders: number | null
+          features: string[] | null
+          fuel_type: string
+          gncap_rating: number | null
           id: string
-          kms_driven: string | null
+          mileage: number | null
           model: string
-          phone_number: string | null
-          transmission: string | null
-          variant: string | null
+          phone_number: string
+          photos: string[] | null
+          seats: number | null
+          sell_price: number
+          status: Database["public"]["Enums"]["listing_status"]
+          transmission: string
+          variant: string
           vehicle_type: string
-          year: string
+          wheel_drive: string | null
+          year: number
         }
         Insert: {
+          airbags?: number | null
           brand: string
-          city?: string | null
+          cc?: number | null
+          city: string
           created_at?: string | null
-          fuel_type?: string | null
+          cylinders?: number | null
+          features?: string[] | null
+          fuel_type: string
+          gncap_rating?: number | null
           id?: string
-          kms_driven?: string | null
+          mileage?: number | null
           model: string
-          phone_number?: string | null
-          transmission?: string | null
-          variant?: string | null
+          phone_number: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          transmission: string
+          variant: string
           vehicle_type: string
-          year: string
+          wheel_drive?: string | null
+          year: number
         }
         Update: {
+          airbags?: number | null
           brand?: string
-          city?: string | null
+          cc?: number | null
+          city?: string
           created_at?: string | null
-          fuel_type?: string | null
+          cylinders?: number | null
+          features?: string[] | null
+          fuel_type?: string
+          gncap_rating?: number | null
           id?: string
-          kms_driven?: string | null
+          mileage?: number | null
           model?: string
-          phone_number?: string | null
-          transmission?: string | null
-          variant?: string | null
+          phone_number?: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price?: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          transmission?: string
+          variant?: string
           vehicle_type?: string
-          year?: string
+          wheel_drive?: string | null
+          year?: number
         }
         Relationships: []
       }
@@ -253,7 +283,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      listing_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -368,6 +398,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      listing_status: ["pending", "verified", "rejected"],
+    },
   },
 } as const
