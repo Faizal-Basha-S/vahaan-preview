@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import ProgressBar from "@/components/appointment/ProgressBar";
@@ -15,6 +15,15 @@ const Appointment: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<AppointmentStep>(0);
   const [expectedPrice, setExpectedPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [vehicleType, setVehicleType] = useState<"car" | "bike">("car");
+  
+  // Get vehicle type from localStorage on component mount
+  useEffect(() => {
+    const storedVehicleType = localStorage.getItem("selectedVehicleType");
+    if (storedVehicleType === "car" || storedVehicleType === "bike") {
+      setVehicleType(storedVehicleType);
+    }
+  }, []);
   
   const steps = [
     "Enter Details",
@@ -46,7 +55,11 @@ const Appointment: React.FC = () => {
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
-        return <CarDetails onBack={handleBack} onNext={handleNext} />;
+        return <CarDetails 
+          onBack={handleBack} 
+          onNext={handleNext} 
+          vehicleType={vehicleType}
+        />;
       case 1:
         return <PhotoUpload onBack={handleBack} onNext={handleNext} />;
       case 2:
