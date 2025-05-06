@@ -4,7 +4,7 @@ import Hero from "../components/home/Hero";
 import { Button } from "../components/ui/button";
 import { Check } from "lucide-react";
 import { Card } from "../components/ui/card";
-import { DollarSign, Car, Handshake, Shield, Lock, PriceTag } from "lucide-react";
+import { DollarSign, Car, Handshake, Shield, Lock, BadgeDollarSign } from "lucide-react";
 
 const IndexPage = () => {
   return (
@@ -79,7 +79,7 @@ const IndexPage = () => {
             {/* Feature 6 */}
             <div className="flex gap-4 items-start">
               <div className="p-3 rounded-full bg-white border-2 border-primary/20 shadow-md">
-                <PriceTag size={28} className="text-primary" />
+                <BadgeDollarSign size={28} className="text-primary" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">No Hidden Charges, Ever</h3>
