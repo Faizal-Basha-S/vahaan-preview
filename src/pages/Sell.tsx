@@ -22,7 +22,6 @@ import { toast } from "sonner";
 import SellProcess from "@/components/sell-page/SellProcess";
 import WhySellWithUs from "@/components/sell-page/WhySellWithUs";
 import TestimonialsSection from "@/components/sell-page/TestimonialsSection";
-import BonusOfferBanner from "@/components/sell-page/BonusOfferBanner";
 import CityPresence from "@/components/sell-page/CityPresence";
 import FAQSection from "@/components/sell-page/FAQSection";
 
@@ -331,7 +330,6 @@ const Sell = () => {
         <SellProcess />
         <WhySellWithUs />
         <TestimonialsSection />
-        <BonusOfferBanner />
         <CityPresence />
         <FAQSection />
       </div>
