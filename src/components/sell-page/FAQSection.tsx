@@ -29,33 +29,36 @@ const FAQItem: React.FC<FAQItemProps> = ({
   </AccordionItem>
 );
 
-const FAQSection: React.FC = () => {
-  const faqs = [
-    {
-      question: "Can I sell a car that's still under loan?",
-      answer: "Yes, we help settle the loan directly with the bank before completing the sale."
-    },
-    {
-      question: "When will I receive the payment?",
-      answer: "Immediately after you accept our offer and confirm the sale."
-    },
-    {
-      question: "Is car inspection free?",
-      answer: "Yes, doorstep car inspection is absolutely free."
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer: "Yes, you can cancel the process anytime before the final payment."
-    },
-    {
-      question: "What documents are required?",
-      answer: "RC, insurance copy, and ID proof. Our team will guide you through the rest."
-    },
-    {
-      question: "Will you handle the RTO paperwork?",
-      answer: "Yes, our experts manage the entire ownership transfer process for you."
-    }
-  ];
+const faqs = [
+  {
+    question: "Do I need to pay a commission or go through a middleman?",
+    answer: "No. VahaanXchange charges a single, transparent fee—no brokers, no commissions, no hidden charges."
+  },
+  {
+    question: "What is the AI-powered pricing tool, and how does it help me?",
+    answer: "The AI pricing tool provides a reliable, data-driven estimate of your vehicle’s market value to help both buyers and sellers make informed decisions."
+  },
+  {
+    question: "How does VahaanXchange ensure listings are genuine?",
+    answer: "All listings go through manual RC and Aadhaar verification to ensure authenticity and reduce spam."
+  },
+  {
+    question: "Does VahaanXchange buy or sell vehicles directly?",
+    answer: "No. VahaanXchange does not manipulate prices or participate in deals. It's a pure matchmaking platform connecting buyers and sellers."
+  },
+  {
+    question: "What is the current fee for listing a vehicle?",
+    answer: "The current introductory listing fee is Rs.199. This is subject to revision as platform traffic and trust grow."
+  },
+  {
+    question: "Will I get serious buyers through the platform?",
+    answer: "Yes. Because users pay to list, the platform attracts high-intent buyers and sellers, leading to better conversions."
+  },
+  {
+    question: "Is the Rs.199 listing fee worth it?",
+    answer: "Absolutely. For just Rs.199, you get verified exposure, AI-powered pricing, and access to a trusted network of buyers and sellers."
+  }
+];
 
   return (
     <section className="py-16 px-4 bg-white dark:bg-black">
