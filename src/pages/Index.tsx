@@ -1,10 +1,19 @@
+
 import React, { useEffect, useState } from "react";
 import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
 import FeaturedBikes from "../components/bikes/FeaturedBikes";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import { ArrowRight, Car, CarFront, ShieldCheck, Bike } from "lucide-react";
+import { 
+  ArrowRight, 
+  Car, 
+  DollarSign, 
+  Handshake, 
+  Shield, 
+  Lock, 
+  Tag 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { 
   Carousel, 
@@ -57,65 +66,104 @@ const Index = () => {
       {/* Hero Section */}
       <Hero />
       
-      {/* How It Works */}
+      {/* Why VahaanXchange is Different */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">How VahaanXchange Works</h2>
+            <h2 className="text-3xl font-bold mb-4">Why VahaanXchange is Different</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Find your perfect car in three simple steps. Our streamlined process makes car buying and selling easier than ever.
+              We're revolutionizing how vehicles are bought and sold in India with our transparent, secure platform.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Step 1 */}
-            <div className="glass-card p-6 rounded-xl relative overflow-hidden group hover-scale">
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="relative z-10">
-                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full mb-4">
-                  <CarFront size={24} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Feature 1 - Zero Brokerage */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
+                  <DollarSign size={24} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Browse Listings</h3>
-                <p className="text-muted-foreground">
-                  Search through thousands of verified car listings using our powerful filters to find your perfect match.
-                </p>
-              </div>
-              <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-primary text-lg">01</span>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Zero Brokerage, Zero Commission</h3>
+                  <p className="text-muted-foreground">
+                    No middlemen. Buyers and sellers connect directly – no extra charges.
+                  </p>
+                </div>
               </div>
             </div>
             
-            {/* Step 2 */}
-            <div className="glass-card p-6 rounded-xl relative overflow-hidden group hover-scale">
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="relative z-10">
-                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full mb-4">
-                  <ShieldCheck size={24} />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Connect Safely</h3>
-                <p className="text-muted-foreground">
-                  Connect with sellers through our secure messaging system. Schedule viewings and test drives with ease.
-                </p>
-              </div>
-              <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-primary text-lg">02</span>
-              </div>
-            </div>
-            
-            {/* Step 3 */}
-            <div className="glass-card p-6 rounded-xl relative overflow-hidden group hover-scale">
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="relative z-10">
-                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full mb-4">
+            {/* Feature 2 - Transparent Pricing */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
                   <Car size={24} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Close the Deal</h3>
-                <p className="text-muted-foreground">
-                  Finalize your purchase with confidence using our comprehensive guides and support throughout the process.
-                </p>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Transparent Pricing with AI-Powered Prediction</h3>
+                  <p className="text-muted-foreground">
+                    Our smart price predictor suggests a fair market price to help both parties decide confidently.
+                  </p>
+                </div>
               </div>
-              <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-primary text-lg">03</span>
+            </div>
+            
+            {/* Feature 3 - Direct Negotiation */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
+                  <Handshake size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Direct Negotiation & Deal Finalization</h3>
+                  <p className="text-muted-foreground">
+                    We don't interfere in your deal. You meet directly and decide on the price yourself.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Feature 4 - Verified Buyers & Sellers */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
+                  <Shield size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Verified Buyers & Sellers</h3>
+                  <p className="text-muted-foreground">
+                    Every buyer is Aadhar-verified. Every seller is matched with their vehicle's RC name and Aadhar – ensuring authenticity.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Feature 5 - Security & Trust */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
+                  <Lock size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Security & Trust Built-In</h3>
+                  <p className="text-muted-foreground">
+                    With document verification and a monitored platform, you can transact with peace of mind.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Feature 6 - No Hidden Charges */}
+            <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 text-primary w-12 h-12 flex items-center justify-center rounded-full shrink-0">
+                  <Tag size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">No Hidden Charges, Ever</h3>
+                  <p className="text-muted-foreground">
+                    What you see is what you get. No last-minute surprises.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
