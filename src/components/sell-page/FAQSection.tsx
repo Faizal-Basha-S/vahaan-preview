@@ -28,7 +28,7 @@ const FAQItem: React.FC<FAQItemProps> = ({
     </AccordionContent>
   </AccordionItem>
 );
-
+const FAQSection: React.FC = () => {
 const faqs = [
   {
     question: "Do I need to pay a commission or go through a middleman?",
