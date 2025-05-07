@@ -68,7 +68,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     }
     
     // Store the vehicle type in localStorage before navigating
-    localStorage.setItem("selectedVehicleType", vehicleType);
+    localStorage.setItem("vehicle", vehicleType);
     
     // Check if user is logged in
     if (!currentUser) {

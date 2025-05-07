@@ -66,6 +66,23 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
       return;
     }
     
+    // Store form data in localStorage
+    localStorage.setItem("vehicle_type", formData.vehicleType);
+    localStorage.setItem("fuel_type", formData.fuelType);
+    localStorage.setItem("color", formData.color);
+    localStorage.setItem("mileage", formData.mileage);
+    localStorage.setItem("seats", formData.seats);
+    localStorage.setItem("safety_rating", formData.safetyRating);
+    localStorage.setItem("cc", formData.cc);
+    
+    // Only store car-specific fields if the vehicle is a car
+    if (vehicleType === "car") {
+      localStorage.setItem("transmission", formData.transmission);
+      localStorage.setItem("airbags", formData.airbags);
+      localStorage.setItem("cylinders", formData.cylinders);
+      localStorage.setItem("wheel_drive", formData.wheelDrive);
+    }
+    
     // Proceed to next step
     onNext();
   };

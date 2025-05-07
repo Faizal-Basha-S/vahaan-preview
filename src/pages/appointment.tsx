@@ -19,7 +19,7 @@ const Appointment: React.FC = () => {
   
   // Get vehicle type from localStorage on component mount
   useEffect(() => {
-    const storedVehicleType = localStorage.getItem("selectedVehicleType");
+    const storedVehicleType = localStorage.getItem("vehicle");
     if (storedVehicleType === "car" || storedVehicleType === "bike") {
       setVehicleType(storedVehicleType);
     }
@@ -49,6 +49,11 @@ const Appointment: React.FC = () => {
   const handlePriceSubmit = (price: string, features: string[]) => {
     setExpectedPrice(price);
     setSelectedFeatures(features);
+    
+    // Store price and features in localStorage
+    localStorage.setItem("seller_price", price);
+    localStorage.setItem("key_features", JSON.stringify(features));
+    
     handleNext();
   };
   

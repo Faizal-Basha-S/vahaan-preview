@@ -99,7 +99,21 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
       return;
     }
     
-    onNext();
+    // Convert uploaded photos to a format that can be stored in localStorage
+    try {
+      // Store photo paths or references
+      const photoReferences: Record<PhotoCategory, string[]> = {} as Record<PhotoCategory, string[]>;
+      
+      categories.forEach(category => {
+        photoReferences[category] = uploadedPhotos[category].map(file => file.name);
+      });
+      
+      localStorage.setItem("uploaded_photos", JSON.stringify(photoReferences));
+      onNext();
+    } catch (error) {
+      toast.error("Failed to process photos. Please try again.");
+      console.error("Error processing photos:", error);
+    }
   };
   
   return (

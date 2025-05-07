@@ -109,6 +109,84 @@ export type Database = {
         }
         Relationships: []
       }
+      car_seller_listings: {
+        Row: {
+          airbags: number | null
+          brand: string
+          cc: number | null
+          city: string
+          color: string
+          created_at: string | null
+          cylinders: number | null
+          features: string[] | null
+          fuel_type: string
+          gncap_rating: number | null
+          id: string
+          mileage: number | null
+          model: string
+          phone_number: string
+          photos: string[] | null
+          seats: number | null
+          sell_price: number
+          status: Database["public"]["Enums"]["listing_status"]
+          transmission: string
+          variant: string
+          vehicle_type: string
+          wheel_drive: string | null
+          year: number
+        }
+        Insert: {
+          airbags?: number | null
+          brand: string
+          cc?: number | null
+          city: string
+          color: string
+          created_at?: string | null
+          cylinders?: number | null
+          features?: string[] | null
+          fuel_type: string
+          gncap_rating?: number | null
+          id?: string
+          mileage?: number | null
+          model: string
+          phone_number: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          transmission: string
+          variant: string
+          vehicle_type: string
+          wheel_drive?: string | null
+          year: number
+        }
+        Update: {
+          airbags?: number | null
+          brand?: string
+          cc?: number | null
+          city?: string
+          color?: string
+          created_at?: string | null
+          cylinders?: number | null
+          features?: string[] | null
+          fuel_type?: string
+          gncap_rating?: number | null
+          id?: string
+          mileage?: number | null
+          model?: string
+          phone_number?: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price?: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          transmission?: string
+          variant?: string
+          vehicle_type?: string
+          wheel_drive?: string | null
+          year?: number
+        }
+        Relationships: []
+      }
       favourites: {
         Row: {
           created_at: string | null
@@ -164,81 +242,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      seller_listings: {
-        Row: {
-          airbags: number | null
-          brand: string
-          cc: number | null
-          city: string
-          created_at: string | null
-          cylinders: number | null
-          features: string[] | null
-          fuel_type: string
-          gncap_rating: number | null
-          id: string
-          mileage: number | null
-          model: string
-          phone_number: string
-          photos: string[] | null
-          seats: number | null
-          sell_price: number
-          status: Database["public"]["Enums"]["listing_status"]
-          transmission: string
-          variant: string
-          vehicle_type: string
-          wheel_drive: string | null
-          year: number
-        }
-        Insert: {
-          airbags?: number | null
-          brand: string
-          cc?: number | null
-          city: string
-          created_at?: string | null
-          cylinders?: number | null
-          features?: string[] | null
-          fuel_type: string
-          gncap_rating?: number | null
-          id?: string
-          mileage?: number | null
-          model: string
-          phone_number: string
-          photos?: string[] | null
-          seats?: number | null
-          sell_price: number
-          status?: Database["public"]["Enums"]["listing_status"]
-          transmission: string
-          variant: string
-          vehicle_type: string
-          wheel_drive?: string | null
-          year: number
-        }
-        Update: {
-          airbags?: number | null
-          brand?: string
-          cc?: number | null
-          city?: string
-          created_at?: string | null
-          cylinders?: number | null
-          features?: string[] | null
-          fuel_type?: string
-          gncap_rating?: number | null
-          id?: string
-          mileage?: number | null
-          model?: string
-          phone_number?: string
-          photos?: string[] | null
-          seats?: number | null
-          sell_price?: number
-          status?: Database["public"]["Enums"]["listing_status"]
-          transmission?: string
-          variant?: string
-          vehicle_type?: string
-          wheel_drive?: string | null
-          year?: number
-        }
-        Relationships: []
       }
       variants: {
         Row: {

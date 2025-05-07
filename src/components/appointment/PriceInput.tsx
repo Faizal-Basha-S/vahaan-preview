@@ -43,6 +43,10 @@ const PriceInput: React.FC<PriceInputProps> = ({ onBack, onNext }) => {
       return;
     }
     
+    // Store data directly in localStorage here for redundancy
+    localStorage.setItem("seller_price", price);
+    localStorage.setItem("key_features", JSON.stringify(selectedFeatures));
+    
     onNext(price, selectedFeatures);
   };
   
