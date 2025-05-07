@@ -1,8 +1,9 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Upload, Image } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PhotoUploadProps {
   onBack: () => void;
@@ -20,6 +21,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
     Features: [],
     Defects: []
   });
+  const [isUploading, setIsUploading] = useState(false);
   
   const categories: PhotoCategory[] = ["Exterior", "Interior", "Tyres", "Features", "Defects"];
   
@@ -90,29 +92,89 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
     }));
   };
   
-  const handleNext = () => {
+  const uploadPhotosToSupabase = async () => {
     // Check if at least one photo is uploaded for each category
     const missingCategories = categories.filter(category => uploadedPhotos[category].length === 0);
     
     if (missingCategories.length > 0) {
       toast.error(`Please upload at least one photo for each category: ${missingCategories.join(", ")}`);
-      return;
+      return false;
     }
     
-    // Convert uploaded photos to a format that can be stored in localStorage
+    setIsUploading(true);
+    const vehicleType = localStorage.getItem("vehicle") === "bike" ? "bike" : "car";
+    const basePath = `temp/${vehicleType}`;
+    
     try {
-      // Store photo paths or references
-      const photoReferences: Record<PhotoCategory, string[]> = {} as Record<PhotoCategory, string[]>;
+      const uploadedFileNames: Record<PhotoCategory, string[]> = {
+        Exterior: [],
+        Interior: [],
+        Tyres: [],
+        Features: [],
+        Defects: []
+      };
       
-      categories.forEach(category => {
-        photoReferences[category] = uploadedPhotos[category].map(file => file.name);
-      });
+      const uploadedFileUrls: Record<PhotoCategory, string[]> = {
+        Exterior: [],
+        Interior: [],
+        Tyres: [],
+        Features: [],
+        Defects: []
+      };
       
-      localStorage.setItem("uploaded_photos", JSON.stringify(photoReferences));
-      onNext();
+      // Upload files for each category
+      for (const category of categories) {
+        const files = uploadedPhotos[category];
+        
+        // Use Promise.all for parallel uploads
+        await Promise.all(files.map(async (file) => {
+          // Create a unique filename to avoid conflicts
+          const timestamp = new Date().getTime();
+          const fileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
+          const filePath = `${basePath}/${category.toLowerCase()}/${fileName}`;
+          
+          const { data, error } = await supabase.storage
+            .from("seller-uploads")
+            .upload(filePath, file, { upsert: true });
+            
+          if (error) {
+            console.error(`Error uploading ${fileName}:`, error);
+            toast.error(`Failed to upload ${file.name}`);
+            return;
+          }
+          
+          // Get public URL for the file
+          const { data: publicUrlData } = supabase.storage
+            .from("seller-uploads")
+            .getPublicUrl(filePath);
+            
+          if (publicUrlData) {
+            uploadedFileNames[category].push(fileName);
+            uploadedFileUrls[category].push(publicUrlData.publicUrl);
+          }
+        }));
+      }
+      
+      // Store metadata in localStorage
+      localStorage.setItem("uploadedFileNames", JSON.stringify(uploadedFileNames));
+      localStorage.setItem("uploadedFileUrls", JSON.stringify(uploadedFileUrls));
+      
+      toast.success("All photos uploaded successfully!");
+      return true;
+      
     } catch (error) {
-      toast.error("Failed to process photos. Please try again.");
-      console.error("Error processing photos:", error);
+      console.error("Error during upload:", error);
+      toast.error("An error occurred while uploading your photos. Please try again.");
+      return false;
+    } finally {
+      setIsUploading(false);
+    }
+  };
+  
+  const handleNext = async () => {
+    const uploadSuccess = await uploadPhotosToSupabase();
+    if (uploadSuccess) {
+      onNext();
     }
   };
   
@@ -198,12 +260,16 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
       
       {/* Navigation buttons */}
       <div className="flex justify-between mt-8">
-        <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
+        <Button variant="outline" onClick={onBack} className="flex items-center gap-2" disabled={isUploading}>
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
-        <Button onClick={handleNext} className="flex items-center gap-2">
-          Continue to Tell Us Your Price
+        <Button 
+          onClick={handleNext} 
+          className="flex items-center gap-2"
+          disabled={isUploading}
+        >
+          {isUploading ? "Uploading..." : "Continue to Tell Us Your Price"}
         </Button>
       </div>
     </div>

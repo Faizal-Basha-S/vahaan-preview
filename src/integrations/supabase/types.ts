@@ -125,7 +125,7 @@ export type Database = {
           mileage: number | null
           model: string
           phone_number: string
-          photos: string[] | null
+          photos: Json
           seats: number | null
           sell_price: number
           status: Database["public"]["Enums"]["listing_status"]
@@ -150,7 +150,7 @@ export type Database = {
           mileage?: number | null
           model: string
           phone_number: string
-          photos?: string[] | null
+          photos: Json
           seats?: number | null
           sell_price: number
           status?: Database["public"]["Enums"]["listing_status"]
@@ -175,7 +175,7 @@ export type Database = {
           mileage?: number | null
           model?: string
           phone_number?: string
-          photos?: string[] | null
+          photos?: Json
           seats?: number | null
           sell_price?: number
           status?: Database["public"]["Enums"]["listing_status"]

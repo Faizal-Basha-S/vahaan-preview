@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -32,6 +32,8 @@ interface ConfirmationProps {
   setIsConfirmationView: (value: boolean) => void;
 }
 
+type PhotoCategory = "Exterior" | "Interior" | "Tyres" | "Features" | "Defects";
+
 const Confirmation: React.FC<ConfirmationProps> = ({
   confirmationData,
   isBike,
@@ -39,6 +41,27 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   selectedFeatures,
   setIsConfirmationView
 }) => {
+  const [uploadedImages, setUploadedImages] = useState<Record<PhotoCategory, string[]>>({
+    Exterior: [],
+    Interior: [],
+    Tyres: [],
+    Features: [],
+    Defects: []
+  });
+
+  useEffect(() => {
+    // Load uploaded image URLs from localStorage
+    const savedUrls = localStorage.getItem("uploadedFileUrls");
+    if (savedUrls) {
+      try {
+        const parsedUrls = JSON.parse(savedUrls) as Record<PhotoCategory, string[]>;
+        setUploadedImages(parsedUrls);
+      } catch (error) {
+        console.error("Error parsing uploaded image URLs:", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       <h2 className="text-2xl font-semibold mb-6">Confirmation</h2>
@@ -78,7 +101,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         {/* Vehicle Details */}
         <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
           <h3 className="text-lg font-medium mb-4">Vehicle Details</h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
               <p className="text-sm text-gray-500 dark:text-gray-400">Vehicle Type</p>
               <p className="font-medium">{confirmationData.vehicleType || "N/A"}</p>
@@ -129,6 +152,30 @@ const Confirmation: React.FC<ConfirmationProps> = ({
                 </div>
               </>
             )}
+          </div>
+
+          {/* Photos section */}
+          <div className="mt-6">
+            <h4 className="text-lg font-medium mb-4">Vehicle Photos</h4>
+            
+            {Object.entries(uploadedImages).map(([category, urls]) => (
+              urls.length > 0 && (
+                <div key={category} className="mb-6">
+                  <h5 className="text-md font-semibold mb-2">{category}</h5>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {urls.map((url, idx) => (
+                      <div key={idx} className="aspect-square rounded-md overflow-hidden border dark:border-gray-600">
+                        <img
+                          src={url}
+                          alt={`${category}-${idx}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            ))}
           </div>
         </div>
         
