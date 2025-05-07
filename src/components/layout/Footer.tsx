@@ -44,23 +44,23 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/sell" className="text-muted-foreground hover:text-primary transition-colors">
-                  Sell Your Car
+                <Link to="/bikes" className="text-muted-foreground hover:text-primary transition-colors">
+                  Find Bikes
                 </Link>
               </li>
               <li>
-                <Link to="/compare" className="text-muted-foreground hover:text-primary transition-colors">
-                  Compare Cars
+                <Link to="/sell?mode=car" className="text-muted-foreground hover:text-primary transition-colors">
+                  Sell Your Cars
                 </Link>
               </li>
               <li>
-                <Link to="/car-valuation" className="text-muted-foreground hover:text-primary transition-colors">
-                  Car Valuation
+                <Link to="/sell?mode=bike" className="text-muted-foreground hover:text-primary transition-colors">
+                  Sell Your Bikes
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                  Blog & News
+                <Link to="/ai" className="text-muted-foreground hover:text-primary transition-colors">
+                  Ask AI
                 </Link>
               </li>
             </ul>
@@ -88,11 +88,6 @@ const Footer = () => {
               <li>
                 <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
                   Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/help" className="text-muted-foreground hover:text-primary transition-colors">
-                  Help Center
                 </Link>
               </li>
             </ul>
