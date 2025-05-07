@@ -12,6 +12,17 @@ interface PriceInputProps {
   onNext: (price: string, features: string[]) => void;
 }
 
+// Helper function to save form data to localStorage
+const saveSellFormData = (field: string, value: string | string[]) => {
+  try {
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, [field]: value };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+  } catch (error) {
+    console.error("Error saving form data to localStorage:", error);
+  }
+};
+
 const PriceInput: React.FC<PriceInputProps> = ({ onBack, onNext }) => {
   const [price, setPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -46,6 +57,10 @@ const PriceInput: React.FC<PriceInputProps> = ({ onBack, onNext }) => {
     // Store data directly in localStorage here for redundancy
     localStorage.setItem("seller_price", price);
     localStorage.setItem("key_features", JSON.stringify(selectedFeatures));
+    
+    // Also save to our unified storage
+    saveSellFormData("expectedPrice", price);
+    saveSellFormData("selectedFeatures", selectedFeatures);
     
     onNext(price, selectedFeatures);
   };

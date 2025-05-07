@@ -17,6 +17,17 @@ interface CitySelectorProps {
   kilometers: string;
 }
 
+// Helper function to save form data to localStorage
+const saveSellFormData = (field: string, value: string) => {
+  try {
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, [field]: value };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+  } catch (error) {
+    console.error("Error saving form data to localStorage:", error);
+  }
+};
+
 const CitySelector: React.FC<CitySelectorProps> = ({
   onOpenCityModal,
   onBack,
@@ -36,6 +47,8 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     const cityFromStorage = localStorage.getItem('selectedCity');
     if (cityFromStorage) {
       setSelectedCity(cityFromStorage);
+      // Also save to unified storage
+      saveSellFormData("city", cityFromStorage);
     }
   }, []);
   
@@ -45,6 +58,8 @@ const CitySelector: React.FC<CitySelectorProps> = ({
       const cityFromStorage = localStorage.getItem('selectedCity');
       if (cityFromStorage) {
         setSelectedCity(cityFromStorage);
+        // Also save to unified storage
+        saveSellFormData("city", cityFromStorage);
       }
     };
     
@@ -69,6 +84,18 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     
     // Store the vehicle type in localStorage before navigating
     localStorage.setItem("vehicle", vehicleType);
+    
+    // Save complete data to unified storage
+    const formData = {
+      vehicleType,
+      brand: selectedBrand,
+      year: selectedYear,
+      model: selectedModel,
+      variant: selectedVariant,
+      kilometersDriven: kilometers,
+      city: selectedCity,
+    };
+    localStorage.setItem("sellFormData", JSON.stringify(formData));
     
     // Check if user is logged in
     if (!currentUser) {
