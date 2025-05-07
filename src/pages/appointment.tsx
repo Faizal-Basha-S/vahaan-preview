@@ -50,6 +50,21 @@ const Appointment: React.FC = () => {
           setVehicleType(parsedData.vehicleType);
         }
       }
+      
+      // Get price and features
+      const storedPrice = localStorage.getItem("seller_price");
+      if (storedPrice) {
+        setExpectedPrice(storedPrice);
+      }
+      
+      const storedFeatures = localStorage.getItem("key_features");
+      if (storedFeatures) {
+        try {
+          setSelectedFeatures(JSON.parse(storedFeatures));
+        } catch (e) {
+          console.error("Error parsing key_features:", e);
+        }
+      }
     } catch (error) {
       console.error("Error loading stored vehicle data:", error);
     }

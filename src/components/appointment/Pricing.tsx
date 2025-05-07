@@ -24,6 +24,29 @@ interface PricingProps {
   vehicleData?: SellFormData | null;
 }
 
+interface ConfirmationData {
+  phone_number: string;
+  brand: string;
+  year: string;
+  model: string;
+  variant: string;
+  kms_driven: string;
+  city: string;
+  vehicle_type: string;
+  fuel_type: string;
+  transmission: string;
+  color: string;
+  mileage: string;
+  seats: string;
+  safety_rating: string;
+  cc: string;
+  airbags: string | null;
+  cylinders: string | null;
+  wheel_drive: string | null;
+  seller_price: string;
+  key_features: string[];
+}
+
 const Pricing: React.FC<PricingProps> = ({ 
   onBack, 
   expectedPrice, 
@@ -32,19 +55,67 @@ const Pricing: React.FC<PricingProps> = ({
 }) => {
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState<boolean>(false);
-  const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
+  const [confirmationData, setConfirmationData] = useState<ConfirmationData>({
+    phone_number: "",
+    brand: "",
+    year: "",
+    model: "",
+    variant: "",
+    kms_driven: "",
+    city: "",
+    vehicle_type: "",
+    fuel_type: "",
+    transmission: "",
+    color: "",
+    mileage: "",
+    seats: "",
+    safety_rating: "",
+    cc: "",
+    airbags: null,
+    cylinders: null,
+    wheel_drive: null,
+    seller_price: "",
+    key_features: [],
+  });
   
-  // Load photos from localStorage
+  // Load data from localStorage
   useEffect(() => {
     try {
-      const storedPhotos = localStorage.getItem("uploaded_photos");
-      if (storedPhotos) {
-        setUploadedPhotos(JSON.parse(storedPhotos));
+      // Load form data
+      const storedFormData = localStorage.getItem("sellFormData");
+      if (storedFormData) {
+        const parsedData = JSON.parse(storedFormData);
+        
+        // Check vehicle type
+        const vehicleType = parsedData.vehicleType || localStorage.getItem("vehicle") || "car";
+        
+        setConfirmationData({
+          phone_number: localStorage.getItem("phone_number") || "",
+          brand: parsedData.brand || "",
+          year: parsedData.year || "",
+          model: parsedData.model || "",
+          variant: parsedData.variant || "",
+          kms_driven: parsedData.kilometersDriven || "",
+          city: parsedData.city || "",
+          vehicle_type: vehicleType,
+          fuel_type: localStorage.getItem("fuel_type") || "",
+          transmission: vehicleType === "car" ? localStorage.getItem("transmission") || "" : null,
+          color: localStorage.getItem("color") || "",
+          mileage: localStorage.getItem("mileage") || "",
+          seats: localStorage.getItem("seats") || "",
+          safety_rating: localStorage.getItem("safety_rating") || "",
+          cc: localStorage.getItem("cc") || "",
+          airbags: vehicleType === "car" ? localStorage.getItem("airbags") || "" : null,
+          cylinders: vehicleType === "car" ? localStorage.getItem("cylinders") || "" : null,
+          wheel_drive: vehicleType === "car" ? localStorage.getItem("wheel_drive") || "" : null,
+          seller_price: expectedPrice || localStorage.getItem("seller_price") || "",
+          key_features: selectedFeatures || JSON.parse(localStorage.getItem("key_features") || "[]"),
+        });
       }
     } catch (error) {
-      console.error("Error loading photos:", error);
+      console.error("Error loading data from localStorage:", error);
     }
-  }, []);
+  }, [expectedPrice, selectedFeatures]);
   
   const handlePromoCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPromoCode(e.target.value);
@@ -92,61 +163,91 @@ const Pricing: React.FC<PricingProps> = ({
             <h3 className="font-medium text-lg">Vehicle Details</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Display data from vehicleData */}
               <div>
                 <p className="text-sm text-gray-500">Brand</p>
-                <p className="font-medium">{vehicleData?.brand || "N/A"}</p>
+                <p className="font-medium">{confirmationData.brand || "N/A"}</p>
               </div>
               
               <div>
                 <p className="text-sm text-gray-500">Model</p>
-                <p className="font-medium">{vehicleData?.model || "N/A"}</p>
+                <p className="font-medium">{confirmationData.model || "N/A"}</p>
               </div>
               
               <div>
                 <p className="text-sm text-gray-500">Variant</p>
-                <p className="font-medium">{vehicleData?.variant || "N/A"}</p>
+                <p className="font-medium">{confirmationData.variant || "N/A"}</p>
               </div>
               
               <div>
                 <p className="text-sm text-gray-500">Year</p>
-                <p className="font-medium">{vehicleData?.year || "N/A"}</p>
+                <p className="font-medium">{confirmationData.year || "N/A"}</p>
               </div>
               
               <div>
                 <p className="text-sm text-gray-500">Kilometers Driven</p>
-                <p className="font-medium">{vehicleData?.kilometersDriven || "N/A"}</p>
+                <p className="font-medium">{confirmationData.kms_driven || "N/A"}</p>
               </div>
               
               <div>
                 <p className="text-sm text-gray-500">City</p>
-                <p className="font-medium">{vehicleData?.city || "N/A"}</p>
+                <p className="font-medium">{confirmationData.city || "N/A"}</p>
               </div>
               
               {/* Only show these fields if vehicleType is car */}
-              {vehicleData?.vehicleType === "car" && (
+              {confirmationData.vehicle_type === "car" && (
                 <>
                   <div>
                     <p className="text-sm text-gray-500">Transmission</p>
-                    <p className="font-medium">{localStorage.getItem("transmission") || "N/A"}</p>
+                    <p className="font-medium">{confirmationData.transmission || "N/A"}</p>
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray-500">Fuel Type</p>
-                    <p className="font-medium">{localStorage.getItem("fuel_type") || "N/A"}</p>
+                    <p className="font-medium">{confirmationData.fuel_type || "N/A"}</p>
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray-500">Color</p>
-                    <p className="font-medium">{localStorage.getItem("color") || "N/A"}</p>
+                    <p className="font-medium">{confirmationData.color || "N/A"}</p>
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray-500">Airbags</p>
-                    <p className="font-medium">{localStorage.getItem("airbags") || "N/A"}</p>
+                    <p className="font-medium">{confirmationData.airbags || "N/A"}</p>
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm text-gray-500">Cylinders</p>
+                    <p className="font-medium">{confirmationData.cylinders || "N/A"}</p>
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm text-gray-500">Wheel Drive</p>
+                    <p className="font-medium">{confirmationData.wheel_drive || "N/A"}</p>
                   </div>
                 </>
               )}
+              
+              {/* Common fields for both car and bike */}
+              <div>
+                <p className="text-sm text-gray-500">Mileage</p>
+                <p className="font-medium">{confirmationData.mileage || "N/A"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm text-gray-500">Seats</p>
+                <p className="font-medium">{confirmationData.seats || "N/A"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm text-gray-500">Safety Rating</p>
+                <p className="font-medium">{confirmationData.safety_rating || "N/A"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm text-gray-500">CC</p>
+                <p className="font-medium">{confirmationData.cc || "N/A"}</p>
+              </div>
             </div>
           </div>
           
@@ -154,8 +255,8 @@ const Pricing: React.FC<PricingProps> = ({
           <div className="border rounded-lg p-4">
             <h3 className="font-medium text-lg mb-2">Key Features</h3>
             <div className="flex flex-wrap gap-2">
-              {selectedFeatures.length > 0 ? (
-                selectedFeatures.map((feature, index) => (
+              {confirmationData.key_features && confirmationData.key_features.length > 0 ? (
+                confirmationData.key_features.map((feature, index) => (
                   <span key={index} className="bg-gray-100 dark:bg-gray-800 px-2 py-1 text-sm rounded">
                     {feature}
                   </span>
@@ -165,20 +266,6 @@ const Pricing: React.FC<PricingProps> = ({
               )}
             </div>
           </div>
-          
-          {/* Uploaded Photos */}
-          {uploadedPhotos.length > 0 && (
-            <div className="border rounded-lg p-4">
-              <h3 className="font-medium text-lg mb-2">Uploaded Photos</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {uploadedPhotos.map((photo, index) => (
-                  <div key={index} className="aspect-square bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
-                    <img src={photo} alt={`Vehicle photo ${index + 1}`} className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
           
           {/* Expected Price */}
           <div className="border rounded-lg p-4">
