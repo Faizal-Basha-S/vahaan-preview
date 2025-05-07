@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -45,6 +46,17 @@ const kilometersSchema = z.object({
     .refine(value => parseInt(value) >= 0, { message: "Kilometers cannot be negative" }),
 });
 
+// Helper function to save form data to localStorage
+const saveSellFormData = (field: string, value: string) => {
+  try {
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, [field]: value };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+  } catch (error) {
+    console.error("Error saving form data to localStorage:", error);
+  }
+};
+
 const Sell = () => {
   const [searchParams] = useSearchParams();
   const { vehicleType, setVehicleType } = useVehicle();
@@ -88,6 +100,7 @@ const Sell = () => {
     const mode = searchParams.get('mode');
     if (mode === 'bike' || mode === 'car') {
       setVehicleType(mode);
+      saveSellFormData("vehicleType", mode);
     }
   }, [searchParams, setVehicleType]);
 
@@ -101,6 +114,9 @@ const Sell = () => {
     setSelectedVariant("");
     setCurrentStep("initial");
     setIsManualEntryClicked(false);
+    
+    // When vehicleType changes, update in the unified storage
+    saveSellFormData("vehicleType", vehicleType);
   }, [vehicleType]);
 
   // Check for saved form data after login
@@ -165,12 +181,18 @@ const Sell = () => {
       // Reset to initial state when toggle is changed
       setCurrentStep("initial");
       setIsManualEntryClicked(false);
+      
+      // Save vehicle type to unified storage
+      saveSellFormData("vehicleType", value);
     }
   };
 
   const handleKilometersSubmit = (data: z.infer<typeof kilometersSchema>) => {
     setKilometers(data.kilometers);
     setCurrentStep("city");
+    
+    // Save kilometers to unified storage
+    saveSellFormData("kilometersDriven", data.kilometers);
   };
 
   const handleManualEntryClick = () => {
@@ -178,18 +200,25 @@ const Sell = () => {
     setCurrentStep("brand");
   };
 
-  // Updated select functions to include IDs
+  // Updated select functions to include IDs and save to localStorage
   const selectBrand = (brand: string, brandId?: string) => {
     setSelectedBrand(brand);
     if (brandId) {
       setSelectedBrandId(brandId);
     }
     setCurrentStep("year");
+    
+    // Save brand to unified storage
+    saveSellFormData("brand", brand);
+    if (brandId) saveSellFormData("brandId", brandId);
   };
 
   const selectYear = (year: string) => {
     setSelectedYear(year);
     setCurrentStep("model");
+    
+    // Save year to unified storage
+    saveSellFormData("year", year);
   };
 
   const selectModel = (model: string, modelId?: string) => {
@@ -200,11 +229,18 @@ const Sell = () => {
     // Reset selected variant
     setSelectedVariant("");
     setCurrentStep("variant");
+    
+    // Save model to unified storage
+    saveSellFormData("model", model);
+    if (modelId) saveSellFormData("modelId", modelId);
   };
 
   const selectVariant = (variant: string) => {
     setSelectedVariant(variant);
     setCurrentStep("kilometers");
+    
+    // Save variant to unified storage
+    saveSellFormData("variant", variant);
   };
 
   const goBack = () => {
