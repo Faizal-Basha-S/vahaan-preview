@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,45 +13,13 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 
-interface SellFormData {
-  vehicleType: "car" | "bike";
-  brand: string;
-  year: string;
-  model: string;
-  variant: string;
-  kilometersDriven: string;
-  city: string;
-  [key: string]: string; // For other possible fields
-}
-
 interface CarDetailsProps {
   onBack: () => void;
   onNext: () => void;
   vehicleType: "car" | "bike";
-  vehicleData?: SellFormData | null;
 }
 
-const CarDetails: React.FC<CarDetailsProps> = ({
-  onBack,
-  onNext,
-  vehicleType,
-  vehicleData
-}) => {
-  // Pre-fill the form fields if we have data from localStorage
-  useEffect(() => {
-    if (vehicleData) {
-      // Log the data for debugging
-      console.log("Vehicle data from localStorage:", vehicleData);
-      
-      // Here you would typically pre-fill your form fields with the vehicleData
-      // This depends on how your form is implemented
-      // For example:
-      // setFormValue("brand", vehicleData.brand || "");
-      // setFormValue("model", vehicleData.model || "");
-      // etc.
-    }
-  }, [vehicleData]);
-
+const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) => {
   // State for form fields
   const [formData, setFormData] = useState({
     vehicleType: "",
@@ -318,19 +287,6 @@ const CarDetails: React.FC<CarDetailsProps> = ({
           </Button>
         </div>
       </form>
-      
-      {/* Show pre-filled data from previous step */}
-      {vehicleData && (
-        <div className="mb-4 p-3 bg-gray-100 dark:bg-gray-800 rounded">
-          <h4 className="font-medium mb-2">Pre-filled data from previous step:</h4>
-          <p>Brand: {vehicleData.brand || "N/A"}</p>
-          <p>Model: {vehicleData.model || "N/A"}</p>
-          <p>Variant: {vehicleData.variant || "N/A"}</p>
-          <p>Year: {vehicleData.year || "N/A"}</p>
-          <p>Kilometers: {vehicleData.kilometersDriven || "N/A"}</p>
-          <p>City: {vehicleData.city || "N/A"}</p>
-        </div>
-      )}
     </div>
   );
 };

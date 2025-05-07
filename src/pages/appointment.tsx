@@ -8,18 +8,6 @@ import PhotoUpload from "@/components/appointment/PhotoUpload";
 import PriceInput from "@/components/appointment/PriceInput";
 import Pricing from "@/components/appointment/Pricing";
 
-// Define the shape of the vehicle data from localStorage
-interface SellFormData {
-  vehicleType: "car" | "bike";
-  brand: string;
-  year: string;
-  model: string;
-  variant: string;
-  kilometersDriven: string;
-  city: string;
-  [key: string]: string; // For other possible fields
-}
-
 type AppointmentStep = 0 | 1 | 2 | 3;
 
 const Appointment: React.FC = () => {
@@ -28,45 +16,12 @@ const Appointment: React.FC = () => {
   const [expectedPrice, setExpectedPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [vehicleType, setVehicleType] = useState<"car" | "bike">("car");
-  const [vehicleData, setVehicleData] = useState<SellFormData | null>(null);
   
-  // Get vehicle data from localStorage on component mount
+  // Get vehicle type from localStorage on component mount
   useEffect(() => {
-    try {
-      // Get vehicle type
-      const storedVehicleType = localStorage.getItem("vehicle");
-      if (storedVehicleType === "car" || storedVehicleType === "bike") {
-        setVehicleType(storedVehicleType);
-      }
-      
-      // Get complete form data
-      const storedFormData = localStorage.getItem("sellFormData");
-      if (storedFormData) {
-        const parsedData = JSON.parse(storedFormData) as SellFormData;
-        setVehicleData(parsedData);
-        
-        // If vehicleType exists in the form data, use it
-        if (parsedData.vehicleType && (parsedData.vehicleType === "car" || parsedData.vehicleType === "bike")) {
-          setVehicleType(parsedData.vehicleType);
-        }
-      }
-      
-      // Get price and features
-      const storedPrice = localStorage.getItem("seller_price");
-      if (storedPrice) {
-        setExpectedPrice(storedPrice);
-      }
-      
-      const storedFeatures = localStorage.getItem("key_features");
-      if (storedFeatures) {
-        try {
-          setSelectedFeatures(JSON.parse(storedFeatures));
-        } catch (e) {
-          console.error("Error parsing key_features:", e);
-        }
-      }
-    } catch (error) {
-      console.error("Error loading stored vehicle data:", error);
+    const storedVehicleType = localStorage.getItem("vehicle");
+    if (storedVehicleType === "car" || storedVehicleType === "bike") {
+      setVehicleType(storedVehicleType);
     }
   }, []);
   
@@ -109,7 +64,6 @@ const Appointment: React.FC = () => {
           onBack={handleBack} 
           onNext={handleNext} 
           vehicleType={vehicleType}
-          vehicleData={vehicleData}
         />;
       case 1:
         return <PhotoUpload onBack={handleBack} onNext={handleNext} />;
@@ -119,8 +73,7 @@ const Appointment: React.FC = () => {
         return <Pricing 
           onBack={handleBack} 
           expectedPrice={expectedPrice} 
-          selectedFeatures={selectedFeatures}
-          vehicleData={vehicleData}
+          selectedFeatures={selectedFeatures} 
         />;
       default:
         return null;
