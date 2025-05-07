@@ -8,6 +8,18 @@ import PhotoUpload from "@/components/appointment/PhotoUpload";
 import PriceInput from "@/components/appointment/PriceInput";
 import Pricing from "@/components/appointment/Pricing";
 
+// Define the shape of the vehicle data from localStorage
+interface SellFormData {
+  vehicleType: "car" | "bike";
+  brand: string;
+  year: string;
+  model: string;
+  variant: string;
+  kilometersDriven: string;
+  city: string;
+  [key: string]: string; // For other possible fields
+}
+
 type AppointmentStep = 0 | 1 | 2 | 3;
 
 const Appointment: React.FC = () => {
@@ -16,12 +28,30 @@ const Appointment: React.FC = () => {
   const [expectedPrice, setExpectedPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [vehicleType, setVehicleType] = useState<"car" | "bike">("car");
+  const [vehicleData, setVehicleData] = useState<SellFormData | null>(null);
   
-  // Get vehicle type from localStorage on component mount
+  // Get vehicle data from localStorage on component mount
   useEffect(() => {
-    const storedVehicleType = localStorage.getItem("vehicle");
-    if (storedVehicleType === "car" || storedVehicleType === "bike") {
-      setVehicleType(storedVehicleType);
+    try {
+      // Get vehicle type
+      const storedVehicleType = localStorage.getItem("vehicle");
+      if (storedVehicleType === "car" || storedVehicleType === "bike") {
+        setVehicleType(storedVehicleType);
+      }
+      
+      // Get complete form data
+      const storedFormData = localStorage.getItem("sellFormData");
+      if (storedFormData) {
+        const parsedData = JSON.parse(storedFormData) as SellFormData;
+        setVehicleData(parsedData);
+        
+        // If vehicleType exists in the form data, use it
+        if (parsedData.vehicleType && (parsedData.vehicleType === "car" || parsedData.vehicleType === "bike")) {
+          setVehicleType(parsedData.vehicleType);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading stored vehicle data:", error);
     }
   }, []);
   
@@ -64,6 +94,7 @@ const Appointment: React.FC = () => {
           onBack={handleBack} 
           onNext={handleNext} 
           vehicleType={vehicleType}
+          vehicleData={vehicleData}
         />;
       case 1:
         return <PhotoUpload onBack={handleBack} onNext={handleNext} />;
@@ -73,7 +104,8 @@ const Appointment: React.FC = () => {
         return <Pricing 
           onBack={handleBack} 
           expectedPrice={expectedPrice} 
-          selectedFeatures={selectedFeatures} 
+          selectedFeatures={selectedFeatures}
+          vehicleData={vehicleData}
         />;
       default:
         return null;
