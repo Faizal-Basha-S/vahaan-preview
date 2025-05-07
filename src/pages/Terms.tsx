@@ -130,8 +130,8 @@ const Terms = () => {
               <h2 className="text-xl font-semibold mt-8 mb-4">12. Contact Us</h2>
               <p className="text-muted-foreground mb-4">For queries, support, or concerns, contact:</p>
               <ul className="list-none pl-6 mb-4 text-muted-foreground">
-                <li>Email: support@vahaanxchange.com</li>
-                <li>Phone: +91 88838 67155</li>
+                <li>Email: admin@vahaanxchange.com</li>
+                <li>Phone: +91 810-810-4175</li>
                 <li>Address: Egattur, Chennai</li>
               </ul>
               
