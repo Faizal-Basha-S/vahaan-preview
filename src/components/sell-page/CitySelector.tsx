@@ -31,20 +31,31 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const navigate = useNavigate();
   
+  // Handle user selection for localStorage
+  const handleUserSelection = (field: string, value: string) => {
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, [field]: value };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+  };
+  
   // Load selected city from localStorage when component mounts
   useEffect(() => {
     const cityFromStorage = localStorage.getItem('selectedCity');
     if (cityFromStorage) {
       setSelectedCity(cityFromStorage);
+      // Also save city to sellFormData
+      handleUserSelection("city", cityFromStorage);
     }
   }, []);
   
-  // Update state whenever localStorage changes (e.g. when modal updates it)
+  // Update state whenever localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
       const cityFromStorage = localStorage.getItem('selectedCity');
       if (cityFromStorage) {
         setSelectedCity(cityFromStorage);
+        // Also save city to sellFormData
+        handleUserSelection("city", cityFromStorage);
       }
     };
     
@@ -69,6 +80,9 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     
     // Store the vehicle type in localStorage before navigating
     localStorage.setItem("vehicle", vehicleType);
+    
+    // Save city to sellFormData
+    handleUserSelection("city", selectedCity);
     
     // Check if user is logged in
     if (!currentUser) {

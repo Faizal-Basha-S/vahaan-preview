@@ -60,6 +60,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   useEffect(() => {
     // Load data from localStorage for confirmation view
     if (isConfirmationView) {
+      // Get regular localStorage data
       const data: ConfirmationData = {
         phoneNumber: localStorage.getItem('phoneNumber'),
         brand: localStorage.getItem('brand'),
@@ -80,6 +81,21 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         cylinders: localStorage.getItem('cylinders'),
         wheelDrive: localStorage.getItem('wheel_drive'),
       };
+      
+      // Also get data from sellFormData
+      try {
+        const sellFormData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+        
+        // Update data with sellFormData values if they exist
+        if (sellFormData.brand) data.brand = sellFormData.brand;
+        if (sellFormData.year) data.year = sellFormData.year;
+        if (sellFormData.model) data.model = sellFormData.model;
+        if (sellFormData.variant) data.variant = sellFormData.variant;
+        if (sellFormData.kilometersDriven) data.kilometers = sellFormData.kilometersDriven;
+        if (sellFormData.city) data.city = sellFormData.city;
+      } catch (error) {
+        console.error("Error parsing sellFormData:", error);
+      }
       
       setConfirmationData(data);
     }

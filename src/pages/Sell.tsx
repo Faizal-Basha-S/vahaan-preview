@@ -159,6 +159,13 @@ const Sell = () => {
     }
   }, [currentUser, setVehicleType]);
 
+  // Function to handle user selection and save to localStorage
+  const handleUserSelection = (field: string, value: string) => {
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, [field]: value };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+  };
+
   const handleToggleChange = (value: string) => {
     if (value === "car" || value === "bike") {
       setVehicleType(value);
@@ -170,6 +177,8 @@ const Sell = () => {
 
   const handleKilometersSubmit = (data: z.infer<typeof kilometersSchema>) => {
     setKilometers(data.kilometers);
+    // Save kilometers to localStorage
+    handleUserSelection("kilometersDriven", data.kilometers);
     setCurrentStep("city");
   };
 
@@ -178,9 +187,12 @@ const Sell = () => {
     setCurrentStep("brand");
   };
 
-  // Updated select functions to include IDs
+  // Updated select functions to include IDs and save to localStorage
   const selectBrand = (brand: string, brandId?: string) => {
     setSelectedBrand(brand);
+    // Save brand to localStorage
+    handleUserSelection("brand", brand);
+    
     if (brandId) {
       setSelectedBrandId(brandId);
     }
@@ -189,11 +201,17 @@ const Sell = () => {
 
   const selectYear = (year: string) => {
     setSelectedYear(year);
+    // Save year to localStorage
+    handleUserSelection("year", year);
+    
     setCurrentStep("model");
   };
 
   const selectModel = (model: string, modelId?: string) => {
     setSelectedModel(model);
+    // Save model to localStorage
+    handleUserSelection("model", model);
+    
     if (modelId) {
       setSelectedModelId(modelId);
     }
@@ -204,6 +222,9 @@ const Sell = () => {
 
   const selectVariant = (variant: string) => {
     setSelectedVariant(variant);
+    // Save variant to localStorage
+    handleUserSelection("variant", variant);
+    
     setCurrentStep("kilometers");
   };
 
