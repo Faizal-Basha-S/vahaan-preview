@@ -132,6 +132,7 @@ export type Database = {
           transmission: string
           variant: string
           vehicle_type: string
+          verified_seller: string | null
           wheel_drive: string | null
           year: number
         }
@@ -157,6 +158,7 @@ export type Database = {
           transmission: string
           variant: string
           vehicle_type: string
+          verified_seller?: string | null
           wheel_drive?: string | null
           year: number
         }
@@ -182,6 +184,7 @@ export type Database = {
           transmission?: string
           variant?: string
           vehicle_type?: string
+          verified_seller?: string | null
           wheel_drive?: string | null
           year?: number
         }
