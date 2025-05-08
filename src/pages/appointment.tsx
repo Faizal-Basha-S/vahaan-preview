@@ -22,9 +22,6 @@ const Appointment: React.FC = () => {
     const storedVehicleType = localStorage.getItem("vehicle");
     if (storedVehicleType === "car" || storedVehicleType === "bike") {
       setVehicleType(storedVehicleType);
-      
-      // Set vehicle_type in localStorage for consistent access in other components
-      localStorage.setItem("vehicle_type", storedVehicleType);
     }
   }, []);
   
