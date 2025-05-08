@@ -8,7 +8,7 @@ import PhotoUpload from "@/components/appointment/PhotoUpload";
 import PriceInput from "@/components/appointment/PriceInput";
 import Pricing from "@/components/appointment/Pricing";
 
-type AppointmentStep = 0 | 1 | 2 | 3;
+type AppointmentStep = 0 | 1 | 2 | 3 | 4;
 
 const Appointment: React.FC = () => {
   const navigate = useNavigate();
