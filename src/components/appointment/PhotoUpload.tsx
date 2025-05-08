@@ -10,35 +10,67 @@ interface PhotoUploadProps {
   onNext: () => void;
 }
 
-type PhotoCategory = "Exterior" | "Interior" | "Tyres" | "Features" | "Defects";
-
 const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
-  const [selectedCategory, setSelectedCategory] = useState<PhotoCategory>("Exterior");
-  const [uploadedPhotos, setUploadedPhotos] = useState<Record<PhotoCategory, File[]>>({
-    Exterior: [],
-    Interior: [],
-    Tyres: [],
-    Features: [],
-    Defects: []
+  const vehicle = localStorage.getItem("vehicle") || "car";
+  const carCategories = ["Exterior", "Interior", "Tyres", "Features", "Defects"];
+  const bikeCategories = ["Front", "Rear", "Left", "Right", "Defects"];
+  const categories = vehicle === "bike" ? bikeCategories : carCategories;
+
+  type PhotoCategory = typeof categories[number];
+
+  const [selectedCategory, setSelectedCategory] = useState<PhotoCategory>(categories[0]);
+  const [uploadedPhotos, setUploadedPhotos] = useState<Record<string, File[]>>(() => {
+    const initialState: Record<string, File[]> = {};
+    categories.forEach(category => {
+      initialState[category] = [];
+    });
+    return initialState;
   });
   const [isUploading, setIsUploading] = useState(false);
   
-  const categories: PhotoCategory[] = ["Exterior", "Interior", "Tyres", "Features", "Defects"];
+  // Update selected category when vehicle type changes
+  useEffect(() => {
+    setSelectedCategory(categories[0]);
+    
+    // Reset uploaded photos when vehicle type changes
+    const initialState: Record<string, File[]> = {};
+    categories.forEach(category => {
+      initialState[category] = [];
+    });
+    setUploadedPhotos(initialState);
+  }, [vehicle]);
   
-  const getCategoryInstruction = (category: PhotoCategory): string => {
-    switch (category) {
-      case "Exterior":
-        return "Upload clear photos of all sides of your vehicle including front, back, and side views.";
-      case "Interior":
-        return "Upload photos of your vehicle's interior including dashboard, seats, and boot space.";
-      case "Tyres":
-        return "Upload close-up photos of all tyres showing tread pattern and condition.";
-      case "Features":
-        return "Upload photos of special features like infotainment system, sunroof, etc.";
-      case "Defects":
-        return "Upload photos of any scratches, dents, or other defects on your vehicle.";
-      default:
-        return "Please upload clear photos.";
+  const getCategoryInstruction = (category: string): string => {
+    if (vehicle === "bike") {
+      switch (category) {
+        case "Front":
+          return "Upload clear photos of the front view of your bike including headlights and front wheel.";
+        case "Rear":
+          return "Upload photos of the rear view including tail lights and exhaust.";
+        case "Left":
+          return "Upload clear side view photos from the left side of your bike.";
+        case "Right":
+          return "Upload clear side view photos from the right side of your bike.";
+        case "Defects":
+          return "Upload close-up photos of any scratches, dents, or other defects on your bike.";
+        default:
+          return "Please upload clear photos.";
+      }
+    } else {
+      switch (category) {
+        case "Exterior":
+          return "Upload clear photos of all sides of your vehicle including front, back, and side views.";
+        case "Interior":
+          return "Upload photos of your vehicle's interior including dashboard, seats, and boot space.";
+        case "Tyres":
+          return "Upload close-up photos of all tyres showing tread pattern and condition.";
+        case "Features":
+          return "Upload photos of special features like infotainment system, sunroof, etc.";
+        case "Defects":
+          return "Upload photos of any scratches, dents, or other defects on your vehicle.";
+        default:
+          return "Please upload clear photos.";
+      }
     }
   };
   
@@ -85,7 +117,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
     }
   };
   
-  const removePhoto = (category: PhotoCategory, index: number) => {
+  const removePhoto = (category: string, index: number) => {
     setUploadedPhotos(prev => ({
       ...prev,
       [category]: prev[category].filter((_, i) => i !== index)
@@ -102,25 +134,18 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
     }
     
     setIsUploading(true);
-    const vehicleType = localStorage.getItem("vehicle") === "bike" ? "bike" : "car";
+    const vehicleType = vehicle === "bike" ? "bike" : "car";
     const basePath = `temp/${vehicleType}`;
     
     try {
-      const uploadedFileNames: Record<PhotoCategory, string[]> = {
-        Exterior: [],
-        Interior: [],
-        Tyres: [],
-        Features: [],
-        Defects: []
-      };
+      const uploadedFileNames: Record<string, string[]> = {};
+      const uploadedFileUrls: Record<string, string[]> = {};
       
-      const uploadedFileUrls: Record<PhotoCategory, string[]> = {
-        Exterior: [],
-        Interior: [],
-        Tyres: [],
-        Features: [],
-        Defects: []
-      };
+      // Initialize categories
+      categories.forEach(category => {
+        uploadedFileNames[category] = [];
+        uploadedFileUrls[category] = [];
+      });
       
       // Upload files for each category
       for (const category of categories) {
