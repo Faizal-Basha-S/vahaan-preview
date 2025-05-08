@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface ConfirmationData {
   phoneNumber: string | null;
@@ -32,7 +34,7 @@ interface ConfirmationProps {
   setIsConfirmationView: (value: boolean) => void;
 }
 
-type PhotoCategory = "Exterior" | "Interior" | "Tyres" | "Features" | "Defects";
+type PhotoCategory = "Exterior" | "Interior" | "Tyres" | "Features" | "Defects" | "Front" | "Rear" | "Left" | "Right";
 
 const Confirmation: React.FC<ConfirmationProps> = ({
   confirmationData,
@@ -46,8 +48,13 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     Interior: [],
     Tyres: [],
     Features: [],
-    Defects: []
+    Defects: [],
+    Front: [],
+    Rear: [],
+    Left: [],
+    Right: []
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // Load uploaded image URLs from localStorage
@@ -61,6 +68,110 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       }
     }
   }, []);
+
+  const handlePublishListing = async () => {
+    setIsSubmitting(true);
+
+    try {
+      // Get vehicle type and determine which table to use
+      const sellFormDataStr = localStorage.getItem("sellFormData");
+      if (!sellFormDataStr) {
+        throw new Error("Sell form data not found in localStorage");
+      }
+
+      const sellFormData = JSON.parse(sellFormDataStr);
+      const vehicleType = sellFormData.vehicleType || localStorage.getItem("vehicle_type") || "car";
+      
+      // Prepare base listing data common to both car and bike
+      const listingData: any = {
+        brand: sellFormData.brand || confirmationData.brand,
+        year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
+        model: sellFormData.model || confirmationData.model,
+        variant: sellFormData.variant || confirmationData.variant,
+        sell_price: parseInt(sellFormData.expectedPrice || localStorage.getItem("seller_price") || "0", 10),
+        city: localStorage.getItem("selectedCity") || confirmationData.city,
+        cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10) || null,
+        color: localStorage.getItem("color") || confirmationData.color,
+        fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
+        mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0") || null,
+        gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10) || null,
+        seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10) || null,
+        vehicle_type: vehicleType,
+        features: selectedFeatures || JSON.parse(localStorage.getItem("key_features") || "[]"),
+        status: "pending"
+      };
+
+      // Get user phone number from user profile
+      let phoneNumber = confirmationData.phoneNumber;
+      
+      // Try to find userProfile in localStorage
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("userProfile_")) {
+          try {
+            const profile = JSON.parse(localStorage.getItem(key) || "{}");
+            phoneNumber = profile.phoneNumber || phoneNumber;
+          } catch (e) {
+            console.error("Error parsing user profile:", e);
+          }
+        }
+      });
+
+      listingData.phone_number = phoneNumber || "0000000000";
+
+      // Format photos based on vehicle type
+      const photos = {};
+      if (vehicleType === "car") {
+        ['exterior', 'interior', 'tyres', 'features', 'defects'].forEach(category => {
+          const categoryKey = category.charAt(0).toUpperCase() + category.slice(1) as PhotoCategory;
+          photos[category.toLowerCase()] = uploadedImages[categoryKey] || [];
+        });
+      } else {
+        ['front', 'rear', 'left', 'right', 'defects'].forEach(category => {
+          const categoryKey = category.charAt(0).toUpperCase() + category.slice(1) as PhotoCategory;
+          photos[categoryKey] = uploadedImages[categoryKey] || [];
+        });
+      }
+
+      listingData.photos = photos;
+
+      // Add car-specific fields
+      if (vehicleType === "car") {
+        listingData.transmission = localStorage.getItem("transmission") || confirmationData.transmission || "Manual";
+        listingData.airbags = parseInt(localStorage.getItem("airbags") || confirmationData.airbags || "0", 10) || null;
+        listingData.cylinders = parseInt(localStorage.getItem("cylinders") || confirmationData.cylinders || "0", 10) || null;
+        listingData.wheel_drive = localStorage.getItem("wheel_drive") || confirmationData.wheelDrive || null;
+        
+        // Insert into car_seller_listings
+        const { data, error } = await supabase
+          .from("car_seller_listings")
+          .insert([listingData]);
+
+        if (error) throw error;
+      } else {
+        // Insert into bike_seller_listings
+        const { data, error } = await supabase
+          .from("bike_seller_listings")
+          .insert([listingData]);
+
+        if (error) throw error;
+      }
+
+      toast.success("Listing published successfully!");
+      
+      // Optional: Clear localStorage data after successful submission
+      // Object.keys(localStorage).forEach(key => {
+      //   if (!key.startsWith("userProfile_") && key !== "auth.token") {
+      //     localStorage.removeItem(key);
+      //   }
+      // });
+      
+    } catch (error) {
+      console.error("Error publishing listing:", error);
+      toast.error("Failed to publish listing. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -206,8 +317,12 @@ const Confirmation: React.FC<ConfirmationProps> = ({
             <ArrowLeft className="h-4 w-4" />
             Back to Pricing
           </Button>
-          <Button className="bg-green-500 hover:bg-green-600 text-white">
-            Listing Published Successfully
+          <Button 
+            className="bg-green-500 hover:bg-green-600 text-white"
+            onClick={handlePublishListing}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Publishing..." : "Listing Published Successfully"}
           </Button>
         </div>
       </div>
