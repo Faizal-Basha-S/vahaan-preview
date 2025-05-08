@@ -13,7 +13,6 @@ type AppointmentStep = 0 | 1 | 2 | 3;
 const Appointment: React.FC = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<AppointmentStep>(0);
-  const [isConfirmationView, setIsConfirmationView] = useState<boolean>(false);
   const [expectedPrice, setExpectedPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [vehicleType, setVehicleType] = useState<"car" | "bike">("car");
@@ -34,17 +33,12 @@ const Appointment: React.FC = () => {
     "Confirmation"
   ];
   
-  // Calculate the progress step number (1-5) for the progress bar
-  const progressStep = isConfirmationView ? 5 : currentStep + 1;
-  
   const handleBack = () => {
     if (currentStep === 0) {
       // Go back to sell page
       navigate("/sell");
     } else {
       setCurrentStep(prev => (prev - 1) as AppointmentStep);
-      // Reset confirmation view if going back
-      setIsConfirmationView(false);
     }
   };
   
@@ -80,8 +74,6 @@ const Appointment: React.FC = () => {
           onBack={handleBack} 
           expectedPrice={expectedPrice} 
           selectedFeatures={selectedFeatures} 
-          isConfirmationView={isConfirmationView}
-          setIsConfirmationView={setIsConfirmationView}
         />;
       default:
         return null;
@@ -91,7 +83,7 @@ const Appointment: React.FC = () => {
   return (
     <Layout>
       <div className="container max-w-5xl mx-auto py-8 px-4">
-        <ProgressBar currentStep={progressStep} steps={steps} />
+        <ProgressBar currentStep={currentStep} steps={steps} />
         
         <div className="bg-white dark:bg-[#1F2633] rounded-xl p-6 shadow-lg">
           {renderStepContent()}
