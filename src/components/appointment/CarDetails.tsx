@@ -98,6 +98,10 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
 
   const transmissionOptions = ["Manual", "Automatic", "CVT", "AMT", "DCT"];
 
+  const wheelDriveOptions = vehicleType === "car"
+    ? ["FWD", "RWD", "AWD", "4WD"]
+    : ["FWD", "AWD"];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -267,17 +271,25 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
           )}
 
           {/* Wheel Drive - Only for Car */}
-          {vehicleType === "car" && (
+          {wheelDrive === "car" && (
             <div className="space-y-2">
-              <Label htmlFor="wheelDrive">Wheel Drive</Label>
-              <Input
-                id="wheelDrive"
-                name="wheelDrive"
-                placeholder="e.g., FWD"
-                value={formData.wheelDrive}
-                onChange={handleInputChange}
-              />
-            </div>
+            <Label htmlFor="wheelDrive">Wheel Drive</Label>
+            <Select
+              value={formData.wheelDrive}
+              onValueChange={(value) => handleSelectChange(value, "wheelDrive")}
+            >
+              <SelectTrigger id="wheelDrive">
+                <SelectValue placeholder="Select wheel drivee" />
+              </SelectTrigger>
+              <SelectContent>
+                {wheelDriveOptions.map((option) => (
+                  <SelectItem key={option} value={option.toLowerCase()}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           )}
         </div>
 
