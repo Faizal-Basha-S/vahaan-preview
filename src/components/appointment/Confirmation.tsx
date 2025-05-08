@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -82,25 +81,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       const sellFormData = JSON.parse(sellFormDataStr);
       const vehicleType = sellFormData.vehicleType || localStorage.getItem("vehicle_type") || "car";
       
-      // Prepare base listing data common to both car and bike
-      const listingData: any = {
-        brand: sellFormData.brand || confirmationData.brand,
-        year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
-        model: sellFormData.model || confirmationData.model,
-        variant: sellFormData.variant || confirmationData.variant,
-        sell_price: parseInt(sellFormData.expectedPrice || localStorage.getItem("seller_price") || "0", 10),
-        city: localStorage.getItem("selectedCity") || confirmationData.city,
-        cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10) || null,
-        color: localStorage.getItem("color") || confirmationData.color,
-        fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
-        mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0") || null,
-        gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10) || null,
-        seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10) || null,
-        vehicle_type: vehicleType,
-        features: selectedFeatures || JSON.parse(localStorage.getItem("key_features") || "[]"),
-        status: "pending"
-      };
-
       // Get user phone number from user profile
       let phoneNumber = confirmationData.phoneNumber;
       
@@ -116,54 +96,114 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         }
       });
 
-      listingData.phone_number = phoneNumber || "0000000000";
-
       // Format photos based on vehicle type
-      const photos = {};
-      if (vehicleType === "car") {
-        ['exterior', 'interior', 'tyres', 'features', 'defects'].forEach(category => {
-          const categoryKey = category.charAt(0).toUpperCase() + category.slice(1) as PhotoCategory;
-          photos[category.toLowerCase()] = uploadedImages[categoryKey] || [];
-        });
-      } else {
-        ['front', 'rear', 'left', 'right', 'defects'].forEach(category => {
-          const categoryKey = category.charAt(0).toUpperCase() + category.slice(1) as PhotoCategory;
-          photos[categoryKey] = uploadedImages[categoryKey] || [];
-        });
-      }
-
-      listingData.photos = photos;
-
-      // Add car-specific fields
-      if (vehicleType === "car") {
-        listingData.transmission = localStorage.getItem("transmission") || confirmationData.transmission || "Manual";
-        listingData.airbags = parseInt(localStorage.getItem("airbags") || confirmationData.airbags || "0", 10) || null;
-        listingData.cylinders = parseInt(localStorage.getItem("cylinders") || confirmationData.cylinders || "0", 10) || null;
-        listingData.wheel_drive = localStorage.getItem("wheel_drive") || confirmationData.wheelDrive || null;
-        
-        // Insert into car_seller_listings
-        const { data, error } = await supabase
-          .from("car_seller_listings")
-          .insert([listingData]);
-
-        if (error) throw error;
-      } else {
-        // Insert into bike_seller_listings
-        const { data, error } = await supabase
-          .from("bike_seller_listings")
-          .insert([listingData]);
-
-        if (error) throw error;
-      }
-
-      toast.success("Listing published successfully!");
+      const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
+      let photos = {};
       
-      // Optional: Clear localStorage data after successful submission
-      // Object.keys(localStorage).forEach(key => {
-      //   if (!key.startsWith("userProfile_") && key !== "auth.token") {
-      //     localStorage.removeItem(key);
-      //   }
-      // });
+      if (uploadedFileUrlsStr) {
+        try {
+          const parsedUrls = JSON.parse(uploadedFileUrlsStr);
+          
+          if (vehicleType === "car") {
+            photos = {
+              exterior: parsedUrls.Exterior || [],
+              interior: parsedUrls.Interior || [],
+              tyres: parsedUrls.Tyres || [],
+              features: parsedUrls.Features || [],
+              defects: parsedUrls.Defects || []
+            };
+          } else {
+            photos = {
+              front: parsedUrls.Front || [],
+              rear: parsedUrls.Rear || [],
+              left: parsedUrls.Left || [],
+              right: parsedUrls.Right || [],
+              defects: parsedUrls.Defects || []
+            };
+          }
+        } catch (error) {
+          console.error("Error parsing uploaded file URLs:", error);
+          photos = {};
+        }
+      }
+
+      const sellingPrice = parseInt(localStorage.getItem("seller_price") || "0", 10);
+      const parsedFeatures = JSON.parse(localStorage.getItem("key_features") || "[]");
+
+      if (vehicleType === "car") {
+        // Prepare car listing data
+        const carData = {
+          brand: sellFormData.brand || confirmationData.brand,
+          model: sellFormData.model || confirmationData.model,
+          variant: sellFormData.variant || confirmationData.variant,
+          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
+          city: localStorage.getItem("selectedCity") || confirmationData.city,
+          color: localStorage.getItem("color") || confirmationData.color,
+          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
+          transmission: localStorage.getItem("transmission") || confirmationData.transmission || "Manual",
+          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
+          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
+          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
+          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
+          airbags: parseInt(localStorage.getItem("airbags") || confirmationData.airbags || "0", 10),
+          cylinders: parseInt(localStorage.getItem("cylinders") || confirmationData.cylinders || "0", 10),
+          wheel_drive: localStorage.getItem("wheel_drive") || confirmationData.wheelDrive,
+          sell_price: sellingPrice,
+          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
+          phone_number: phoneNumber || "0000000000",
+          vehicle_type: vehicleType,
+          photos: photos
+        };
+
+        // Insert car listing into Supabase
+        const { data: carData_res, error: carError } = await supabase
+          .from("car_seller_listings")
+          .insert([carData]);
+
+        if (carError) {
+          throw carError;
+        }
+        
+        console.log("Car listing published successfully");
+        toast.success("Car listing has been published successfully!");
+      } else {
+        // Prepare bike listing data
+        const bikeData = {
+          brand: sellFormData.brand || confirmationData.brand,
+          model: sellFormData.model || confirmationData.model,
+          variant: sellFormData.variant || confirmationData.variant,
+          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
+          city: localStorage.getItem("selectedCity") || confirmationData.city,
+          color: localStorage.getItem("color") || confirmationData.color,
+          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
+          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
+          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
+          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
+          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
+          sell_price: sellingPrice,
+          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
+          phone_number: phoneNumber || "0000000000",
+          vehicle_type: vehicleType,
+          photos: photos
+        };
+
+        // Insert bike listing into Supabase
+        const { data: bikeData_res, error: bikeError } = await supabase
+          .from("bike_seller_listings")
+          .insert([bikeData]);
+
+        if (bikeError) {
+          throw bikeError;
+        }
+        
+        console.log("Bike listing published successfully");
+        toast.success("Bike listing has been published successfully!");
+      }
+
+      // Optional: Clear certain localStorage data after successful submission
+      // localStorage.removeItem("uploadedFileUrls");
+      // localStorage.removeItem("seller_price");
+      // localStorage.removeItem("key_features");
       
     } catch (error) {
       console.error("Error publishing listing:", error);
