@@ -61,7 +61,7 @@ export type Database = {
       }
       bike_seller_listings: {
         Row: {
-          brand: string
+          brand: string | null
           cc: number | null
           city: string
           color: string | null
@@ -71,9 +71,9 @@ export type Database = {
           gncap_rating: number | null
           id: string
           mileage: number | null
-          model: string
-          phone_number: string
-          photos: string[] | null
+          model: string | null
+          phone_number: string | null
+          photos: Json[] | null
           seats: number | null
           sell_price: number
           status: Database["public"]["Enums"]["listing_status"]
@@ -82,7 +82,7 @@ export type Database = {
           year: number
         }
         Insert: {
-          brand: string
+          brand?: string | null
           cc?: number | null
           city: string
           color?: string | null
@@ -92,9 +92,9 @@ export type Database = {
           gncap_rating?: number | null
           id?: string
           mileage?: number | null
-          model: string
-          phone_number: string
-          photos?: string[] | null
+          model?: string | null
+          phone_number?: string | null
+          photos?: Json[] | null
           seats?: number | null
           sell_price: number
           status?: Database["public"]["Enums"]["listing_status"]
@@ -103,7 +103,7 @@ export type Database = {
           year: number
         }
         Update: {
-          brand?: string
+          brand?: string | null
           cc?: number | null
           city?: string
           color?: string | null
@@ -113,9 +113,9 @@ export type Database = {
           gncap_rating?: number | null
           id?: string
           mileage?: number | null
-          model?: string
-          phone_number?: string
-          photos?: string[] | null
+          model?: string | null
+          phone_number?: string | null
+          photos?: Json[] | null
           seats?: number | null
           sell_price?: number
           status?: Database["public"]["Enums"]["listing_status"]

@@ -322,7 +322,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
             onClick={handlePublishListing}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Publishing..." : "Listing Published Successfully"}
+            {isSubmitting ? "Publishing..." : "Publish Listing"}
           </Button>
         </div>
       </div>
