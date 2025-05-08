@@ -79,7 +79,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       }
 
       const sellFormData = JSON.parse(sellFormDataStr);
-      const vehicleType = localStorage.getItem("vehicle");
+      const vehicleType = localStorage.getItem("vehicle_type");
+      const vehicle = localStorage.getItem("vehicle");
 
       console.log("vehicle", vehicleType);
       
@@ -132,7 +133,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       const sellingPrice = parseInt(localStorage.getItem("seller_price") || "0", 10);
       const parsedFeatures = JSON.parse(localStorage.getItem("key_features") || "[]");
 
-      if (vehicleType === "car") {
+      if (vehicle === "car") {
         // Prepare car listing data
         const carData = {
           brand: sellFormData.brand || confirmationData.brand,
