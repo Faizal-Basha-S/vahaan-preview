@@ -121,10 +121,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     if (promoApplied) {
       // Save additional data to localStorage for bike listings
       const vehicleType = localStorage.getItem("vehicle");
-      if (vehicleType === "bike") {
-        // Save any bike-specific data that might be needed in confirmation
-        localStorage.setItem("vehicle_type", "bike");
-        
+      if (vehicleType === "bike") {        
         // Get data from forms/input fields if available
         // For example, from sellFormData
         try {
