@@ -80,6 +80,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({
 
       const sellFormData = JSON.parse(sellFormDataStr);
       const vehicleType = localStorage.getItem("vehicle");
+
+      console.log("vehicle", vehicleType);
       
       // Get user phone number from user profile
       let phoneNumber = confirmationData.phoneNumber;
