@@ -67,7 +67,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
     }
     
     // Store form data in localStorage
-    localStorage.setItem("vehicle_type", vehicleType); // Explicitly store the vehicle type
+    localStorage.setItem("vehicle_type", formData.vehicleType); // Explicitly store the vehicle type
     localStorage.setItem("fuel_type", formData.fuelType);
     localStorage.setItem("color", formData.color);
     localStorage.setItem("mileage", formData.mileage);
