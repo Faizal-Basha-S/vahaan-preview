@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
@@ -120,6 +119,24 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   const handleProceedToPay = () => {
     // If the promo is applied, show the confirmation view
     if (promoApplied) {
+      // Save additional data to localStorage for bike listings
+      const vehicleType = localStorage.getItem("vehicle");
+      if (vehicleType === "bike") {
+        // Save any bike-specific data that might be needed in confirmation
+        localStorage.setItem("vehicle_type", "bike");
+        
+        // Get data from forms/input fields if available
+        // For example, from sellFormData
+        try {
+          const sellFormData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+          if (sellFormData.mileage) localStorage.setItem("mileage", sellFormData.mileage);
+          if (sellFormData.color) localStorage.setItem("color", sellFormData.color);
+          if (sellFormData.cc) localStorage.setItem("cc", sellFormData.cc);
+        } catch (error) {
+          console.error("Error parsing sellFormData:", error);
+        }
+      }
+      
       setIsConfirmationView(true);
       return;
     }

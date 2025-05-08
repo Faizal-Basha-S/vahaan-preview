@@ -59,6 +59,72 @@ export type Database = {
           },
         ]
       }
+      bike_seller_listings: {
+        Row: {
+          brand: string
+          cc: number | null
+          city: string
+          color: string | null
+          created_at: string | null
+          features: string[] | null
+          fuel_type: string
+          gncap_rating: number | null
+          id: string
+          mileage: number | null
+          model: string
+          phone_number: string
+          photos: string[] | null
+          seats: number | null
+          sell_price: number
+          status: Database["public"]["Enums"]["listing_status"]
+          variant: string
+          vehicle_type: string
+          year: number
+        }
+        Insert: {
+          brand: string
+          cc?: number | null
+          city: string
+          color?: string | null
+          created_at?: string | null
+          features?: string[] | null
+          fuel_type: string
+          gncap_rating?: number | null
+          id?: string
+          mileage?: number | null
+          model: string
+          phone_number: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          variant: string
+          vehicle_type: string
+          year: number
+        }
+        Update: {
+          brand?: string
+          cc?: number | null
+          city?: string
+          color?: string | null
+          created_at?: string | null
+          features?: string[] | null
+          fuel_type?: string
+          gncap_rating?: number | null
+          id?: string
+          mileage?: number | null
+          model?: string
+          phone_number?: string
+          photos?: string[] | null
+          seats?: number | null
+          sell_price?: number
+          status?: Database["public"]["Enums"]["listing_status"]
+          variant?: string
+          vehicle_type?: string
+          year?: number
+        }
+        Relationships: []
+      }
       bike_variant: {
         Row: {
           created_at: string | null
@@ -132,6 +198,7 @@ export type Database = {
           transmission: string
           variant: string
           vehicle_type: string
+          verified_seller: string | null
           wheel_drive: string | null
           year: number
         }
@@ -157,6 +224,7 @@ export type Database = {
           transmission: string
           variant: string
           vehicle_type: string
+          verified_seller?: string | null
           wheel_drive?: string | null
           year: number
         }
@@ -182,6 +250,7 @@ export type Database = {
           transmission?: string
           variant?: string
           vehicle_type?: string
+          verified_seller?: string | null
           wheel_drive?: string | null
           year?: number
         }
@@ -242,6 +311,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      temp_uploads: {
+        Row: {
+          file_path: string
+          id: string
+          uploaded_at: string | null
+        }
+        Insert: {
+          file_path: string
+          id?: string
+          uploaded_at?: string | null
+        }
+        Update: {
+          file_path?: string
+          id?: string
+          uploaded_at?: string | null
+        }
+        Relationships: []
       }
       variants: {
         Row: {

@@ -22,6 +22,9 @@ const Appointment: React.FC = () => {
     const storedVehicleType = localStorage.getItem("vehicle");
     if (storedVehicleType === "car" || storedVehicleType === "bike") {
       setVehicleType(storedVehicleType);
+      
+      // Set vehicle_type in localStorage for consistent access in other components
+      localStorage.setItem("vehicle_type", storedVehicleType);
     }
   }, []);
   
@@ -57,6 +60,9 @@ const Appointment: React.FC = () => {
     handleNext();
   };
   
+  // Calculate the current progress step for the ProgressBar
+  const progressStep = currentStep + 1;
+  
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
@@ -83,7 +89,7 @@ const Appointment: React.FC = () => {
   return (
     <Layout>
       <div className="container max-w-5xl mx-auto py-8 px-4">
-        <ProgressBar currentStep={currentStep} steps={steps} />
+        <ProgressBar currentStep={progressStep} steps={steps} />
         
         <div className="bg-white dark:bg-[#1F2633] rounded-xl p-6 shadow-lg">
           {renderStepContent()}
