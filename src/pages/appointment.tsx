@@ -29,8 +29,7 @@ const Appointment: React.FC = () => {
     "Enter Details",
     "Upload Photos",
     "Tell Us Your Price",
-    "Pricing",
-    "Confirmation"
+    "Payment and Confirmation"
   ];
   
   const handleBack = () => {
@@ -58,7 +57,7 @@ const Appointment: React.FC = () => {
   };
   
   // Calculate the current progress step for the ProgressBar
-  const progressStep = currentStep + 1;
+  const progressStep = currentStep;
   
   const renderStepContent = () => {
     switch (currentStep) {
