@@ -107,7 +107,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         try {
           const parsedUrls = JSON.parse(uploadedFileUrlsStr);
           
-          if (vehicleType === "car") {
+          if (vehicle === "car") {
             photos = {
               exterior: parsedUrls.Exterior || [],
               interior: parsedUrls.Interior || [],
