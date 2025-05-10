@@ -1,93 +1,90 @@
 
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import Index from "@/pages/Index";
-import BuyCar from "@/pages/BuyCar";
-import CarDetail from "@/pages/CarDetail";
-import BikeDetail from "@/pages/BikeDetail";
-import BuyBikes from "@/pages/BuyBikes";
-import UsedCars from "@/pages/UsedCars";
-import Sell from "@/pages/Sell";
-import SellCity from "@/pages/SellCity";
-import Partner from "@/pages/Partner";
-import Services from "@/pages/Services";
-import Favourites from "@/pages/Favourites";
-import Appointments from "@/pages/Appointments";
-import Appointment from "./pages/appointment"; // Changed casing to match actual file
-import Bookings from "@/pages/Bookings";
-import Privacy from "@/pages/Privacy";
-import Terms from "@/pages/Terms";
-import FAQs from "@/pages/FAQs";
-import Contact from "@/pages/Contact";
-import AI from "@/pages/AI";
-import AdminUploads from "@/pages/AdminUploads";
-import NotFound from "@/pages/NotFound";
-import ScrollToTop from "@/components/layout/ScrollToTop"; // Fixed import path
-import { ThemeProvider } from "./components/ui/theme-provider"; // Fixed import path
-import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import Services from "./pages/Services";
+import BuyCar from "./pages/BuyCar";
+import BuyBikes from "./pages/BuyBikes";
+import Sell from "./pages/Sell";
+import UsedCars from "./pages/UsedCars";
+import BikeBuySection from "./pages/BikeBuySection";
+import AI from "./pages/AI";
+import { createCSSVariables } from "./lib/utils";
 import { VehicleProvider } from "./context/VehicleContext";
-import SignInModal from "./components/auth/SignInModal"; // Fixed import path
-import AboutUs from "@/pages/AboutUs";
+import { AuthProvider } from "./context/AuthContext";
+import CarDetail from "./pages/CarDetail";
+import BikeDetail from "./pages/BikeDetail";
+import SellCity from "./pages/SellCity";
+import Contact from "./pages/Contact";
+import FAQs from "./pages/FAQs";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import AdminUploads from "@/pages/AdminUploads";
+import Appointment from "@/pages/appointment";
+
+// Import new pages
+import Favourites from "./pages/Favourites";
+import Appointments from "./pages/Appointments";
+import Bookings from "./pages/Bookings";
+import ServicesPage from "./pages/Services";
+import Partner from "./pages/Partner";
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
-
   useEffect(() => {
-    const handleOpenSignInModal = () => {
-      setIsSignInModalOpen(true);
-    };
-
-    window.addEventListener('openSignInModal', handleOpenSignInModal);
-
-    return () => {
-      window.removeEventListener('openSignInModal', handleOpenSignInModal);
-    };
+    // Initialize CSS variables for animations
+    createCSSVariables();
   }, []);
 
-  const closeSignInModal = () => {
-    setIsSignInModalOpen(false);
-  };
-
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <Router>
-        <ScrollToTop />
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
         <AuthProvider>
           <VehicleProvider>
-            <SignInModal isOpen={isSignInModalOpen} onClose={closeSignInModal} />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/search" element={<BuyCar />} />
-              <Route path="/cars/:id" element={<CarDetail />} />
-              <Route path="/bikes/:id" element={<BikeDetail />} />
-              <Route path="/bikes" element={<BuyBikes />} />
-              <Route path="/used-cars" element={<UsedCars />} />
-              <Route path="/sell" element={<Sell />} />
-              <Route path="/sell/:city" element={<SellCity />} />
-              <Route path="/partner" element={<Partner />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/favourites" element={<Favourites />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="/appointment" element={<Appointment />} />
-              <Route path="/bookings" element={<Bookings />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/faqs" element={<FAQs />} />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/ai" element={<AI />} />
-              <Route path="/admin-uploads" element={<AdminUploads />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Toaster />
+            <Sonner />
+            <div className="w-full">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<Services />} />
+                <Route path="/search" element={<BuyCar />} />
+                <Route path="/bikes" element={<BuyBikes />} />
+                <Route path="/sell-car" element={<Sell />} />
+                <Route path="/sell" element={<Sell />} /> {/* Route alias */}
+                <Route path="/sell/:city" element={<SellCity />} />
+                <Route path="/used-cars" element={<UsedCars />} />
+                <Route path="/bike-buy-section" element={<BikeBuySection />} />
+                <Route path="/ai" element={<AI />} />
+                <Route path="/buy/:id" element={<CarDetail />} /> {/* Car details route */}
+                <Route path="/bike/:id" element={<BikeDetail />} /> {/* Bike details route */}
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faqs" element={<FAQs />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/admin-uploads" element={<AdminUploads />} />
+                <Route path="/appointment" element={<Appointment />} /> {/* New appointment route */}
+                
+                {/* New routes for authenticated user pages */}
+                <Route path="/favourites" element={<Favourites />} />
+                <Route path="/appointments" element={<Appointments />} />
+                <Route path="/bookings" element={<Bookings />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/partner" element={<Partner />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </VehicleProvider>
         </AuthProvider>
-      </Router>
-    </ThemeProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 

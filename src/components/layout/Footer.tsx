@@ -1,137 +1,131 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
-import { Mail, Phone, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
-import logoSrc from "@/assets/logo.svg";
+import { Facebook, Twitter, Instagram, Youtube, Mail, PhoneCall, MapPin } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-100 py-10 dark:bg-gray-900 dark:border-gray-800">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          <div className="lg:col-span-2">
-            <Link to="/" className="inline-block">
-              <div className="flex items-center">
-                <img
-                  src={logoSrc}
-                  alt="VahaanXchange Logo"
-                  className="h-8 w-auto"
-                />
-                <span className="ml-2 font-bold text-xl">VahaanXchange</span>
-              </div>
+    <footer className="bg-secondary/50 dark:bg-gray-900 mt-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <Link to="/" className="text-2xl font-bold text-primary">
+              VahaanXchange – Smart & Secure Car Deals!
             </Link>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 max-w-md">
-              VahaanXchange is your trusted partner for buying and selling vehicles in India. 
-              We provide a transparent, secure platform with AI-powered pricing and verified listings.
+            <p className="text-muted-foreground max-w-xs">
+              Buy and sell with Aadhar-verified safety in a fraud-free marketplace. Get AI-powered price estimates and connect with mechanics, insurers, and more—all in one place.
             </p>
+            <Separator className="my-2" />
+            <p className="text-muted-foreground">Join now for a seamless experience! 🚗</p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Facebook">
+                <Facebook size={20} />
+              </a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Instagram">
+                <Instagram size={20} />
+              </a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="YouTube">
+                <Youtube size={20} />
+              </a>
+            </div>
           </div>
           
+          {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider">Explore</h3>
-            <ul className="mt-4 space-y-2">
+            <h5 className="font-semibold text-lg mb-4">Quick Links</h5>
+            <ul className="space-y-3">
               <li>
-                <Link to="/used-cars" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Buy Used Cars
+                <Link to="/search" className="text-muted-foreground hover:text-primary transition-colors">
+                  Find Cars
                 </Link>
               </li>
               <li>
-                <Link to="/bikes" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Buy Used Bikes
+                <Link to="/bikes" className="text-muted-foreground hover:text-primary transition-colors">
+                  Find Bikes
                 </Link>
               </li>
               <li>
-                <Link to="/sell" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Sell Your Vehicle
+                <Link to="/sell?mode=car" className="text-muted-foreground hover:text-primary transition-colors">
+                  Sell Your Cars
                 </Link>
               </li>
               <li>
-                <Link to="/partner" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Become a Partner
+                <Link to="/sell?mode=bike" className="text-muted-foreground hover:text-primary transition-colors">
+                  Sell Your Bikes
+                </Link>
+              </li>
+              <li>
+                <Link to="/ai" className="text-muted-foreground hover:text-primary transition-colors">
+                  Ask AI
                 </Link>
               </li>
             </ul>
           </div>
           
+          {/* Help & Support - Fixed links to point to the proper routes */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider">Company</h3>
-            <ul className="mt-4 space-y-2">
+            <h5 className="font-semibold text-lg mb-4">Help & Support</h5>
+            <ul className="space-y-3">
               <li>
-                <Link to="/about-us" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link to="/aboutus" className="text-muted-foreground hover:text-primary transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/faqs" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link to="/faqs" className="text-muted-foreground hover:text-primary transition-colors">
                   FAQs
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Terms of Service
+                <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                  Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                  Contact Us
                 </Link>
               </li>
             </ul>
           </div>
           
+          {/* Contact Information */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider">Connect With Us</h3>
-            <ul className="mt-4 space-y-2">
-              <li className="flex items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  <Mail className="h-4 w-4 inline mr-2" />
+            <h5 className="font-semibold text-lg mb-4">Contact Us</h5>
+            <ul className="space-y-3">
+              <li className="flex items-start space-x-3">
+                <MapPin size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Egattur, Chennai, Tamil Nadu, India
+                </span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <PhoneCall size={20} className="text-primary flex-shrink-0" />
+                <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors">
+                  +91 810-810-4175
+                </a>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Mail size={20} className="text-primary flex-shrink-0" />
+                <a href="mailto:info@vahaanxchange.com" className="text-muted-foreground hover:text-primary transition-colors">
                   admin@vahaanxchange.com
-                </span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  <Phone className="h-4 w-4 inline mr-2" />
-                  810-810-4175
-                </span>
-              </li>
-              <li className="mt-4">
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                    <Facebook className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                    <Twitter className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                </div>
+                </a>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} VahaanXchange. All rights reserved.
-          </p>
-          <div className="mt-4 md:mt-0 flex space-x-6">
-            <Link to="/terms" className="text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-              Terms
-            </Link>
-            <Link to="/privacy" className="text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-              Privacy
-            </Link>
-            <Link to="/contact" className="text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-              Contact
-            </Link>
-          </div>
+        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+          <p>© {new Date().getFullYear()} VahaanXchange- Matchorax technologies pvt ltd. All rights reserved.</p>
         </div>
       </div>
     </footer>
