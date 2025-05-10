@@ -147,7 +147,7 @@ const Terms = () => {
               <hr className="my-8" />
               
               <h2 className="text-xl font-semibold mt-8 mb-4">14. Listing and Advertising Terms</h2>
-              <ul className="list-none pl-6 mb-4 text-muted-foreground">
+              <ul className="list-disc pl-6 mb-4 text-muted-foreground">
                 <li>Whether a listing is posted through a paid or unpaid method (including promotional codes), the charges collected by VahaanXchange are solely for displaying the advertisement. </li>
                 <li>VahaanXchange does not guarantee the availability or quality of potential buyers or sellers, whether verified or unverified. The company is not liable for any such outcomes.</li>
               </ul>
