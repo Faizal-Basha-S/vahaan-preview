@@ -66,12 +66,12 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Help & Support - Fixed links to point to the proper routes */}
+          {/* Help & Support - Updated links to point to the proper routes */}
           <div>
             <h5 className="font-semibold text-lg mb-4">Help & Support</h5>
             <ul className="space-y-3">
               <li>
-                <Link to="/aboutus" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
                   About Us
                 </Link>
               </li>
@@ -125,7 +125,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
-          <p>© {new Date().getFullYear()} VahaanXchange- Matchorax technologies pvt ltd. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} VahaanXchange- Matchorax technologies pvt ltd. All rights reserved.</p>
         </div>
       </div>
     </footer>

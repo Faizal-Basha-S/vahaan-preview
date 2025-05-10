@@ -26,6 +26,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AdminUploads from "@/pages/AdminUploads";
 import Appointment from "@/pages/appointment";
+import AboutUs from "./pages/AboutUs"; // Import the new AboutUs page
 
 // Import new pages
 import Favourites from "./pages/Favourites";
@@ -52,7 +53,7 @@ function App() {
             <div className="w-full">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/about" element={<Services />} />
+                <Route path="/about" element={<AboutUs />} /> {/* Add new AboutUs route */}
                 <Route path="/search" element={<BuyCar />} />
                 <Route path="/bikes" element={<BuyBikes />} />
                 <Route path="/sell-car" element={<Sell />} />
@@ -76,6 +77,7 @@ function App() {
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/services" element={<ServicesPage />} />
                 <Route path="/partner" element={<Partner />} />
+                <Route path="/aboutus" element={<AboutUs />} /> {/* Alternative route for AboutUs */}
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
