@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Calendar, Star, Car, MessageSquare, Bell, FileText, CircleDollarSign } from "lucide-react";
 import {
   DropdownMenu,
@@ -19,11 +19,57 @@ interface AuthButtonsProps {
   className?: string;
 }
 
+interface MenuOption {
+  id: number;
+  title: string;
+  icon: React.ReactNode;
+  path: string;
+  badge?: string;
+}
+
 const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
   const { currentUser, userProfile, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [intendedPath, setIntendedPath] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
+  const navigate = useNavigate();
+
+  // Menu options for both signed-in and non-signed-in users
+  const menuOptions: MenuOption[] = [
+    { 
+      id: 1, 
+      title: "Favourites", 
+      icon: <Star className="h-5 w-5 text-gray-600" />,
+      path: "/favourites"
+    },
+    { 
+      id: 2, 
+      title: "My Appointments", 
+      icon: <Calendar className="h-5 w-5 text-gray-600" />,
+      path: "/appointments",
+      badge: "SELL" 
+    },
+    { 
+      id: 3, 
+      title: "My Bookings", 
+      icon: <Car className="h-5 w-5 text-gray-600" />,
+      path: "/bookings",
+      badge: "BUY" 
+    },
+    { 
+      id: 4, 
+      title: "Requested Services", 
+      icon: <FileText className="h-5 w-5 text-gray-600" />,
+      path: "/services"
+    },
+    { 
+      id: 5, 
+      title: "Become a Partner", 
+      icon: <Bell className="h-5 w-5 text-gray-600" />,
+      path: "/partner"
+    },
+  ];
 
   const handleShowAuthModal = () => {
     setShowAuthModal(true);
@@ -33,6 +79,12 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
   
   const handleCloseAuthModal = () => {
     setShowAuthModal(false);
+    
+    // If there was an intended path after authentication, navigate there
+    if (intendedPath && currentUser) {
+      navigate(intendedPath);
+      setIntendedPath(null);
+    }
   };
 
   const handleMouseEnter = () => {
@@ -45,10 +97,23 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
   };
 
   const handleMouseLeave = () => {
-    // Set timeout to hide dropdown after 1 second
+    // Set timeout to hide dropdown after 250ms
     hoverTimeoutRef.current = window.setTimeout(() => {
       setShowDropdown(false);
     }, 250);
+  };
+
+  // Handle menu item click
+  const handleMenuItemClick = (path: string) => {
+    if (currentUser) {
+      // If authenticated, navigate directly
+      navigate(path);
+    } else {
+      // If not authenticated, store intended path and show auth modal
+      setIntendedPath(path);
+      handleShowAuthModal();
+    }
+    setShowDropdown(false);
   };
 
   // Clean up timeout on unmount
@@ -60,6 +125,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
     };
   }, []);
 
+  // For authenticated users, we show the avatar dropdown
   if (currentUser && userProfile) {
     return (
       <div className={className}>
@@ -85,14 +151,18 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
           <DropdownMenuContent className="w-56" align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to="/profile" className="cursor-pointer">Profile</Link>
-              <Link to="/profile" className="cursor-pointer">Favourites</Link>
-              <Link to="/profile" className="cursor-pointer">My Appointments</Link>
-              <Link to="/profile" className="cursor-pointer">My Bookings</Link>
-              <Link to="/profile" className="cursor-pointer">Become a Partner</Link>
-              
-            </DropdownMenuItem>
+            
+            {menuOptions.map((option) => (
+              <DropdownMenuItem 
+                key={option.id} 
+                className="cursor-pointer"
+                onClick={() => handleMenuItemClick(option.path)}
+              >
+                {option.title}
+              </DropdownMenuItem>
+            ))}
+            
+            <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={signOut}>
               Log out
             </DropdownMenuItem>
@@ -102,6 +172,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
     );
   }
 
+  // For non-authenticated users, we show the sign-in button with dropdown
   return (
     <>
       <div 
@@ -120,56 +191,40 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
           <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
             
             <div className="space-y-3">
-              <div className="flex items-center justify-between py-1">
-                <div className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm font-medium">Favourites</span>
+              {menuOptions.map((option) => (
+                <div 
+                  key={option.id} 
+                  className="flex items-center justify-between py-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 px-2 rounded"
+                  onClick={() => handleMenuItemClick(option.path)}
+                >
+                  <div className="flex items-center gap-2">
+                    {option.icon}
+                    <span className="text-sm font-medium">{option.title}</span>
+                  </div>
+                  {option.badge && (
+                    <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">{option.badge}</span>
+                  )}
                 </div>
-              </div>
+              ))}
               
-              <div className="flex items-center justify-between py-1">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm font-medium">My Appointments</span>
-                </div>
-                <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">SELL</span>
-              </div>
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-3"></div>
               
-              <div className="flex items-center justify-between py-1">
-                <div className="flex items-center gap-2">
-                  <Car className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm font-medium">My Bookings</span>
-                </div>
-                <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">BUY</span>
-              </div>
-              
-              <div className="flex items-center justify-between py-1 border-b border-gray-200 dark:border-gray-700 pb-3">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm font-medium">Requested Services</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Bell className="h-5 w-5 text-gray-600" />
-                  <span className="text-sm font-medium">Become a Partner</span>
-                </div>
-              </div>
-              
-            <Button 
-              className="w-full bg-orange-500 hover:bg-orange-600 mb-4 py-6 text-lg"
-              onClick={handleShowAuthModal}
-            >
-              SIGN IN/SIGN UP
-            </Button>
+              <Button 
+                className="w-full bg-orange-500 hover:bg-orange-600 mb-4 py-6 text-lg"
+                onClick={handleShowAuthModal}
+              >
+                SIGN IN/SIGN UP
+              </Button>
             </div>
           </div>
         )}
       </div>
       
       {/* Auth Modal */}
-      <PhoneAuthModal isOpen={showAuthModal} onClose={handleCloseAuthModal} />
+      <PhoneAuthModal 
+        isOpen={showAuthModal} 
+        onClose={handleCloseAuthModal} 
+      />
     </>
   );
 };

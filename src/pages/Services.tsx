@@ -1,333 +1,219 @@
 
-import { useEffect, useState } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import Layout from "@/components/layout/Layout";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, Wrench, ChevronRight, Phone } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CircleDollarSign, Calendar, Timer, MapPin, Car, RotateCw, FileText } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const ServicesPage = () => {
-  // Scroll to top on page load
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  // State for the professional services dialog
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<string>("mechanics");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const { toast } = useToast();
-
-  const handleServiceSelection = (value: string) => {
-    setSelectedService(value);
-  };
-
-  const handleSubmitRequest = () => {
-    // Validate phone number (basic validation)
-    if (!phoneNumber || phoneNumber.length < 10) {
-      toast({
-        title: "Invalid Phone Number",
-        description: "Please enter a valid phone number to proceed.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Handle the service request submission
-    toast({
-      title: "Request Submitted",
-      description: `We'll call you shortly regarding ${getServiceName(selectedService)}.`,
-    });
-
-    // Reset and close dialog
-    setPhoneNumber("");
-    setIsDialogOpen(false);
-  };
-
-  const getServiceName = (serviceId: string) => {
-    switch (serviceId) {
-      case "mechanics":
-        return "Mechanic Services";
-      case "insurance":
-        return "Insurance Consultation";
-      case "accessories":
-        return "Car Accessories";
-      default:
-        return "Professional Services";
-    }
-  };
-
-  const faqs = [
-    {
-      question: "How do I verify my Aadhar ID on VahaanXchange?",
-      answer: "To verify your Aadhar ID, navigate to your profile settings and select 'Verify Identity'. Follow the prompts to securely upload your Aadhar details. Our verification team will review and confirm your identity within 24-48 hours."
-    },
-    {
-      question: "Are all cars on VahaanXchange verified?",
-      answer: "Yes, all cars listed on our platform undergo a verification process. Sellers must provide vehicle documentation, and our team verifies the information before listings go live. Look for the 'Verified' badge on listings for added assurance."
-    },
-    {
-      question: "How do I connect with professional mechanics through VahaanXchange?",
-      answer: "You can find professional mechanics in the 'Professional Services' section. Browse through profiles based on location, specialization, and ratings. Once you've selected a mechanic, you can contact them directly through our platform."
-    },
-    {
-      question: "What types of professional services are available?",
-      answer: "VahaanXchange connects you with various automotive professionals including mechanics, insurance agents, car accessory providers, detailing experts, and documentation assistants to help with all aspects of car ownership."
-    },
-    {
-      question: "Is there a fee to list my car for sale?",
-      answer: "Basic listings are free. Premium listing options with enhanced visibility features are available for a nominal fee. You can choose the listing type that best suits your needs during the ad posting process."
-    }
-  ];
-
+const ServiceCard = ({ service }) => {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="pt-24 pb-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-600/40 via-blue-500/30 to-transparent dark:from-violet-900/60 dark:via-blue-800/40 dark:to-transparent backdrop-blur-sm z-0"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-black dark:text-white animate-fade-in">
-              Explore Our Services
-            </h1>
-            <p className="text-lg md:text-xl text-black/90 dark:text-white/90 mb-8 animate-fade-in">
-              Discover how VahaanXchange makes buying and selling used cars easier, safer, and more reliable.
-            </p>
-          </div>
-        </div>
-        
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-background to-transparent"></div>
-      </section>
-
-      {/* Service Cards Section */}
-      <section className="py-12 relative z-10 bg-secondary/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Card 1: Verified Buy & Sell Platform */}
-            <Card className="card-shadow overflow-hidden border-0 rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-violet-500/20 dark:from-blue-800/40 dark:to-violet-900/30 opacity-80 z-0"></div>
-              <CardHeader className="relative z-10">
-                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-4">
-                  <Shield className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-2xl">Verified Buy & Sell Platform</CardTitle>
-                <CardDescription className="text-foreground/80 dark:text-foreground/70">
-                  Security and trust at the core of every transaction
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative z-10 text-foreground/90 dark:text-foreground/80">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Aadhar-verified car listings for enhanced security</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Thorough vehicle history checks and documentation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Secure payment gateway for hassle-free transactions</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter className="relative z-10">
-                <Button className="w-full group">
-                  Explore Verified Listings
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
-                  >
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </Button>
-              </CardFooter>
-            </Card>
-
-            {/* Card 2: Professional Services */}
-            <Card className="card-shadow overflow-hidden border-0 rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-blue-500/20 dark:from-violet-900/40 dark:to-blue-800/30 opacity-80 z-0"></div>
-              <CardHeader className="relative z-10">
-                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-violet-100 dark:bg-violet-900/30 mb-4">
-                  <Wrench className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-2xl">Professional Services</CardTitle>
-                <CardDescription className="text-foreground/80 dark:text-foreground/70">
-                  Expert assistance for all your automotive needs
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative z-10 text-foreground/90 dark:text-foreground/80">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Connect with certified mechanics for inspections and repairs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Insurance consultation and policy comparison services</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>Premium car accessories from verified providers</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter className="relative z-10">
-                <Button 
-                  className="w-full group"
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  Find Professionals
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
-                  >
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Professional Services Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-semibold">Professional Services</DialogTitle>
-            <DialogDescription>
-              Select a service and provide your contact details for a callback.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="py-4">
-            <div className="mb-6">
-              <h4 className="font-medium mb-3">Select service type:</h4>
-              <RadioGroup 
-                value={selectedService} 
-                onValueChange={handleServiceSelection}
-                className="space-y-3"
-              >
-                <div className="flex items-center space-x-2 border p-3 rounded-md hover:bg-secondary/50 transition-colors">
-                  <RadioGroupItem value="mechanics" id="mechanics" />
-                  <Label htmlFor="mechanics" className="flex-1 cursor-pointer">
-                    <div className="font-medium">Certified Mechanics</div>
-                    <div className="text-sm text-muted-foreground">Expert inspections and repairs</div>
-                  </Label>
-                </div>
-                
-                <div className="flex items-center space-x-2 border p-3 rounded-md hover:bg-secondary/50 transition-colors">
-                  <RadioGroupItem value="insurance" id="insurance" />
-                  <Label htmlFor="insurance" className="flex-1 cursor-pointer">
-                    <div className="font-medium">Insurance Consultation</div>
-                    <div className="text-sm text-muted-foreground">Policy comparison and advice</div>
-                  </Label>
-                </div>
-                
-                <div className="flex items-center space-x-2 border p-3 rounded-md hover:bg-secondary/50 transition-colors">
-                  <RadioGroupItem value="accessories" id="accessories" />
-                  <Label htmlFor="accessories" className="flex-1 cursor-pointer">
-                    <div className="font-medium">Car Accessories</div>
-                    <div className="text-sm text-muted-foreground">Premium products from verified providers</div>
-                  </Label>
-                </div>
-              </RadioGroup>
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
+      <CardContent className="p-4">
+        <div className="flex flex-col md:flex-row justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Badge className={`
+                ${service.status === "Pending" ? "bg-amber-500" : ""}
+                ${service.status === "Scheduled" ? "bg-blue-500" : ""}
+                ${service.status === "Completed" ? "bg-green-500" : ""}
+                ${service.status === "Cancelled" ? "bg-red-500" : ""}
+              `}>
+                {service.status}
+              </Badge>
+              <span className="text-sm text-muted-foreground">
+                Request ID: {service.id}
+              </span>
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="font-medium">Your Contact Number</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your mobile number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+            <h3 className="font-semibold text-lg">{service.type}</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <Car className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm">{service.vehicle}</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+              <div className="flex items-center text-sm">
+                <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                <span>{service.date}</span>
               </div>
-              <p className="text-xs text-muted-foreground">
-                We'll call you back to discuss your requirements.
-              </p>
+              <div className="flex items-center text-sm">
+                <Timer className="h-4 w-4 mr-2 text-muted-foreground" />
+                <span>{service.time}</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                <span>{service.location}</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <CircleDollarSign className="h-4 w-4 mr-2 text-muted-foreground" />
+                <span>{service.price}</span>
+              </div>
             </div>
           </div>
           
-          <DialogFooter>
-            <Button
-              onClick={handleSubmitRequest}
-              className="w-full sm:w-auto"
-            >
-              <Phone className="mr-2 h-4 w-4" />
-              Request a Call
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* FAQ Section */}
-      <section className="py-12 bg-secondary/50 dark:bg-secondary/20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-              <p className="text-muted-foreground">
-                Find answers to common questions about our services
-              </p>
+          {service.notes && (
+            <div className="mt-4 md:mt-0 md:ml-4 md:max-w-xs">
+              <div className="text-sm p-2 bg-muted rounded">
+                <span className="font-medium">Notes:</span> {service.notes}
+              </div>
             </div>
-
-            <Accordion type="single" collapsible className="w-full space-y-3">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-2">
-                  <AccordionTrigger className="text-left font-medium text-base py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-sm pb-4">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-
-            <div className="mt-10 text-center">
-              <p className="text-muted-foreground mb-4">
-                Didn't find what you were looking for?
-              </p>
-              <Button variant="outline">
-                Contact Support
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
-      </section>
-      
-      <div className="mt-auto">
-        <Footer />
+      </CardContent>
+      <CardFooter className="bg-secondary/20 px-4 py-3 flex justify-end gap-2">
+        {service.status !== "Completed" && service.status !== "Cancelled" && (
+          <>
+            <Button variant="outline" size="sm" className="gap-1">
+              <FileText className="h-4 w-4" /> Details
+            </Button>
+            {service.status === "Pending" && (
+              <Button size="sm" className="gap-1">
+                Confirm
+              </Button>
+            )}
+            {service.status === "Scheduled" && (
+              <Button size="sm" className="gap-1">
+                <Calendar className="h-4 w-4" /> Reschedule
+              </Button>
+            )}
+          </>
+        )}
+        {service.status === "Completed" && (
+          <Button size="sm" className="gap-1">
+            <RotateCw className="h-4 w-4" /> Request Again
+          </Button>
+        )}
+        {service.status !== "Cancelled" && service.status !== "Completed" && (
+          <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-700 hover:bg-red-50">
+            Cancel
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
+};
+
+const ServicesPage = () => {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  
+  // Mock data for demonstration
+  const mockServices = [
+    {
+      id: "SRV-1001",
+      type: "Full Vehicle Inspection",
+      vehicle: "Honda City (2020)",
+      date: "May 14, 2025",
+      time: "10:30 AM",
+      location: "VahaanXchange Service Center, Chennai",
+      price: "₹2,500",
+      status: "Scheduled",
+      notes: "Please bring vehicle documentation"
+    },
+    {
+      id: "SRV-1002",
+      type: "Engine Oil Change",
+      vehicle: "Hyundai Creta (2021)",
+      date: "May 20, 2025",
+      time: "02:45 PM",
+      location: "VahaanXchange Service Center, Chennai",
+      price: "₹1,200",
+      status: "Pending"
+    },
+    {
+      id: "SRV-1003",
+      type: "Battery Replacement",
+      vehicle: "Royal Enfield Classic 350 (2022)",
+      date: "Apr 25, 2025",
+      time: "11:15 AM",
+      location: "VahaanXchange Service Center, Bangalore",
+      price: "₹3,500",
+      status: "Completed"
+    },
+    {
+      id: "SRV-1004",
+      type: "Wheel Alignment",
+      vehicle: "Maruti Swift (2022)",
+      date: "Apr 18, 2025",
+      time: "09:00 AM",
+      location: "VahaanXchange Service Center, Chennai",
+      price: "₹800",
+      status: "Cancelled"
+    }
+  ];
+  
+  // Check authentication
+  if (!currentUser) {
+    navigate("/");
+    return null;
+  }
+
+  return (
+    <Layout>
+      <div className="container mx-auto px-4 py-10">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold">Your Requested Services</h1>
+          <p className="text-muted-foreground mt-2">Review and manage the services you've requested for your vehicle.</p>
+        </div>
+        
+        <Tabs defaultValue="all" className="w-full">
+          <div className="flex justify-between items-center mb-6">
+            <TabsList>
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="completed">Completed</TabsTrigger>
+              <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
+            </TabsList>
+            
+            <Button size="sm" onClick={() => navigate("/appointment")}>
+              Request New Service
+            </Button>
+          </div>
+          
+          <TabsContent value="all" className="mt-0">
+            <div className="space-y-4">
+              {mockServices.map(service => (
+                <ServiceCard key={service.id} service={service} />
+              ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="active" className="mt-0">
+            <div className="space-y-4">
+              {mockServices
+                .filter(service => ["Pending", "Scheduled"].includes(service.status))
+                .map(service => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="completed" className="mt-0">
+            <div className="space-y-4">
+              {mockServices
+                .filter(service => service.status === "Completed")
+                .map(service => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="cancelled" className="mt-0">
+            <div className="space-y-4">
+              {mockServices
+                .filter(service => service.status === "Cancelled")
+                .map(service => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
-    </div>
+    </Layout>
   );
 };
 
