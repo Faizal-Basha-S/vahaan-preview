@@ -13,7 +13,7 @@ import Partner from "@/pages/Partner";
 import Services from "@/pages/Services";
 import Favourites from "@/pages/Favourites";
 import Appointments from "@/pages/Appointments";
-import Appointment from "./pages/Appointment"; // Fixed import path
+import Appointment from "./pages/appointment"; // Changed casing to match actual file
 import Bookings from "@/pages/Bookings";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
