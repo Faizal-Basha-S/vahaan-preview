@@ -41,7 +41,7 @@ const Header = () => {
     const { pathname } = location;
     
     if (pathname === '/') return 'home';
-    if (pathname.includes('/about') || pathname.includes('/services')) return 'services';
+    // if (pathname.includes('/about') || pathname.includes('/services')) return 'services';
     if (pathname.includes('/cars-buy-section')) return 'cars';
     if (pathname.includes('/bikes')) return 'bikes';
     
@@ -189,7 +189,7 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            
+            {/*
             <div 
               className="relative group"
               onMouseEnter={() => setHoveredItem('services')}
@@ -221,7 +221,7 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            
+            */}
             <Link to="/sell">
               <Button 
                 className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-full"
