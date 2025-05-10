@@ -35,7 +35,7 @@ const ServiceCard = ({ service }) => {
               <span className="text-sm">{service.vehicle}</span>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
               <div className="flex items-center text-sm">
                 <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
                 <span>{service.date}</span>
@@ -64,7 +64,7 @@ const ServiceCard = ({ service }) => {
           )}
         </div>
       </CardContent>
-      <CardFooter className="bg-secondary/20 px-4 py-3 flex justify-end gap-2">
+      <CardFooter className="bg-secondary/20 px-4 py-3 flex flex-wrap gap-2 justify-end">
         {service.status !== "Completed" && service.status !== "Cancelled" && (
           <>
             <Button variant="outline" size="sm" className="gap-1">
@@ -154,15 +154,15 @@ const ServicesPage = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-10">
+      <div className="py-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">Your Requested Services</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Your Requested Services</h1>
           <p className="text-muted-foreground mt-2">Review and manage the services you've requested for your vehicle.</p>
         </div>
         
         <Tabs defaultValue="all" className="w-full">
-          <div className="flex justify-between items-center mb-6">
-            <TabsList>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <TabsList className="overflow-x-auto">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="active">Active</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>

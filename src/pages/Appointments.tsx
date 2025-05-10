@@ -59,9 +59,9 @@ const Appointments = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-10">
+      <div className="py-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">Your Scheduled Appointments</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Your Scheduled Appointments</h1>
           <p className="text-muted-foreground mt-2">Keep track of all your sell and service appointments.</p>
         </div>
         
@@ -112,8 +112,8 @@ const Appointments = () => {
           
           <div className="lg:col-span-2">
             <Tabs defaultValue="all">
-              <div className="flex justify-between items-center mb-4">
-                <TabsList>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+                <TabsList className="overflow-x-auto">
                   <TabsTrigger value="all">All</TabsTrigger>
                   <TabsTrigger value="confirmed">Confirmed</TabsTrigger>
                   <TabsTrigger value="pending">Pending</TabsTrigger>
@@ -125,7 +125,7 @@ const Appointments = () => {
                   {mockAppointments.map(appointment => (
                     <Card key={appointment.id} className="overflow-hidden hover:shadow-md transition-shadow">
                       <CardContent className="p-4">
-                        <div className="flex flex-wrap md:flex-nowrap justify-between">
+                        <div className="flex flex-col md:flex-row justify-between">
                           <div className="w-full md:w-auto">
                             <div className="flex items-start mb-2">
                               <Badge className={appointment.status === "Confirmed" ? "bg-green-500" : "bg-amber-500"}>
@@ -169,7 +169,7 @@ const Appointments = () => {
                     .map(appointment => (
                       <Card key={appointment.id} className="overflow-hidden hover:shadow-md transition-shadow">
                         <CardContent className="p-4">
-                          <div className="flex flex-wrap md:flex-nowrap justify-between">
+                          <div className="flex flex-col md:flex-row justify-between">
                             <div className="w-full md:w-auto">
                               <div className="flex items-start mb-2">
                                 <Badge className="bg-green-500">
@@ -213,7 +213,7 @@ const Appointments = () => {
                     .map(appointment => (
                       <Card key={appointment.id} className="overflow-hidden hover:shadow-md transition-shadow">
                         <CardContent className="p-4">
-                          <div className="flex flex-wrap md:flex-nowrap justify-between">
+                          <div className="flex flex-col md:flex-row justify-between">
                             <div className="w-full md:w-auto">
                               <div className="flex items-start mb-2">
                                 <Badge className="bg-amber-500">

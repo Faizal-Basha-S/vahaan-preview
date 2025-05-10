@@ -67,12 +67,12 @@ const CityModal = ({ isOpen, onClose, isMandatory = false }: CityModalProps) => 
       }}
     >
       <DialogContent 
-        className="sm:max-w-[600px] max-h-[90vh] flex flex-col"
+        className="sm:max-w-[600px] max-h-[80vh] md:max-h-[90vh] w-[90vw] flex flex-col"
         // Remove the close button if the modal is mandatory
         closeButton={!isMandatory || !!selectedCity}
       >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+          <DialogTitle className="text-lg sm:text-2xl font-bold flex items-center gap-2">
             <MapPin className="h-5 w-5 text-primary" />
             Select Your City
           </DialogTitle>
@@ -93,20 +93,20 @@ const CityModal = ({ isOpen, onClose, isMandatory = false }: CityModalProps) => 
 
         {/* City grid with scrollable area */}
         <div className="overflow-y-auto flex-grow pr-1">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2">
             {filteredCities.map((city) => (
               <Button
                 key={city}
                 variant={selectedCity === city ? "default" : "outline"}
-                className={`justify-start h-auto py-2 px-3 text-left ${
+                className={`justify-start h-auto py-2 px-3 text-left text-sm sm:text-base ${
                   selectedCity === city 
                     ? 'bg-primary text-primary-foreground' 
                     : 'hover:bg-secondary'
                 }`}
                 onClick={() => handleCitySelect(city)}
               >
-                {selectedCity === city && <Check className="h-4 w-4 mr-2" />}
-                {city}
+                {selectedCity === city && <Check className="h-4 w-4 mr-2 flex-shrink-0" />}
+                <span className="truncate">{city}</span>
               </Button>
             ))}
           </div>

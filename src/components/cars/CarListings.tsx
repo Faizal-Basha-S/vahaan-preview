@@ -8,7 +8,7 @@ interface CarListingsProps {
   gridClass?: string;
 }
 
-const CarListings = ({ cars, gridClass = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" }: CarListingsProps) => {
+const CarListings = ({ cars, gridClass = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" }: CarListingsProps) => {
   return (
     <div className={`grid ${gridClass} gap-4 md:gap-6 transition-all duration-[1500ms] ease-in-out`}>
       {cars.map((car) => {

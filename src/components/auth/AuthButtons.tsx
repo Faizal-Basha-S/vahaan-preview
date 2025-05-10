@@ -158,7 +158,15 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
                 className="cursor-pointer"
                 onClick={() => handleMenuItemClick(option.path)}
               >
-                {option.title}
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center">
+                    <span className="mr-2">{option.icon}</span>
+                    <span>{option.title}</span>
+                  </div>
+                  {option.badge && (
+                    <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">{option.badge}</span>
+                  )}
+                </div>
               </DropdownMenuItem>
             ))}
             
@@ -182,13 +190,13 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
       >
         <Button 
           variant="default"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-2 rounded-full transition-colors duration-300"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
         >
           Sign In
         </Button>
         
         {showDropdown && (
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
+          <div className="absolute right-0 top-full z-50 mt-2 w-64 sm:w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
             
             <div className="space-y-3">
               {menuOptions.map((option) => (
@@ -210,7 +218,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
               <div className="border-t border-gray-200 dark:border-gray-700 pt-3"></div>
               
               <Button 
-                className="w-full bg-orange-500 hover:bg-orange-600 mb-4 py-6 text-lg"
+                className="w-full bg-orange-500 hover:bg-orange-600 mb-4 py-4 sm:py-6 text-base sm:text-lg"
                 onClick={handleShowAuthModal}
               >
                 SIGN IN/SIGN UP

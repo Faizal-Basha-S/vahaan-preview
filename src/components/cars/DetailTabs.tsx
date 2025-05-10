@@ -25,7 +25,7 @@ const DetailTabs = ({ activeTab, onTabChange }: DetailTabsProps) => {
                 key={tab.id}
                 value={tab.id}
                 className={cn(
-                  "py-3 px-4 font-medium text-sm",
+                  "py-2 sm:py-3 px-3 sm:px-4 font-medium text-xs sm:text-sm whitespace-nowrap",
                   activeTab === tab.id && "text-primary border-b-2 border-primary"
                 )}
               >

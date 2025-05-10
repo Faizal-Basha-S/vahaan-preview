@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -18,6 +19,11 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        'xs': '475px',
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
       boxShadow: {
         'custom-card': 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
         'light-card': '0px 10px 15px rgba(0, 0, 0, 0.2)',

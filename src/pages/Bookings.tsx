@@ -139,15 +139,15 @@ const Bookings = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-10">
+      <div className="py-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">My Vehicle Bookings</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">My Vehicle Bookings</h1>
           <p className="text-muted-foreground mt-2">Manage all your vehicle purchase bookings in one place.</p>
         </div>
         
         <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-          <div className="flex justify-between items-center mb-6">
-            <TabsList>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <TabsList className="overflow-x-auto">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="in progress">In Progress</TabsTrigger>
               <TabsTrigger value="confirmed">Confirmed</TabsTrigger>

@@ -9,7 +9,7 @@ interface FAQSectionProps {
 
 const FAQSection = ({ car }: FAQSectionProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6 mb-6">
       <h2 className="text-lg font-semibold mb-4">Frequently Asked Questions</h2>
       <Separator className="mb-6" />
       <div className="space-y-4">
