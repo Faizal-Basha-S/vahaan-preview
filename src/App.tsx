@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Index from "@/pages/Index";
@@ -12,7 +13,7 @@ import Partner from "@/pages/Partner";
 import Services from "@/pages/Services";
 import Favourites from "@/pages/Favourites";
 import Appointments from "@/pages/Appointments";
-import Appointment from "@/pages/Appointment";
+import Appointment from "./pages/Appointment"; // Fixed import path
 import Bookings from "@/pages/Bookings";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
@@ -21,14 +22,11 @@ import Contact from "@/pages/Contact";
 import AI from "@/pages/AI";
 import AdminUploads from "@/pages/AdminUploads";
 import NotFound from "@/pages/NotFound";
-import ScrollToTop from "@/components/ui/ScrollToTop";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { siteConfig } from "./config/site";
-import { Toaster } from "@/components/ui/toaster";
-import { Analytics } from '@vercel/analytics/react';
+import ScrollToTop from "@/components/layout/ScrollToTop"; // Fixed import path
+import { ThemeProvider } from "./components/ui/theme-provider"; // Fixed import path
 import { AuthProvider } from "./context/AuthContext";
 import { VehicleProvider } from "./context/VehicleContext";
-import SignInModal from "./components/auth/SignInModal";
+import SignInModal from "./components/auth/SignInModal"; // Fixed import path
 import AboutUs from "@/pages/AboutUs";
 
 function App() {
@@ -80,7 +78,7 @@ function App() {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/faqs" element={<FAQs />} />
-              <Route path="/about-us" element={<AboutUs />} /> {/* Add new route for AboutUs */}
+              <Route path="/about-us" element={<AboutUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/ai" element={<AI />} />
               <Route path="/admin-uploads" element={<AdminUploads />} />
@@ -88,8 +86,6 @@ function App() {
             </Routes>
           </VehicleProvider>
         </AuthProvider>
-        <Toaster />
-        <Analytics />
       </Router>
     </ThemeProvider>
   );
