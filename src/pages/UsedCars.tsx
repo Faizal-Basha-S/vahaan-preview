@@ -157,7 +157,7 @@ const UsedCars = () => {
                         <img 
                           src={getCityImageUrl(city)}
                           alt={`${city} Icon`} 
-                          className="h-50 sm:h-50 w-40 sm:w-40 rounded-full object-cover"
+                          className="h-60 sm:h-50 w-50 sm:w-40 rounded-full object-cover"
                         />
                       </div>
                       <h3 className="font-medium text-center">{city}</h3>
