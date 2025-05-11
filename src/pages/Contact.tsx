@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 const Contact = () => {
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
+      <div className="w-full px-4 py-8 lg:px-8 xl:px-12">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8 text-sm">
           <Link to="/" className="text-muted-foreground hover:text-primary flex items-center">

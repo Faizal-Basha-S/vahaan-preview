@@ -13,10 +13,10 @@ const Layout = ({ children }) => {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen w-full lg:min-h-screen lg:w-screen">
         <Header />
-        <main className="flex-1 pt-16">
-          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <main className="flex-1 pt-16 w-full">
+          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 max-w-full">
             {children}
           </div>
         </main>

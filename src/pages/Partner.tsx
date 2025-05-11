@@ -58,7 +58,7 @@ const Partner = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-10">
+      <div className="w-full px-4 py-10 lg:px-8 xl:px-12">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-blue-500 hover:bg-blue-600">Partner Program</Badge>
           <h1 className="text-4xl font-bold mb-4">Join as a VahaanXchange Partner</h1>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
@@ -64,8 +63,8 @@ const Index = () => {
       <Hero />
       
       {/* Why VahaanXchange is Different */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-secondary/30 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 w-full lg:max-w-none">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Why VahaanXchange is Different</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -73,7 +72,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto lg:max-w-none">
             {/* Feature 1 - Zero Brokerage */}
             <div className="glass-card p-6 rounded-xl hover-scale transition-all duration-300">
               <div className="flex items-start gap-4">
@@ -168,8 +167,8 @@ const Index = () => {
       </section>
       
       {/* Featured Cars */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 lg:max-w-none">
           <FeaturedCars />
           
           <div className="mt-10 text-center">
@@ -185,8 +184,8 @@ const Index = () => {
       </section>
       
       {/* Featured Bikes */}
-      <section className="py-16 bg-primary/5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-primary/5 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 lg:max-w-none">
           <FeaturedBikes />
           
           <div className="mt-10 text-center">
@@ -202,8 +201,8 @@ const Index = () => {
       </section>
       
       {/* Call to Action - Now a Slideshow */}
-      <section className="py-16 bg-primary/5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-primary/5 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 lg:max-w-none">
           <div className="glass-card rounded-2xl overflow-hidden">
             <Carousel
               setApi={setApi}
@@ -299,8 +298,8 @@ const Index = () => {
       </section>
       
       {/* Testimonials */}
-      <section className="py-16 dot-pattern">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 dot-pattern w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 lg:max-w-none">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold">What Our Users Say</h2>
             <p className="text-muted-foreground mt-2">Hear from our satisfied buyers and sellers</p>

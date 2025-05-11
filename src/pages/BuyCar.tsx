@@ -96,7 +96,7 @@ const BuyCar = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
       )}
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="w-full px-4 py-8 lg:px-8 xl:px-12">
         
         {/* Search Bar and Location Input */}
         <div className="mb-6 pl-0">
@@ -163,7 +163,7 @@ const BuyCar = () => {
           </Button>
         </div>
         
-        <div className="flex flex-col lg:flex-row gap-6 relative">
+        <div className="flex flex-col lg:flex-row gap-6 relative w-full">
           {/* Sidebar with slide animation */}
           <div 
             className={`absolute lg:relative lg:block w-full lg:w-1/4 xl:w-1/5 top-0 left-0 z-30 h-[calc(100vh-150px)] 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
@@ -7,7 +6,7 @@ import { ChevronRight, Home } from "lucide-react";
 const Privacy = () => {
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="w-full px-4 py-8 lg:px-8 xl:px-12">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8 text-sm">
           <Link to="/" className="text-muted-foreground hover:text-primary flex items-center">
@@ -21,7 +20,7 @@ const Privacy = () => {
         <div className="mb-12">
           <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
           <div className="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-8">
-            <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
+            <div className="prose prose-sm sm:prose max-w-none lg:max-w-none dark:prose-invert">
               <p className="text-lg mb-6">
                 At VahaanXchange (operated by Matchorax Technologies Private Limited), protecting your privacy is a priority.
                 This Privacy Policy describes how we collect, use, disclose, and protect your information.
