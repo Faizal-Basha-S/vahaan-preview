@@ -85,11 +85,6 @@ const BuyBikes = () => {
     };
   }, [pageBlocked]);
 
-  // Add function to handle admin add button click
-  const handleAddClick = () => {
-    navigate('/admin-uploads', { state: { from: '/bikes' } });
-  };
-
   return (
     <Layout>
       {/* Modal overlay to block interactions when city modal is open */}
@@ -134,25 +129,6 @@ const BuyBikes = () => {
                 </>
               )}
             </Button>
-            
-            {/* Admin buttons */}
-            {isAdmin && (
-              <>
-                <Button 
-                  variant="outline"
-                  className="flex items-center gap-2 shadow-sm hover:shadow-md"
-                  onClick={handleAddClick}
-                >
-                  <Plus className="h-4 w-4" /> Add
-                </Button>
-                <Button 
-                  variant="outline"
-                  className="flex items-center gap-2 shadow-sm hover:shadow-md"
-                >
-                  <Minus className="h-4 w-4" /> Remove
-                </Button>
-              </>
-            )}
           </div>
           
           <Button 
