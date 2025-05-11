@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Confirmation from "./Confirmation";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface PricingProps {
   onBack: () => void;
@@ -30,6 +32,7 @@ interface ConfirmationData {
   airbags: string | null;
   cylinders: string | null;
   wheelDrive: string | null;
+  warrantyStatus: string | null;
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -55,7 +58,20 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     airbags: null,
     cylinders: null,
     wheelDrive: null,
+    warrantyStatus: null,
   });
+  
+  // Document agreement states
+  const [agreementItems, setAgreementItems] = useState({
+    insurance: false,
+    batteryHealth: false,
+    loanNOC: false,
+    warranty: false,
+    pucCertificate: false,
+    roadTaxStatus: false,
+  });
+  
+  const hasActiveWarranty = localStorage.getItem('warrantyStatus') === 'At Present';
   
   useEffect(() => {
     // Load data from localStorage for confirmation view
@@ -80,6 +96,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         airbags: localStorage.getItem('airbags'),
         cylinders: localStorage.getItem('cylinders'),
         wheelDrive: localStorage.getItem('wheel_drive'),
+        warrantyStatus: localStorage.getItem('warrantyStatus'),
       };
       
       // Also get data from sellFormData
@@ -142,6 +159,36 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     toast.info("Payment integration will be available in a future update");
   };
   
+  const handleAgreementChange = (item: keyof typeof agreementItems) => {
+    setAgreementItems(prev => ({
+      ...prev,
+      [item]: !prev[item]
+    }));
+  };
+  
+  const canSubmitAgreement = () => {
+    // Check if all required fields are checked
+    const requiredFields = ['insurance', 'batteryHealth', 'loanNOC', 'pucCertificate', 'roadTaxStatus'];
+    
+    // If warranty status is "At Present", also require the warranty document
+    if (hasActiveWarranty) {
+      requiredFields.push('warranty');
+    }
+    
+    return requiredFields.every(field => agreementItems[field as keyof typeof agreementItems]);
+  };
+  
+  const handleSubmitListing = () => {
+    if (!canSubmitAgreement()) {
+      toast.error("Please agree to provide all required documents");
+      return;
+    }
+    
+    // TODO: Handle form submission logic
+    toast.success("Listing published successfully!");
+    // You would typically redirect to a success page or dashboard here
+  };
+  
   // Format the expected price for display
   const formattedPrice = expectedPrice 
     ? new Intl.NumberFormat("en-IN").format(parseInt(expectedPrice))
@@ -150,16 +197,94 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   // Check if vehicle is a bike
   const isBike = localStorage.getItem("vehicle") === "bike";
   
-  // Render confirmation component if payment is successful
+  // When in document confirmation view
   if (isConfirmationView) {
     return (
-      <Confirmation
-        confirmationData={confirmationData}
-        isBike={isBike}
-        formattedPrice={formattedPrice}
-        selectedFeatures={selectedFeatures}
-        setIsConfirmationView={setIsConfirmationView}
-      />
+      <div className="w-full max-w-2xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-6">To Post Ads Agree to give your Documents for</h2>
+        
+        <div className="space-y-4 my-6">
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="insurance" 
+              checked={agreementItems.insurance} 
+              onCheckedChange={() => handleAgreementChange('insurance')}
+            />
+            <label htmlFor="insurance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Insurance document
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="batteryHealth" 
+              checked={agreementItems.batteryHealth} 
+              onCheckedChange={() => handleAgreementChange('batteryHealth')}
+            />
+            <label htmlFor="batteryHealth" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Battery health proof
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="loanNOC" 
+              checked={agreementItems.loanNOC} 
+              onCheckedChange={() => handleAgreementChange('loanNOC')}
+            />
+            <label htmlFor="loanNOC" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Loan NOC document
+            </label>
+          </div>
+          
+          {hasActiveWarranty && (
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="warranty" 
+                checked={agreementItems.warranty} 
+                onCheckedChange={() => handleAgreementChange('warranty')}
+              />
+              <label htmlFor="warranty" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Warranty Document
+              </label>
+            </div>
+          )}
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="pucCertificate" 
+              checked={agreementItems.pucCertificate} 
+              onCheckedChange={() => handleAgreementChange('pucCertificate')}
+            />
+            <label htmlFor="pucCertificate" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              PUC certificate
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="roadTaxStatus" 
+              checked={agreementItems.roadTaxStatus} 
+              onCheckedChange={() => handleAgreementChange('roadTaxStatus')}
+            />
+            <label htmlFor="roadTaxStatus" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Road tax status
+            </label>
+          </div>
+        </div>
+        
+        <div className="flex justify-between">
+          <Button variant="outline" onClick={() => setIsConfirmationView(false)}>
+            Back
+          </Button>
+          <Button 
+            onClick={handleSubmitListing}
+            disabled={!canSubmitAgreement()}
+          >
+            Listing publish successfully
+          </Button>
+        </div>
+      </div>
     );
   }
   
