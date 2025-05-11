@@ -333,15 +333,17 @@ const Appointment: React.FC = () => {
                   <SelectValue placeholder="Select RTO" />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.rto_state === "Karnataka" && (
-                    <>
-                      <SelectItem value="KA-01">KA-01 (Bangalore Central)</SelectItem>
-                      <SelectItem value="KA-02">KA-02 (Bangalore West)</SelectItem>
-                      <SelectItem value="KA-03">KA-03 (Bangalore East)</SelectItem>
-                      <SelectItem value="KA-04">KA-04 (Bangalore North)</SelectItem>
-                      <SelectItem value="KA-05">KA-05 (Bangalore South)</SelectItem>
-                    </>
-                  )}
+  {data.rto_state === "Delhi" && (
+  <>
+    <SelectItem value="DL-05">DL-05</SelectItem>
+    <SelectItem value="DL-09">DL-09</SelectItem>
+    <SelectItem value="DL-15">DL-15</SelectItem>
+    <SelectItem value="DL-16">DL-16</SelectItem>
+    <SelectItem value="DL-17">DL-17</SelectItem>
+    <SelectItem value="DL-18">DL-18</SelectItem>
+    <SelectItem value="DL-51">DL-51</SelectItem>
+  </>
+)}
                   {data.rto_state === "Tamil Nadu" && (
                     <>
                       <SelectItem value="TN-01">TN-01 (Chennai Central)</SelectItem>
