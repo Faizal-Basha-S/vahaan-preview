@@ -45,12 +45,13 @@ const Appointment: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<AppointmentStep>(0);
   const [expectedPrice, setExpectedPrice] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
-  const [vehicleType, setVehicleType] = useState<"car" | "bike">("car");
   const [stepData, setStepData] = useState<Record<number, StepData>>({});
   const [isElectric, setIsElectric] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [locationDetails, setLocationDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const vehicleType = localStorage.getItem('vehicle');
+  const setVehicleType = localStorage.getItem('vehicle');
   
   // Get vehicle type from localStorage on component mount
   useEffect(() => {
