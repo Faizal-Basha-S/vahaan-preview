@@ -1,298 +1,249 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 
 interface CarDetailsProps {
   onBack: () => void;
   onNext: () => void;
-  vehicleType: "car" | "bike";
+  vehicleType: string | null;
+}
+
+interface FormData {
+  brand: string | null;
+  year: string | null;
+  model: string | null;
+  variant: string | null;
+  kilometersDriven: string | null;
+  city: string | null;
+  vehicleType: string | null;
+  fuelType: string | null;
+  transmission: string | null;
 }
 
 const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) => {
-  // State for form fields
-  const [formData, setFormData] = useState({
-    vehicleType: "",
-    fuelType: "",
-    transmission: "",
-    mileage: "",
-    seats: "",
-    safetyRating: "",
-    cc: "",
-    airbags: "",
-    cylinders: "",
-    wheelDrive: "",
-    color: "",
+  const [formData, setFormData] = useState<FormData>({
+    brand: localStorage.getItem('brand') || "",
+    year: localStorage.getItem('year') || "",
+    model: localStorage.getItem('model') || "",
+    variant: localStorage.getItem('variant') || "",
+    kilometersDriven: localStorage.getItem('kilometers') || "",
+    city: localStorage.getItem('selectedCity') || "",
+    vehicleType: localStorage.getItem('vehicle_type') || vehicleType || "",
+    fuelType: localStorage.getItem('fuel_type') || "",
+    transmission: localStorage.getItem('transmission') || "",
   });
-
-  // Handle input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  
+  const years = Array.from({ length: new Date().getFullYear() - 1990 + 1 }, (_, i) => new Date().getFullYear() - i);
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
-  // Handle select change
-  const handleSelectChange = (value: string, name: string) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  
+  const handleSubmit = () => {
+    // Store form data in localStorage
+    localStorage.setItem("brand", formData.brand || "");
+    localStorage.setItem("year", formData.year || "");
+    localStorage.setItem("model", formData.model || "");
+    localStorage.setItem("variant", formData.variant || "");
+    localStorage.setItem("kilometers", formData.kilometersDriven || "");
+    localStorage.setItem("vehicle_type", formData.vehicleType || "");
+    localStorage.setItem("fuel_type", formData.fuelType || "");
+    localStorage.setItem("transmission", formData.transmission || "");
+    
+    // Also store in sellFormData
+    const sellFormData = {
+      brand: formData.brand,
+      year: formData.year,
+      model: formData.model,
+      variant: formData.variant,
+      kilometersDriven: formData.kilometersDriven,
+      city: formData.city,
+    };
+    localStorage.setItem("sellFormData", JSON.stringify(sellFormData));
     
     // Basic validation
     if (!formData.vehicleType || !formData.fuelType) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+      toast("Missing Information - Please fill in all required fields.");
       return;
     }
     
-    // Store form data in localStorage
-    localStorage.setItem("vehicle_type", formData.vehicleType); // Explicitly store the vehicle type
-    localStorage.setItem("fuel_type", formData.fuelType);
-    localStorage.setItem("color", formData.color);
-    localStorage.setItem("mileage", formData.mileage);
-    localStorage.setItem("seats", formData.seats);
-    localStorage.setItem("safety_rating", formData.safetyRating);
-    localStorage.setItem("cc", formData.cc);
-    
-    // Only store car-specific fields if the vehicle is a car
-    if (vehicleType === "car") {
-      localStorage.setItem("transmission", formData.transmission);
-      localStorage.setItem("airbags", formData.airbags);
-      localStorage.setItem("cylinders", formData.cylinders);
-      localStorage.setItem("wheel_drive", formData.wheelDrive);
-    } else {
-      // Clear car-specific fields if it's a bike to avoid confusion
-      localStorage.removeItem("transmission");
-      localStorage.removeItem("airbags");
-      localStorage.removeItem("cylinders");
-      localStorage.removeItem("wheel_drive");
-    }
-    
-    // Proceed to next step
     onNext();
   };
-
-  // Define dropdown options based on vehicle type
-  const vehicleTypeOptions = vehicleType === "car" 
-    ? ["SUV", "Sedan", "Hatchback", "Van"]
-    : ["Commuter", "Cruiser", "Sports", "Adventure", "Electric", "Scooty"];
-
-  const fuelTypeOptions = vehicleType === "car"
-    ? ["Petrol", "Diesel", "Electric", "CNG", "LPG"]
-    : ["Petrol", "Electric", "CNG"];
-
-  const transmissionOptions = ["Manual", "Automatic", "CVT", "AMT", "DCT"];
-
+  
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="p-0 mr-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h3 className="text-xl font-medium">Enter {vehicleType === "car" ? "Car" : "Bike"} Details</h3>
+    <div className="w-full max-w-2xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-6">Tell us more about your vehicle</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Brand */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Brand <span className="text-red-500">*</span>
+          </label>
+          <Input
+            type="text"
+            name="brand"
+            value={formData.brand || ""}
+            onChange={handleChange}
+            placeholder="Enter brand"
+            required
+          />
+        </div>
+        
+        {/* Year */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Year <span className="text-red-500">*</span>
+          </label>
+          <Select onValueChange={(value) => handleSelectChange("year", value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select year" defaultValue={formData.year || ""}/>
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((year) => (
+                <SelectItem key={year} value={String(year)}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        {/* Model */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Model <span className="text-red-500">*</span>
+          </label>
+          <Input
+            type="text"
+            name="model"
+            value={formData.model || ""}
+            onChange={handleChange}
+            placeholder="Enter model"
+            required
+          />
+        </div>
+        
+        {/* Variant */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Variant <span className="text-red-500">*</span>
+          </label>
+          <Input
+            type="text"
+            name="variant"
+            value={formData.variant || ""}
+            onChange={handleChange}
+            placeholder="Enter variant"
+            required
+          />
+        </div>
+        
+        {/* Kilometers Driven */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Kilometers Driven <span className="text-red-500">*</span>
+          </label>
+          <Input
+            type="number"
+            name="kilometersDriven"
+            value={formData.kilometersDriven || ""}
+            onChange={handleChange}
+            placeholder="Enter kilometers driven"
+            required
+          />
+        </div>
+        
+        {/* City */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            City <span className="text-red-500">*</span>
+          </label>
+          <Input
+            type="text"
+            name="city"
+            value={formData.city || ""}
+            onChange={handleChange}
+            placeholder="Enter city"
+            required
+          />
+        </div>
+        
+        {/* Vehicle Type */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Vehicle Type <span className="text-red-500">*</span>
+          </label>
+          <Select onValueChange={(value) => handleSelectChange("vehicleType", value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select vehicle type" defaultValue={formData.vehicleType || ""}/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="car">Car</SelectItem>
+              <SelectItem value="bike">Bike</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        {/* Fuel Type */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Fuel Type <span className="text-red-500">*</span>
+          </label>
+          <Select onValueChange={(value) => handleSelectChange("fuelType", value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select fuel type" defaultValue={formData.fuelType || ""}/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="petrol">Petrol</SelectItem>
+              <SelectItem value="diesel">Diesel</SelectItem>
+              <SelectItem value="cng">CNG</SelectItem>
+              <SelectItem value="electric">Electric</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        {/* Transmission */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Transmission <span className="text-red-500">*</span>
+          </label>
+          <Select onValueChange={(value) => handleSelectChange("transmission", value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select transmission" defaultValue={formData.transmission || ""}/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="manual">Manual</SelectItem>
+              <SelectItem value="automatic">Automatic</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Vehicle Type */}
-          <div className="space-y-2">
-            <Label htmlFor="vehicleType">Vehicle Type</Label>
-            <Select
-              value={formData.vehicleType}
-              onValueChange={(value) => handleSelectChange(value, "vehicleType")}
-            >
-              <SelectTrigger id="vehicleType">
-                <SelectValue placeholder="Select vehicle type" />
-              </SelectTrigger>
-              <SelectContent>
-                {vehicleTypeOptions.map((option) => (
-                  <SelectItem key={option} value={option.toLowerCase()}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Fuel Type */}
-          <div className="space-y-2">
-            <Label htmlFor="fuelType">Fuel Type</Label>
-            <Select
-              value={formData.fuelType}
-              onValueChange={(value) => handleSelectChange(value, "fuelType")}
-            >
-              <SelectTrigger id="fuelType">
-                <SelectValue placeholder="Select fuel type" />
-              </SelectTrigger>
-              <SelectContent>
-                {fuelTypeOptions.map((option) => (
-                  <SelectItem key={option} value={option.toLowerCase()}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Transmission - Only for Car */}
-          {vehicleType === "car" && (
-            <div className="space-y-2">
-              <Label htmlFor="transmission">Transmission</Label>
-              <Select
-                value={formData.transmission}
-                onValueChange={(value) => handleSelectChange(value, "transmission")}
-              >
-                <SelectTrigger id="transmission">
-                  <SelectValue placeholder="Select transmission" />
-                </SelectTrigger>
-                <SelectContent>
-                  {transmissionOptions.map((option) => (
-                    <SelectItem key={option} value={option.toLowerCase()}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-
-          {/* Color - For both Car and Bike */}
-          <div className="space-y-2">
-            <Label htmlFor="color">Color</Label>
-            <Input
-              id="color"
-              name="color"
-              placeholder="e.g., Red"
-              value={formData.color}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Mileage */}
-          <div className="space-y-2">
-            <Label htmlFor="mileage">Mileage</Label>
-            <Input
-              id="mileage"
-              name="mileage"
-              placeholder="e.g., 18 kmpl"
-              value={formData.mileage}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Seats */}
-          <div className="space-y-2">
-            <Label htmlFor="seats">Seats</Label>
-            <Input
-              id="seats"
-              name="seats"
-              placeholder="e.g., 5"
-              value={formData.seats}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* GNCAP Safety Rating */}
-          <div className="space-y-2">
-            <Label htmlFor="safetyRating">GNCAP Safety Rating</Label>
-            <Input
-              id="safetyRating"
-              name="safetyRating"
-              placeholder="e.g., 5"
-              value={formData.safetyRating}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* CC */}
-          <div className="space-y-2">
-            <Label htmlFor="cc">CC</Label>
-            <Input
-              id="cc"
-              name="cc"
-              placeholder="e.g., 1197"
-              value={formData.cc}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Airbags - Only for Car */}
-          {vehicleType === "car" && (
-            <div className="space-y-2">
-              <Label htmlFor="airbags">Airbags</Label>
-              <Input
-                id="airbags"
-                name="airbags"
-                placeholder="e.g., 2"
-                value={formData.airbags}
-                onChange={handleInputChange}
-              />
-            </div>
-          )}
-
-          {/* Cylinders - Only for Car */}
-          {vehicleType === "car" && (
-            <div className="space-y-2">
-              <Label htmlFor="cylinders">Cylinders</Label>
-              <Input
-                id="cylinders"
-                name="cylinders"
-                placeholder="e.g., 4"
-                value={formData.cylinders}
-                onChange={handleInputChange}
-              />
-            </div>
-          )}
-
-          {/* Wheel Drive - Only for Car */}
-          {vehicleType === "car" && (
-            <div className="space-y-2">
-              <Label htmlFor="wheelDrive">Wheel Drive</Label>
-              <Input
-                id="wheelDrive"
-                name="wheelDrive"
-                placeholder="e.g., FWD"
-                value={formData.wheelDrive}
-                onChange={handleInputChange}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="flex justify-end pt-4">
-          <Button type="submit" className="bg-primary text-white">
-            Continue
-          </Button>
-        </div>
-      </form>
+      
+      {/* Navigation buttons */}
+      <div className="flex justify-between mt-8">
+        <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+        <Button onClick={handleSubmit} className="flex items-center gap-2">
+          Continue to Next Step
+        </Button>
+      </div>
     </div>
   );
 };

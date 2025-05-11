@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import Confirmation from "./Confirmation";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 interface PricingProps {
   onBack: () => void;
@@ -30,6 +32,7 @@ interface ConfirmationData {
   airbags: string | null;
   cylinders: string | null;
   wheelDrive: string | null;
+  warrantyStatus: string | null; // Added to store warranty status
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -55,6 +58,17 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     airbags: null,
     cylinders: null,
     wheelDrive: null,
+    warrantyStatus: null, // Added to store warranty status
+  });
+  
+  // State for document checkboxes
+  const [documents, setDocuments] = useState({
+    insurance: false,
+    batteryHealth: false,
+    loanNOC: false,
+    warranty: false,
+    pucCertificate: false,
+    roadTaxStatus: false
   });
   
   useEffect(() => {
@@ -80,6 +94,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         airbags: localStorage.getItem('airbags'),
         cylinders: localStorage.getItem('cylinders'),
         wheelDrive: localStorage.getItem('wheel_drive'),
+        warrantyStatus: localStorage.getItem('warranty_status'), // Get warranty status from localStorage
       };
       
       // Also get data from sellFormData
@@ -116,6 +131,13 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     }
   };
   
+  const handleDocumentChange = (documentName: keyof typeof documents) => {
+    setDocuments(prev => ({
+      ...prev,
+      [documentName]: !prev[documentName]
+    }));
+  };
+  
   const handleProceedToPay = () => {
     // If the promo is applied, show the confirmation view
     if (promoApplied) {
@@ -142,6 +164,33 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     toast.info("Payment integration will be available in a future update");
   };
   
+  const handlePublishListing = () => {
+    // Check if all documents are selected
+    const requiredDocs = Object.entries(documents)
+      .filter(([key, value]) => {
+        // Skip warranty document check if warranty status is not "At Present"
+        if (key === "warranty" && confirmationData.warrantyStatus !== "At Present") {
+          return false;
+        }
+        return !value;
+      })
+      .map(([key]) => key);
+    
+    if (requiredDocs.length > 0) {
+      toast.error("Please agree to provide all required documents");
+      return;
+    }
+    
+    // Save document agreement to localStorage
+    localStorage.setItem("document_agreement", JSON.stringify(documents));
+    
+    // Show success message
+    toast.success("Your listing has been published successfully!");
+    
+    // Reset confirmation view
+    setIsConfirmationView(false);
+  };
+  
   // Format the expected price for display
   const formattedPrice = expectedPrice 
     ? new Intl.NumberFormat("en-IN").format(parseInt(expectedPrice))
@@ -150,17 +199,92 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   // Check if vehicle is a bike
   const isBike = localStorage.getItem("vehicle") === "bike";
   
+  // Custom document confirmation view
+  const renderDocumentConfirmation = () => {
+    return (
+      <div className="w-full max-w-2xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-2">To Post Ads Agree to give your Documents for</h2>
+        <p className="text-gray-500 mb-6">Please confirm that you will provide the following documents</p>
+        
+        <div className="space-y-4 mb-8">
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="document-insurance"
+              checked={documents.insurance}
+              onCheckedChange={() => handleDocumentChange('insurance')}
+            />
+            <Label htmlFor="document-insurance">Insurance document</Label>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="document-battery"
+              checked={documents.batteryHealth}
+              onCheckedChange={() => handleDocumentChange('batteryHealth')}
+            />
+            <Label htmlFor="document-battery">Battery health proof</Label>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="document-loan"
+              checked={documents.loanNOC}
+              onCheckedChange={() => handleDocumentChange('loanNOC')}
+            />
+            <Label htmlFor="document-loan">Loan NOC document</Label>
+          </div>
+          
+          {confirmationData.warrantyStatus === "At Present" && (
+            <div className="flex items-center space-x-3">
+              <Checkbox
+                id="document-warranty"
+                checked={documents.warranty}
+                onCheckedChange={() => handleDocumentChange('warranty')}
+              />
+              <Label htmlFor="document-warranty">Warranty Document</Label>
+            </div>
+          )}
+          
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="document-puc"
+              checked={documents.pucCertificate}
+              onCheckedChange={() => handleDocumentChange('pucCertificate')}
+            />
+            <Label htmlFor="document-puc">PUC Certificate</Label>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="document-roadtax"
+              checked={documents.roadTaxStatus}
+              onCheckedChange={() => handleDocumentChange('roadTaxStatus')}
+            />
+            <Label htmlFor="document-roadtax">Road tax status</Label>
+          </div>
+        </div>
+        
+        <Button 
+          onClick={handlePublishListing}
+          className="w-full py-2 bg-green-600 hover:bg-green-700"
+        >
+          Listing publish successfully
+        </Button>
+        
+        <Button
+          variant="outline"
+          onClick={() => setIsConfirmationView(false)}
+          className="w-full mt-4"
+        >
+          Go back
+        </Button>
+      </div>
+    );
+  };
+  
   // Render confirmation component if payment is successful
   if (isConfirmationView) {
-    return (
-      <Confirmation
-        confirmationData={confirmationData}
-        isBike={isBike}
-        formattedPrice={formattedPrice}
-        selectedFeatures={selectedFeatures}
-        setIsConfirmationView={setIsConfirmationView}
-      />
-    );
+    return renderDocumentConfirmation();
   }
   
   // Default pricing view

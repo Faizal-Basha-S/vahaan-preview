@@ -3,14 +3,19 @@ import React from "react";
 
 interface ProgressBarProps {
   currentStep: number;
-  steps: string[];
+  steps?: string[];
+  totalSteps?: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], totalSteps }) => {
+  // If totalSteps is provided but no steps array, create a generic array
+  const displaySteps = steps.length > 0 ? steps : 
+    Array(totalSteps).fill(0).map((_, index) => `Step ${index + 1}`);
+  
   return (
     <div className="w-full mb-8">
       <div className="flex items-center justify-between">
-        {steps.map((step, index) => (
+        {displaySteps.map((step, index) => (
           <React.Fragment key={index}>
             {/* Step circle */}
             <div className="flex flex-col items-center">
@@ -35,7 +40,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps }) => {
             </div>
             
             {/* Connector line (not for the last item) */}
-            {index < steps.length - 1 && (
+            {index < displaySteps.length - 1 && (
               <div 
                 className={`flex-1 h-1 mx-2 ${
                   index < currentStep ? "bg-primary" : "bg-gray-200 dark:bg-gray-700"

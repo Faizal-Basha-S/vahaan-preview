@@ -10,11 +10,29 @@ import { Label } from "@/components/ui/label";
 interface PriceInputProps {
   onBack: () => void;
   onNext: (price: string, features: string[]) => void;
+  expectedPrice?: string;
+  setExpectedPrice?: React.Dispatch<React.SetStateAction<string>>;
+  selectedFeatures?: string[];
+  setSelectedFeatures?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const PriceInput: React.FC<PriceInputProps> = ({ onBack, onNext }) => {
-  const [price, setPrice] = useState<string>("");
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+const PriceInput: React.FC<PriceInputProps> = ({ 
+  onBack, 
+  onNext,
+  expectedPrice: externalPrice,
+  setExpectedPrice: setExternalPrice,
+  selectedFeatures: externalFeatures,
+  setSelectedFeatures: setExternalFeatures
+}) => {
+  // Use internal state if external state is not provided
+  const [internalPrice, setInternalPrice] = useState<string>("");
+  const [internalFeatures, setInternalFeatures] = useState<string[]>([]);
+  
+  // Use either external or internal state
+  const price = externalPrice !== undefined ? externalPrice : internalPrice;
+  const setPrice = setExternalPrice || setInternalPrice;
+  const selectedFeatures = externalFeatures !== undefined ? externalFeatures : internalFeatures;
+  const setSelectedFeatures = setExternalFeatures || setInternalFeatures;
   
   const features = [
     "Air Conditioning", "Power Steering", "Power Windows",
