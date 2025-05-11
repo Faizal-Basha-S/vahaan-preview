@@ -1192,24 +1192,6 @@ const Appointment: React.FC = () => {
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Warranty Details
-            </label>
-            <Select 
-              value={data.warranty_details || ""}
-              onValueChange={(value) => handleInputChange("warranty_details", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Option" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Yes">Yes</SelectItem>
-                <SelectItem value="No">No</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
           {isElectric && (
             <div>
               <label className="block text-sm font-medium mb-1">
