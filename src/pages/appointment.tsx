@@ -1138,78 +1138,7 @@ const Appointment: React.FC = () => {
       <div className="space-y-6">
         <PhotoUpload onBack={handleBack} onNext={handleNext} />
         
-        {/* Additional buttons for odometer photo and walkaround video */}
-        <div className="mt-6 border-t pt-6">
-          <h3 className="text-lg font-medium mb-4">Additional Media</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Odometer Photo
-              </label>
-              <div className="flex items-center justify-center w-full">
-                <label htmlFor="odometer-photo" className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Upload className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400" />
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">Click to upload</span> odometer photo
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 5MB)</p>
-                  </div>
-                  <input 
-                    id="odometer-photo" 
-                    type="file" 
-                    accept="image/*" 
-                    className="hidden" 
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        // Store in localStorage using the same pattern as the main component
-                        const uploadedFileUrls = JSON.parse(localStorage.getItem("uploadedFileUrls") || "{}");
-                        uploadedFileUrls.odometer = [URL.createObjectURL(e.target.files[0])];
-                        localStorage.setItem("uploadedFileUrls", JSON.stringify(uploadedFileUrls));
-                        
-                        toast.success("Odometer photo uploaded successfully!");
-                      }
-                    }} 
-                  />
-                </label>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Walkaround Video
-              </label>
-              <div className="flex items-center justify-center w-full">
-                <label htmlFor="walkaround-video" className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Upload className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400" />
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">Click to upload</span> walkaround video
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">MP4, MOV or AVI (MAX. 100MB)</p>
-                  </div>
-                  <input 
-                    id="walkaround-video" 
-                    type="file" 
-                    accept="video/*" 
-                    className="hidden" 
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        // Store in localStorage using the same pattern as the main component
-                        const uploadedFileUrls = JSON.parse(localStorage.getItem("uploadedFileUrls") || "{}");
-                        uploadedFileUrls.walkaround_video = [URL.createObjectURL(e.target.files[0])];
-                        localStorage.setItem("uploadedFileUrls", JSON.stringify(uploadedFileUrls));
-                        
-                        toast.success("Walkaround video uploaded successfully!");
-                      }
-                    }} 
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     );
   };
