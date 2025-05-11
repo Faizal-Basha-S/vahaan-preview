@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
@@ -284,7 +285,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
                 checked={documents.warranty}
                 onCheckedChange={() => handleDocumentChange('warranty')}
               />
-              <Label htmlFor="document-warranty">Warranty Document</Label>
+              <Label htmlFor="document-warranty">Warrenty Document</Label>
             </div>
           )}
           
@@ -294,7 +295,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
               checked={documents.pucCertificate}
               onCheckedChange={() => handleDocumentChange('pucCertificate')}
             />
-            <Label htmlFor="document-puc">PUC Certificate</Label>
+            <Label htmlFor="document-puc">puc_certificate</Label>
           </div>
           
           <div className="flex items-center space-x-3">
@@ -303,7 +304,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
               checked={documents.roadTaxStatus}
               onCheckedChange={() => handleDocumentChange('roadTaxStatus')}
             />
-            <Label htmlFor="document-roadtax">Road tax status</Label>
+            <Label htmlFor="document-roadtax">road_tax_status</Label>
           </div>
         </div>
         

@@ -75,6 +75,7 @@ export type Database = {
           photos: Json | null
           seats: number | null
           sell_price: number | null
+          status: string | null
           variant: string | null
           vehicle_type: string | null
           year: number | null
@@ -94,6 +95,7 @@ export type Database = {
           photos?: Json | null
           seats?: number | null
           sell_price?: number | null
+          status?: string | null
           variant?: string | null
           vehicle_type?: string | null
           year?: number | null
@@ -113,6 +115,7 @@ export type Database = {
           photos?: Json | null
           seats?: number | null
           sell_price?: number | null
+          status?: string | null
           variant?: string | null
           vehicle_type?: string | null
           year?: number | null
@@ -187,6 +190,7 @@ export type Database = {
           photos: Json | null
           seats: number | null
           sell_price: number | null
+          status: string | null
           transmission: string | null
           variant: string | null
           vehicle_type: string | null
@@ -210,6 +214,7 @@ export type Database = {
           photos?: Json | null
           seats?: number | null
           sell_price?: number | null
+          status?: string | null
           transmission?: string | null
           variant?: string | null
           vehicle_type?: string | null
@@ -233,6 +238,7 @@ export type Database = {
           photos?: Json | null
           seats?: number | null
           sell_price?: number | null
+          status?: string | null
           transmission?: string | null
           variant?: string | null
           vehicle_type?: string | null
