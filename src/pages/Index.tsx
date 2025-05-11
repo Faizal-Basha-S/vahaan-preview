@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
 import FeaturedBikes from "../components/bikes/FeaturedBikes";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Layout from "../components/layout/Layout";
 import { 
   ArrowRight, 
   Car, 
@@ -60,9 +59,7 @@ const Index = () => {
   }, [api]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      
+    <Layout>
       {/* Hero Section */}
       <Hero />
       
@@ -394,10 +391,8 @@ const Index = () => {
         </div>
       </section>
       
-      <Footer />
-      
       <AIFloatingButton />
-    </div>
+    </Layout>
   );
 };
 
