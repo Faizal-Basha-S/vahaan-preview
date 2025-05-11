@@ -288,12 +288,40 @@ const Appointment: React.FC = () => {
                   <SelectValue placeholder="Select State" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Karnataka">Karnataka</SelectItem>
-                  <SelectItem value="Tamil Nadu">Tamil Nadu</SelectItem>
-                  <SelectItem value="Maharashtra">Maharashtra</SelectItem>
-                  <SelectItem value="Delhi">Delhi</SelectItem>
-                  <SelectItem value="Gujarat">Gujarat</SelectItem>
-                </SelectContent>
+                  <  <SelectItem value="Delhi">DL-Delhi</SelectItem>
+  <SelectItem value="Maharashtra">MH-Maharashtra</SelectItem>
+  <SelectItem value="Uttar Pradesh">UP-Uttar Pradesh</SelectItem>
+  <SelectItem value="Haryana">HR-Haryana</SelectItem>
+  <SelectItem value="Karnataka">KA-Karnataka</SelectItem>
+  <SelectItem value="Gujarat">GJ-Gujarat</SelectItem>
+  <SelectItem value="Tamil Nadu">TN-Tamil Nadu</SelectItem>
+  <SelectItem value="Rajasthan">RJ-Rajasthan</SelectItem>
+  <SelectItem value="Kerala">KL-Kerala</SelectItem>
+  <SelectItem value="Madhya Pradesh">MP-Madhya Pradesh</SelectItem>
+  <SelectItem value="Andhra Pradesh">AP-Andhra Pradesh</SelectItem>
+  <SelectItem value="Telangana">TS-Telangana</SelectItem>
+  <SelectItem value="Bihar">BR-Bihar</SelectItem>
+  <SelectItem value="Punjab">PB-Punjab</SelectItem>
+  <SelectItem value="West Bengal">WB-West Bengal</SelectItem>
+  <SelectItem value="Jharkhand">JH-Jharkhand</SelectItem>
+  <SelectItem value="Uttarakhand">UK-Uttarakhand</SelectItem>
+  <SelectItem value="Chandigarh">CH-Chandigarh</SelectItem>
+  <SelectItem value="Assam">AS-Assam</SelectItem>
+  <SelectItem value="Jammu & Kashmir">JK-Jammu & Kashmir</SelectItem>
+  <SelectItem value="Chhattisgarh">CG-Chhattisgarh</SelectItem>
+  <SelectItem value="Himachal Pradesh">HP-Himachal Pradesh</SelectItem>
+  <SelectItem value="Mizoram">MZ-Mizoram</SelectItem>
+  <SelectItem value="Goa">GA-Goa</SelectItem>
+  <SelectItem value="Nagaland">NL-Nagaland</SelectItem>
+  <SelectItem value="Odisha">OD-Odisha</SelectItem>
+  <SelectItem value="Sikkim">SK-Sikkim</SelectItem>
+  <SelectItem value="Puducherry">PY-Puducherry</SelectItem>
+  <SelectItem value="Meghalaya">ML-Meghalaya</SelectItem>
+  <SelectItem value="Dadra and Nagar Haveli">DN-Dadra and Nagar Haveli</SelectItem>
+  <SelectItem value="Daman and Diu">DD-Daman and Diu</SelectItem>
+  <SelectItem value="Arunachal Pradesh">AR-Arunachal Pradesh</SelectItem>
+  <SelectItem value="Tripura">TR-Tripura</SelectItem>
+  <SelectItem value="Manipur">MN-Manipur</SelectItem>                </SelectContent>
               </Select>
               
               <Select 
