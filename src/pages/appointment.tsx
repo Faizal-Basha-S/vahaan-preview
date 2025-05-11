@@ -287,7 +287,7 @@ const Appointment: React.FC = () => {
             <Input 
               value={data.registration_number || ""}
               onChange={(e) => handleInputChange("registration_number", e.target.value)}
-              placeholder="Enter registration number"
+              placeholder="eg, AY 4564"
             />
           </div>
           
@@ -948,7 +948,7 @@ const Appointment: React.FC = () => {
           
           <div>
             <label className="block text-sm font-medium mb-1">
-              Tire Condition
+              Tyre Condition
             </label>
             <Select 
               value={data.tire_condition || ""}
