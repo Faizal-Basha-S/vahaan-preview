@@ -904,7 +904,18 @@ const Appointment: React.FC = () => {
               </SelectContent>
             </Select>
           </div>
-
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Color <span className="text-red-500">*</span>
+            </label>
+            <Input 
+              value={data.color || ""}
+              onChange={(e) => handleInputChange("color", e.target.value)}
+              placeholder="Enter vehicle color"
+            />
+          </div>
+          
           <div>
             <label className="block text-sm font-medium mb-1">
               Service History Documents
@@ -934,17 +945,6 @@ const Appointment: React.FC = () => {
             {data.service_history_docs && (
               <p className="text-sm text-green-600 mt-1">File selected: {data.service_history_docs}</p>
             )}
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Color <span className="text-red-500">*</span>
-            </label>
-            <Input 
-              value={data.color || ""}
-              onChange={(e) => handleInputChange("color", e.target.value)}
-              placeholder="Enter vehicle color"
-            />
           </div>
           
           {isElectric && (
