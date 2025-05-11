@@ -58,8 +58,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
     
     // Basic validation
     if (!formData.vehicleType || !formData.fuelType) {
-      toast({
-        title: "Missing Information",
+      toast("Missing Information", {
         description: "Please fill in all required fields.",
         variant: "destructive",
       });
