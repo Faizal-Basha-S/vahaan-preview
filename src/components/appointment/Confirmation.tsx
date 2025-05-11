@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,6 +55,24 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     Right: []
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [documentChecklist, setDocumentChecklist] = useState<Record<string, boolean>>({
+    insurance_document: false,
+    puc_certificate: false,
+    road_tax_status: false,
+    battery_health_proof: false,
+    loan_noc_document: false,
+    warranty_document: false
+  });
+  const [showDocumentChecklist, setShowDocumentChecklist] = useState<Record<string, boolean>>({
+    insurance_document: true,
+    puc_certificate: true,
+    road_tax_status: true,
+    battery_health_proof: false,
+    loan_noc_document: false,
+    warranty_document: false
+  });
+  const [step2Data, setStep2Data] = useState<Record<string, any>>({});
+  const [step3Data, setStep3Data] = useState<Record<string, any>>({});
 
   useEffect(() => {
     // Load uploaded image URLs from localStorage
@@ -66,9 +85,61 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         console.error("Error parsing uploaded image URLs:", error);
       }
     }
+
+    // Load step2 and step3 data from localStorage for document checklist conditions
+    const step2DataStr = localStorage.getItem("appointment_step2_data");
+    const step3DataStr = localStorage.getItem("appointment_step3_data");
+
+    try {
+      if (step2DataStr) {
+        const parsedStep2Data = JSON.parse(step2DataStr);
+        setStep2Data(parsedStep2Data);
+        
+        // Show battery_health_proof checkbox conditionally
+        if (parsedStep2Data.battery_health && parsedStep2Data.battery_health.trim() !== '') {
+          setShowDocumentChecklist(prev => ({...prev, battery_health_proof: true}));
+        }
+      }
+
+      if (step3DataStr) {
+        const parsedStep3Data = JSON.parse(step3DataStr);
+        setStep3Data(parsedStep3Data);
+        
+        // Show loan_noc_document checkbox conditionally
+        if (parsedStep3Data.loan_status === "Yes-got NOC") {
+          setShowDocumentChecklist(prev => ({...prev, loan_noc_document: true}));
+        }
+
+        // Show warranty_document checkbox conditionally
+        if (parsedStep3Data.warranty_status === "At Present") {
+          setShowDocumentChecklist(prev => ({...prev, warranty_document: true}));
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing step data:", error);
+    }
   }, []);
 
+  // Check if all required documents are checked
+  const areAllDocumentsChecked = () => {
+    for (const [key, isVisible] of Object.entries(showDocumentChecklist)) {
+      if (isVisible && !documentChecklist[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleDocumentCheckboxChange = (document: string, checked: boolean) => {
+    setDocumentChecklist(prev => ({...prev, [document]: checked}));
+  };
+
   const handlePublishListing = async () => {
+    if (!areAllDocumentsChecked()) {
+      toast.error("Please agree to provide all required documents");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -354,6 +425,92 @@ const Confirmation: React.FC<ConfirmationProps> = ({
             </div>
           )}
         </div>
+
+        {/* Document Checklist Section */}
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+          <h3 className="text-lg font-medium mb-4">To Post Ads Agree to give your Documents for</h3>
+          <div className="space-y-3">
+            {/* Always visible documents */}
+            {showDocumentChecklist.insurance_document && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="insurance_document"
+                  checked={documentChecklist.insurance_document}
+                  onChange={(e) => handleDocumentCheckboxChange("insurance_document", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="insurance_document" className="text-sm">Insurance Document</label>
+              </div>
+            )}
+            
+            {showDocumentChecklist.puc_certificate && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="puc_certificate"
+                  checked={documentChecklist.puc_certificate}
+                  onChange={(e) => handleDocumentCheckboxChange("puc_certificate", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="puc_certificate" className="text-sm">PUC Certificate</label>
+              </div>
+            )}
+            
+            {showDocumentChecklist.road_tax_status && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="road_tax_status"
+                  checked={documentChecklist.road_tax_status}
+                  onChange={(e) => handleDocumentCheckboxChange("road_tax_status", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="road_tax_status" className="text-sm">Road Tax Status</label>
+              </div>
+            )}
+            
+            {/* Conditional documents */}
+            {showDocumentChecklist.battery_health_proof && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="battery_health_proof"
+                  checked={documentChecklist.battery_health_proof}
+                  onChange={(e) => handleDocumentCheckboxChange("battery_health_proof", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="battery_health_proof" className="text-sm">Battery Health Proof</label>
+              </div>
+            )}
+            
+            {showDocumentChecklist.loan_noc_document && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="loan_noc_document"
+                  checked={documentChecklist.loan_noc_document}
+                  onChange={(e) => handleDocumentCheckboxChange("loan_noc_document", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="loan_noc_document" className="text-sm">Loan NOC Document</label>
+              </div>
+            )}
+            
+            {showDocumentChecklist.warranty_document && (
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="warranty_document"
+                  checked={documentChecklist.warranty_document}
+                  onChange={(e) => handleDocumentCheckboxChange("warranty_document", e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary mr-2"
+                />
+                <label htmlFor="warranty_document" className="text-sm">Warranty Document</label>
+              </div>
+            )}
+          </div>
+        </div>
         
         <div className="flex justify-between">
           <Button variant="outline" onClick={() => setIsConfirmationView(false)} className="flex items-center gap-2">
@@ -363,7 +520,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
           <Button 
             className="bg-green-500 hover:bg-green-600 text-white"
             onClick={handlePublishListing}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !areAllDocumentsChecked()}
           >
             {isSubmitting ? "Publishing..." : "Listing Published Successfully"}
           </Button>

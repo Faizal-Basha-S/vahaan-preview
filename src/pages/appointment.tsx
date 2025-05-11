@@ -93,7 +93,10 @@ const Appointment: React.FC = () => {
       // Go back to sell page
       navigate("/sell");
     } else {
-      setCurrentStep(prev => (prev - 1) as AppointmentStep);
+      setCurrentStep(prev => {
+        const newStep = prev - 1;
+        return newStep as AppointmentStep;
+      });
     }
   };
   
@@ -104,7 +107,10 @@ const Appointment: React.FC = () => {
       saveCurrentStepData();
       
       // Move to next step
-      setCurrentStep(prev => (prev + 1) as AppointmentStep);
+      setCurrentStep(prev => {
+        const newStep = prev + 1;
+        return newStep as AppointmentStep;
+      });
     }
   };
   
@@ -264,6 +270,7 @@ const Appointment: React.FC = () => {
   
   const renderStepOne = () => {
     const data = stepData[0] || {};
+    const isBike = vehicleType === "bike";
     
     return (
       <div className="space-y-6">
@@ -653,13 +660,28 @@ const Appointment: React.FC = () => {
                 <SelectValue placeholder="Select Body Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Sedan">Sedan</SelectItem>
-                <SelectItem value="SUV">SUV</SelectItem>
-                <SelectItem value="Hatchback">Hatchback</SelectItem>
-                <SelectItem value="Crossover">Crossover</SelectItem>
-                <SelectItem value="MPV">MPV</SelectItem>
-                <SelectItem value="Coupe">Coupe</SelectItem>
-                <SelectItem value="Convertible">Convertible</SelectItem>
+                {isBike ? (
+                  // Bike body types
+                  <>
+                    <SelectItem value="Commuter">Commuter</SelectItem>
+                    <SelectItem value="Cruiser">Cruiser</SelectItem>
+                    <SelectItem value="Sports">Sports</SelectItem>
+                    <SelectItem value="Adventure">Adventure</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="Scooty">Scooty</SelectItem>
+                  </>
+                ) : (
+                  // Car body types
+                  <>
+                    <SelectItem value="Sedan">Sedan</SelectItem>
+                    <SelectItem value="SUV">SUV</SelectItem>
+                    <SelectItem value="Hatchback">Hatchback</SelectItem>
+                    <SelectItem value="Crossover">Crossover</SelectItem>
+                    <SelectItem value="MPV">MPV</SelectItem>
+                    <SelectItem value="Coupe">Coupe</SelectItem>
+                    <SelectItem value="Convertible">Convertible</SelectItem>
+                  </>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -693,6 +715,7 @@ const Appointment: React.FC = () => {
   
   const renderStepTwo = () => {
     const data = stepData[1] || {};
+    const isBike = vehicleType === "bike";
     
     return (
       <div className="space-y-6">
@@ -783,12 +806,24 @@ const Appointment: React.FC = () => {
                 <SelectValue placeholder="Select Fuel Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Petrol">Petrol</SelectItem>
-                <SelectItem value="Diesel">Diesel</SelectItem>
-                <SelectItem value="CNG">CNG</SelectItem>
-                <SelectItem value="Electric">Electric</SelectItem>
-                <SelectItem value="Hybrid">Hybrid</SelectItem>
-                <SelectItem value="LPG">LPG</SelectItem>
+                {isBike ? (
+                  // Limited fuel types for bikes
+                  <>
+                    <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="CNG">CNG</SelectItem>
+                  </>
+                ) : (
+                  // Full list for cars
+                  <>
+                    <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Diesel">Diesel</SelectItem>
+                    <SelectItem value="CNG">CNG</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="Hybrid">Hybrid</SelectItem>
+                    <SelectItem value="LPG">LPG</SelectItem>
+                  </>
+                )}
               </SelectContent>
             </Select>
           </div>
