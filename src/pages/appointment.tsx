@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -89,13 +90,13 @@ const Appointment: React.FC = () => {
   
   const handleBack = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      setCurrentStep((prev) => (prev - 1) as AppointmentStep);
     }
   };
   
   const handleNext = async () => {
     if (await validateCurrentStep()) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep((prev) => (prev + 1) as AppointmentStep);
     }
   };
   
@@ -169,6 +170,234 @@ const Appointment: React.FC = () => {
     return true;
   };
   
+  // Define renderStepOne function
+  const renderStepOne = () => {
+    const data = stepData[0] || {};
+    const storedVehicleType = localStorage.getItem("vehicle");
+    const isBike = storedVehicleType === "bike";
+    
+    return (
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium">Basic Vehicle Info</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Registration Number <span className="text-red-500">*</span>
+            </label>
+            <Input 
+              value={data.registration_number || ""}
+              onChange={(e) => handleInputChange("registration_number", e.target.value)}
+              placeholder="Enter registration number"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              RTO State <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.rto_state || ""}
+              onValueChange={(value) => handleInputChange("rto_state", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select RTO State" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Tamil Nadu">Tamil Nadu</SelectItem>
+                <SelectItem value="Karnataka">Karnataka</SelectItem>
+                <SelectItem value="Maharashtra">Maharashtra</SelectItem>
+                <SelectItem value="Delhi">Delhi</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              RTO <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.rto || ""}
+              onValueChange={(value) => handleInputChange("rto", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select RTO" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="TN-01">TN-01</SelectItem>
+                <SelectItem value="TN-02">TN-02</SelectItem>
+                <SelectItem value="TN-07">TN-07</SelectItem>
+                <SelectItem value="TN-09">TN-09</SelectItem>
+                <SelectItem value="TN-10">TN-10</SelectItem>
+                <SelectItem value="TN-11">TN-11</SelectItem>
+                <SelectItem value="TN-14">TN-14</SelectItem>
+                <SelectItem value="TN-18">TN-18</SelectItem>
+                <SelectItem value="TN-19">TN-19</SelectItem>
+                <SelectItem value="TN-20">TN-20</SelectItem>
+                <SelectItem value="TN-21">TN-21</SelectItem>
+                <SelectItem value="TN-22">TN-22</SelectItem>
+                <SelectItem value="TN-23">TN-23</SelectItem>
+                <SelectItem value="TN-24">TN-24</SelectItem>
+                <SelectItem value="TN-28">TN-28</SelectItem>
+                <SelectItem value="TN-29">TN-29</SelectItem>
+                <SelectItem value="TN-30">TN-30</SelectItem>
+                <SelectItem value="TN-31">TN-31</SelectItem>
+                <SelectItem value="TN-32">TN-32</SelectItem>
+                <SelectItem value="TN-33">TN-33</SelectItem>
+                <SelectItem value="TN-34">TN-34</SelectItem>
+                <SelectItem value="TN-36">TN-36</SelectItem>
+                <SelectItem value="TN-37">TN-37</SelectItem>
+                <SelectItem value="TN-38">TN-38</SelectItem>
+                <SelectItem value="TN-39">TN-39</SelectItem>
+                <SelectItem value="TN-40">TN-40</SelectItem>
+                <SelectItem value="TN-41">TN-41</SelectItem>
+                <SelectItem value="TN-45">TN-45</SelectItem>
+                <SelectItem value="TN-46">TN-46</SelectItem>
+                <SelectItem value="TN-47">TN-47</SelectItem>
+                <SelectItem value="TN-48">TN-48</SelectItem>
+                <SelectItem value="TN-49">TN-49</SelectItem>
+                <SelectItem value="TN-50">TN-50</SelectItem>
+                <SelectItem value="TN-51">TN-51</SelectItem>
+                <SelectItem value="TN-52">TN-52</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Body Type <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.body_type || ""}
+              onValueChange={(value) => handleInputChange("body_type", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Body Type" />
+              </SelectTrigger>
+              <SelectContent>
+                {isBike ? (
+                  <>
+                    <SelectItem value="Commuter">Commuter</SelectItem>
+                    <SelectItem value="Cruiser">Cruiser</SelectItem>
+                    <SelectItem value="Sports">Sports</SelectItem>
+                    <SelectItem value="Adventure">Adventure</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="Scooty">Scooty</SelectItem>
+                  </>
+                ) : (
+                  <>
+                    <SelectItem value="Hatchback">Hatchback</SelectItem>
+                    <SelectItem value="Sedan">Sedan</SelectItem>
+                    <SelectItem value="SUV">SUV</SelectItem>
+                    <SelectItem value="MUV">MUV</SelectItem>
+                    <SelectItem value="Luxury">Luxury</SelectItem>
+                    <SelectItem value="Convertible">Convertible</SelectItem>
+                    <SelectItem value="Coupe">Coupe</SelectItem>
+                    <SelectItem value="Pickup Truck">Pickup Truck</SelectItem>
+                  </>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  // Define renderStepTwo function
+  const renderStepTwo = () => {
+    const data = stepData[1] || {};
+    const storedVehicleType = localStorage.getItem("vehicle");
+    const isBike = storedVehicleType === "bike";
+    
+    return (
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium">Ownership & Usage</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Number of Owners <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.number_of_owners || ""}
+              onValueChange={(value) => handleInputChange("number_of_owners", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Number of Owners" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">1</SelectItem>
+                <SelectItem value="2">2</SelectItem>
+                <SelectItem value="3">3</SelectItem>
+                <SelectItem value="4">4</SelectItem>
+                <SelectItem value="5+">5+</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Fuel Type <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.fuel_type || ""}
+              onValueChange={(value) => {
+                handleInputChange("fuel_type", value);
+                setIsElectric(value === "Electric");
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Fuel Type" />
+              </SelectTrigger>
+              <SelectContent>
+                {isBike ? (
+                  <>
+                    <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="CNG">CNG</SelectItem>
+                  </>
+                ) : (
+                  <>
+                    <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Diesel">Diesel</SelectItem>
+                    <SelectItem value="CNG">CNG</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                    <SelectItem value="Hybrid">Hybrid</SelectItem>
+                    <SelectItem value="LPG">LPG</SelectItem>
+                  </>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Color
+            </label>
+            <Input 
+              value={data.color || ""}
+              onChange={(e) => handleInputChange("color", e.target.value)}
+              placeholder="Enter color"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Kilometers Driven
+            </label>
+            <Input 
+              type="number"
+              value={data.kilometers || ""}
+              onChange={(e) => handleInputChange("kilometers", e.target.value)}
+              placeholder="Enter kilometers driven"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
   const renderStepFive = () => {
     const data = stepData[4] || {};
     
@@ -198,6 +427,24 @@ const Appointment: React.FC = () => {
               onChange={(e) => handleInputChange("phone_number", e.target.value)}
               placeholder="Enter phone number"
             />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Seller Price <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span className="text-gray-500">₹</span>
+              </div>
+              <Input 
+                type="number"
+                value={data.seller_price || ""}
+                onChange={(e) => handleInputChange("seller_price", e.target.value)}
+                className="pl-7"
+                placeholder="Enter selling price"
+              />
+            </div>
           </div>
           
           <div>
@@ -338,6 +585,25 @@ const Appointment: React.FC = () => {
           
           <div>
             <label className="block text-sm font-medium mb-1">
+              Warranty Status <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.warranty_status || ""}
+              onValueChange={(value) => handleInputChange("warranty_status", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Warranty Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Not Applicable">Not Applicable</SelectItem>
+                <SelectItem value="At Present">At Present</SelectItem>
+                <SelectItem value="Expired">Expired</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
               Battery Health
             </label>
             <Input 
@@ -363,25 +629,6 @@ const Appointment: React.FC = () => {
                 <SelectItem value="No">No</SelectItem>
                 <SelectItem value="Yes-got NOC">Yes - Got NOC</SelectItem>
                 <SelectItem value="Yes-in process">Yes - In Process</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Warranty Status
-            </label>
-            <Select 
-              value={data.warranty_status || ""}
-              onValueChange={(value) => handleInputChange("warranty_status", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Warranty Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Not Applicable">Not Applicable</SelectItem>
-                <SelectItem value="At Present">At Present</SelectItem>
-                <SelectItem value="Expired">Expired</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -458,3 +705,4 @@ const Appointment: React.FC = () => {
 };
 
 export default Appointment;
+
