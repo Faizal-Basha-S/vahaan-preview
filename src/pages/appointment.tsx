@@ -1163,12 +1163,32 @@ const Appointment: React.FC = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Anytime">Anytime</SelectItem>
-                <SelectItem value="Above 9 AM">Above 9 AM</SelectItem>
-                <SelectItem value="3 PM">3 PM</SelectItem>
-                <SelectItem value="7 PM">7 PM</SelectItem>
+                <SelectItem value="After 9 AM">Above 9 AM</SelectItem>
+                <SelectItem value="After 3 PM">3 PM</SelectItem>
+                <SelectItem value="After 7 PM">7 PM</SelectItem>
               </SelectContent>
             </Select>
           </div>
+
+          {isElectric && (
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                EV Charger Included
+              </label>
+              <Select 
+                value={data.ev_charger_included || ""}
+                onValueChange={(value) => handleInputChange("ev_charger_included", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">
@@ -1194,25 +1214,6 @@ const Appointment: React.FC = () => {
             />
           </div>
           
-          {isElectric && (
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                EV Charger Included
-              </label>
-              <Select 
-                value={data.ev_charger_included || ""}
-                onValueChange={(value) => handleInputChange("ev_charger_included", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Yes">Yes</SelectItem>
-                  <SelectItem value="No">No</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
         </div>
       </div>
     );
