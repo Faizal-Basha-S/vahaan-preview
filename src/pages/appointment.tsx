@@ -50,8 +50,10 @@ const Appointment: React.FC = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [locationDetails, setLocationDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const vehicleType = localStorage.getItem('vehicle');
-  const setVehicleType = localStorage.getItem('vehicle');
+  const [vehicleType, setVehicleType] = useState<"car" | "bike">(
+  (localStorage.getItem("vehicle") as "car" | "bike") || "car"
+);
+
   
   // Get vehicle type from localStorage on component mount
   useEffect(() => {
