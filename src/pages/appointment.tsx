@@ -682,7 +682,6 @@ const Appointment: React.FC = () => {
                   {/* Add more states and RTOs as needed */}
                 </SelectContent>
               </Select>
-            </div>
           </div>
           
           <div>
