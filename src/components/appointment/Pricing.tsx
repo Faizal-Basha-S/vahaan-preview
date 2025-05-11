@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
@@ -32,7 +31,9 @@ interface ConfirmationData {
   airbags: string | null;
   cylinders: string | null;
   wheelDrive: string | null;
-  warrantyStatus: string | null; // Added to store warranty status
+  warrantyStatus: string | null;
+  loanStatus: string | null;
+  batteryHealth: string | null;
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -58,7 +59,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     airbags: null,
     cylinders: null,
     wheelDrive: null,
-    warrantyStatus: null, // Added to store warranty status
+    warrantyStatus: null,
+    loanStatus: null,
+    batteryHealth: null,
   });
   
   // State for document checkboxes
@@ -94,7 +97,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         airbags: localStorage.getItem('airbags'),
         cylinders: localStorage.getItem('cylinders'),
         wheelDrive: localStorage.getItem('wheel_drive'),
-        warrantyStatus: localStorage.getItem('warranty_status'), // Get warranty status from localStorage
+        warrantyStatus: localStorage.getItem('warranty_status'),
+        loanStatus: localStorage.getItem('loan_status'),
+        batteryHealth: localStorage.getItem('battery_health'),
       };
       
       // Also get data from sellFormData
@@ -110,6 +115,29 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         if (sellFormData.city) data.city = sellFormData.city;
       } catch (error) {
         console.error("Error parsing sellFormData:", error);
+      }
+
+      // Try to get data from appointment steps
+      try {
+        for (let i = 1; i <= 6; i++) {
+          const stepData = localStorage.getItem(`appointment_step${i}_data`);
+          if (stepData) {
+            const parsedData = JSON.parse(stepData);
+            
+            // Update specific fields based on step data
+            if (i === 2 && parsedData.warranty_status) {
+              data.warrantyStatus = parsedData.warranty_status;
+            }
+            if (i === 2 && parsedData.loan_status) {
+              data.loanStatus = parsedData.loan_status;
+            }
+            if (i === 1 && parsedData.battery_health) {
+              data.batteryHealth = parsedData.battery_health;
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error parsing appointment step data:", error);
       }
       
       setConfirmationData(data);
@@ -168,10 +196,21 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     // Check if all documents are selected
     const requiredDocs = Object.entries(documents)
       .filter(([key, value]) => {
+        // Skip battery health check if battery health is not saved
+        if (key === "batteryHealth" && !confirmationData.batteryHealth) {
+          return false;
+        }
+        
+        // Skip loan NOC document check if loan status is not "Yes-got NOC"
+        if (key === "loanNOC" && confirmationData.loanStatus !== "Yes-got NOC") {
+          return false;
+        }
+        
         // Skip warranty document check if warranty status is not "At Present"
         if (key === "warranty" && confirmationData.warrantyStatus !== "At Present") {
           return false;
         }
+        
         return !value;
       })
       .map(([key]) => key);
@@ -216,23 +255,27 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             <Label htmlFor="document-insurance">Insurance document</Label>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <Checkbox
-              id="document-battery"
-              checked={documents.batteryHealth}
-              onCheckedChange={() => handleDocumentChange('batteryHealth')}
-            />
-            <Label htmlFor="document-battery">Battery health proof</Label>
-          </div>
+          {confirmationData.batteryHealth && (
+            <div className="flex items-center space-x-3">
+              <Checkbox
+                id="document-battery"
+                checked={documents.batteryHealth}
+                onCheckedChange={() => handleDocumentChange('batteryHealth')}
+              />
+              <Label htmlFor="document-battery">Battery health proof</Label>
+            </div>
+          )}
           
-          <div className="flex items-center space-x-3">
-            <Checkbox
-              id="document-loan"
-              checked={documents.loanNOC}
-              onCheckedChange={() => handleDocumentChange('loanNOC')}
-            />
-            <Label htmlFor="document-loan">Loan NOC document</Label>
-          </div>
+          {confirmationData.loanStatus === "Yes-got NOC" && (
+            <div className="flex items-center space-x-3">
+              <Checkbox
+                id="document-loan"
+                checked={documents.loanNOC}
+                onCheckedChange={() => handleDocumentChange('loanNOC')}
+              />
+              <Label htmlFor="document-loan">Loan NOC document</Label>
+            </div>
+          )}
           
           {confirmationData.warrantyStatus === "At Present" && (
             <div className="flex items-center space-x-3">

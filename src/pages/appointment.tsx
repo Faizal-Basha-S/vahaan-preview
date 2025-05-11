@@ -135,12 +135,17 @@ const Appointment: React.FC = () => {
           return false;
         }
         break;
-      case 2: // Vehicle Condition - no mandatory fields
+      case 2: // Vehicle Condition
+        if (!currentFormData.warranty_status) {
+          toast.error("Please select a warranty status");
+          return false;
+        }
         break;
       case 3: // Photo Upload - validation happens in the component
         break;
       case 4: // Seller Details
-        if (!currentFormData.seller_name || !currentFormData.phone_number || !currentFormData.location_city) {
+        if (!currentFormData.seller_name || !currentFormData.phone_number || 
+            !currentFormData.location_city || !currentFormData.seller_price) {
           toast.error("Please fill all mandatory fields marked with *");
           return false;
         }
@@ -964,6 +969,24 @@ const Appointment: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium mb-1">
+              Warranty Status <span className="text-red-500">*</span>
+            </label>
+            <Select 
+              value={data.warranty_status || ""}
+              onValueChange={(value) => handleInputChange("warranty_status", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Warranty Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Finished">Finished</SelectItem>
+                <SelectItem value="At Present">At Present</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
               Loan Status
             </label>
             <Select 
@@ -1129,6 +1152,24 @@ const Appointment: React.FC = () => {
               onChange={(e) => handleInputChange("seller_name", e.target.value)}
               placeholder="Enter your full name"
             />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Seller Price <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span className="text-gray-500">₹</span>
+              </div>
+              <Input 
+                type="number"
+                value={data.seller_price || ""}
+                onChange={(e) => handleInputChange("seller_price", e.target.value)}
+                className="pl-7"
+                placeholder="Enter your expected price"
+              />
+            </div>
           </div>
           
           <div>
@@ -1326,125 +1367,4 @@ const Appointment: React.FC = () => {
               type="button"
             >
               <MapPin className="h-4 w-4" />
-              {isLoading ? "Verifying Location..." : "Verify My Current Location"}
-            </Button>
-            
-            {locationDetails && (
-              <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800 rounded-md">
-                <div className="flex items-start">
-                  <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium">Location Verified</h4>
-                    <p className="text-sm mt-1">
-                      Address: {locationDetails.formatted}
-                    </p>
-                    {locationDetails.components.city && (
-                      <p className="text-xs mt-1">
-                        City: {locationDetails.components.city}
-                      </p>
-                    )}
-                    {locationDetails.components.state && (
-                      <p className="text-xs">
-                        State: {locationDetails.components.state}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-4">
-            <div className="flex items-center">
-              <input
-                id="terms-agree"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300"
-                checked={data.terms_agreed || false}
-                onChange={(e) => handleInputChange("terms_agreed", e.target.checked)}
-              />
-              <label htmlFor="terms-agree" className="ml-2 block text-sm">
-                I confirm that the information provided above is accurate and I agree to the 
-                <a href="/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer"> Terms of Service</a> and 
-                <a href="/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  const renderStepSeven = () => {
-    // Reuse existing components for Payment & Confirmation
-    return (
-      <Pricing
-        onBack={handleBack}
-        expectedPrice={expectedPrice}
-        selectedFeatures={selectedFeatures}
-      />
-    );
-  };
-  
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0: // Basic Vehicle Info
-        return renderStepOne();
-      case 1: // Ownership & Usage
-        return renderStepTwo();
-      case 2: // Vehicle Condition
-        return renderStepThree();
-      case 3: // Upload Photos
-        return renderStepFour();
-      case 4: // Seller Details
-        return renderStepFive();
-      case 5: // Verification
-        return renderStepSix();
-      case 6: // Payment and Confirmation
-        return renderStepSeven();
-      default:
-        return null;
-    }
-  };
-  
-  // Navigation buttons
-  const renderNavigationButtons = () => {
-    if (currentStep === 3 || currentStep === 6) {
-      // These steps have their own navigation buttons
-      return null;
-    }
-    
-    return (
-      <div className="flex justify-between mt-8">
-        <Button 
-          variant="outline" 
-          onClick={handleBack} 
-          className="flex items-center gap-2"
-        >
-          Back
-        </Button>
-        <Button 
-          onClick={handleNext} 
-          className="flex items-center gap-2"
-        >
-          {currentStep === 5 ? "Continue to Payment" : "Continue"}
-        </Button>
-      </div>
-    );
-  };
-  
-  return (
-    <Layout>
-      <div className="container max-w-5xl mx-auto py-8 px-4">
-        <ProgressBar currentStep={progressStep} steps={steps} />
-        
-        <div className="bg-white dark:bg-[#1F2633] rounded-xl p-6 shadow-lg">
-          {renderStepContent()}
-          {renderNavigationButtons()}
-        </div>
-      </div>
-    </Layout>
-  );
-};
-
-export default Appointment;
+              {isLoading ? "Verifying Location..." : "Verify My Current Location

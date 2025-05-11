@@ -10,7 +10,7 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], totalSteps }) => {
   // If totalSteps is provided but no steps array, create a generic array
   const displaySteps = steps.length > 0 ? steps : 
-    Array(totalSteps).fill(0).map((_, index) => `Step ${index + 1}`);
+    Array(totalSteps || 0).fill(0).map((_, index) => `Step ${index + 1}`);
   
   return (
     <div className="w-full mb-8">
