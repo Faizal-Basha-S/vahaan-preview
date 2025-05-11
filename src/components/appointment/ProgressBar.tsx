@@ -3,10 +3,13 @@ import React from "react";
 
 interface ProgressBarProps {
   currentStep: number;
-  steps: string[];
+  totalSteps: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) => {
+  // Generate steps array based on totalSteps
+  const steps = Array.from({ length: totalSteps }, (_, i) => `Step ${i + 1}`);
+  
   return (
     <div className="w-full mb-8">
       <div className="flex items-center justify-between">

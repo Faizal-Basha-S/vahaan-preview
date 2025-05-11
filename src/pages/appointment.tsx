@@ -490,7 +490,11 @@ const Appointment = () => {
               </div>
             </div>
             
-            <CarDetails />
+            <CarDetails 
+              onBack={handleBack}
+              onNext={handleNext}
+              vehicleType={vehicleType as "car" | "bike"}
+            />
           </div>
         );
       case 4:
