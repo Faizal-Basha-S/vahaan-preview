@@ -676,6 +676,56 @@ const Appointment: React.FC = () => {
     <SelectItem value="TN-583">TN-583</SelectItem>
   </>
 )}
+{data.rto_state === "Rajasthan" && (
+  <>
+    <SelectItem value="RJ-03">RJ-03</SelectItem>
+    <SelectItem value="RJ-04">RJ-04</SelectItem>
+    <SelectItem value="RJ-08">RJ-08</SelectItem>
+    <SelectItem value="RJ-10">RJ-10</SelectItem>
+    <SelectItem value="RJ-11">RJ-11</SelectItem>
+    <SelectItem value="RJ-12">RJ-12</SelectItem>
+    <SelectItem value="RJ-13">RJ-13</SelectItem>
+    <SelectItem value="RJ-15">RJ-15</SelectItem>
+    <SelectItem value="RJ-16">RJ-16</SelectItem>
+    <SelectItem value="RJ-17">RJ-17</SelectItem>
+    <SelectItem value="RJ-21">RJ-21</SelectItem>
+    <SelectItem value="RJ-22">RJ-22</SelectItem>
+    <SelectItem value="RJ-24">RJ-24</SelectItem>
+    <SelectItem value="RJ-25">RJ-25</SelectItem>
+    <SelectItem value="RJ-26">RJ-26</SelectItem>
+    <SelectItem value="RJ-28">RJ-28</SelectItem>
+    <SelectItem value="RJ-29">RJ-29</SelectItem>
+    <SelectItem value="RJ-30">RJ-30</SelectItem>
+    <SelectItem value="RJ-31">RJ-31</SelectItem>
+    <SelectItem value="RJ-32">RJ-32</SelectItem>
+    <SelectItem value="RJ-33">RJ-33</SelectItem>
+    <SelectItem value="RJ-34">RJ-34</SelectItem>
+    <SelectItem value="RJ-35">RJ-35</SelectItem>
+    <SelectItem value="RJ-36">RJ-36</SelectItem>
+    <SelectItem value="RJ-37">RJ-37</SelectItem>
+    <SelectItem value="RJ-38">RJ-38</SelectItem>
+    <SelectItem value="RJ-39">RJ-39</SelectItem>
+    <SelectItem value="RJ-41">RJ-41</SelectItem>
+    <SelectItem value="RJ-42">RJ-42</SelectItem>
+    <SelectItem value="RJ-43">RJ-43</SelectItem>
+    <SelectItem value="RJ-44">RJ-44</SelectItem>
+    <SelectItem value="RJ-46">RJ-46</SelectItem>
+    <SelectItem value="RJ-47">RJ-47</SelectItem>
+    <SelectItem value="RJ-48">RJ-48</SelectItem>
+    <SelectItem value="RJ-49">RJ-49</SelectItem>
+    <SelectItem value="RJ-50">RJ-50</SelectItem>
+    <SelectItem value="RJ-51">RJ-51</SelectItem>
+    <SelectItem value="RJ-52">RJ-52</SelectItem>
+    <SelectItem value="RJ-53">RJ-53</SelectItem>
+    <SelectItem value="RJ-54">RJ-54</SelectItem>
+    <SelectItem value="RJ-55">RJ-55</SelectItem>
+    <SelectItem value="RJ-56">RJ-56</SelectItem>
+    <SelectItem value="RJ-57">RJ-57</SelectItem>
+    <SelectItem value="RJ-58">RJ-58</SelectItem>
+    <SelectItem value="RJ-59">RJ-59</SelectItem>
+  </>
+)}
+
                   {/* Add more states and RTOs as needed */}
                 </SelectContent>
               </Select>
