@@ -288,7 +288,7 @@ const Appointment: React.FC = () => {
                   <SelectValue placeholder="Select State" />
                 </SelectTrigger>
                 <SelectContent>
-                  <  <SelectItem value="Delhi">DL-Delhi</SelectItem>
+  <SelectItem value="Delhi">DL-Delhi</SelectItem>
   <SelectItem value="Maharashtra">MH-Maharashtra</SelectItem>
   <SelectItem value="Uttar Pradesh">UP-Uttar Pradesh</SelectItem>
   <SelectItem value="Haryana">HR-Haryana</SelectItem>
