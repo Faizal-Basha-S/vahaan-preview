@@ -271,7 +271,7 @@ const Appointment: React.FC = () => {
             <Input 
               value={data.registration_number || ""}
               onChange={(e) => handleInputChange("registration_number", e.target.value)}
-              placeholder="Enter registration number"
+              placeholder="eg, AY 4655"
             />
           </div>
           
@@ -287,14 +287,43 @@ const Appointment: React.FC = () => {
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Select State" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Karnataka">Karnataka</SelectItem>
-                  <SelectItem value="Tamil Nadu">Tamil Nadu</SelectItem>
-                  <SelectItem value="Maharashtra">Maharashtra</SelectItem>
-                  <SelectItem value="Delhi">Delhi</SelectItem>
-                  <SelectItem value="Gujarat">Gujarat</SelectItem>
-                </SelectContent>
-              </Select>
+               <SelectContent>
+  <SelectItem value="Delhi">DL-Delhi</SelectItem>
+  <SelectItem value="Maharashtra">MH-Maharashtra</SelectItem>
+  <SelectItem value="Uttar Pradesh">UP-Uttar Pradesh</SelectItem>
+  <SelectItem value="Haryana">HR-Haryana</SelectItem>
+  <SelectItem value="Karnataka">KA-Karnataka</SelectItem>
+  <SelectItem value="Gujarat">GJ-Gujarat</SelectItem>
+  <SelectItem value="Tamil Nadu">TN-Tamil Nadu</SelectItem>
+  <SelectItem value="Rajasthan">RJ-Rajasthan</SelectItem>
+  <SelectItem value="Kerala">KL-Kerala</SelectItem>
+  <SelectItem value="Madhya Pradesh">MP-Madhya Pradesh</SelectItem>
+  <SelectItem value="Andhra Pradesh">AP-Andhra Pradesh</SelectItem>
+  <SelectItem value="Telangana">TS-Telangana</SelectItem>
+  <SelectItem value="Bihar">BR-Bihar</SelectItem>
+  <SelectItem value="Punjab">PB-Punjab</SelectItem>
+  <SelectItem value="West Bengal">WB-West Bengal</SelectItem>
+  <SelectItem value="Jharkhand">JH-Jharkhand</SelectItem>
+  <SelectItem value="Uttarakhand">UK-Uttarakhand</SelectItem>
+  <SelectItem value="Chandigarh">CH-Chandigarh</SelectItem>
+  <SelectItem value="Assam">AS-Assam</SelectItem>
+  <SelectItem value="Jammu & Kashmir">JK-Jammu & Kashmir</SelectItem>
+  <SelectItem value="Chhattisgarh">CG-Chhattisgarh</SelectItem>
+  <SelectItem value="Himachal Pradesh">HP-Himachal Pradesh</SelectItem>
+  <SelectItem value="Mizoram">MZ-Mizoram</SelectItem>
+  <SelectItem value="Goa">GA-Goa</SelectItem>
+  <SelectItem value="Nagaland">NL-Nagaland</SelectItem>
+  <SelectItem value="Odisha">OD-Odisha</SelectItem>
+  <SelectItem value="Sikkim">SK-Sikkim</SelectItem>
+  <SelectItem value="Puducherry">PY-Puducherry</SelectItem>
+  <SelectItem value="Meghalaya">ML-Meghalaya</SelectItem>
+  <SelectItem value="Dadra and Nagar Haveli">DN-Dadra and Nagar Haveli</SelectItem>
+  <SelectItem value="Daman and Diu">DD-Daman and Diu</SelectItem>
+  <SelectItem value="Arunachal Pradesh">AR-Arunachal Pradesh</SelectItem>
+  <SelectItem value="Tripura">TR-Tripura</SelectItem>
+  <SelectItem value="Manipur">MN-Manipur</SelectItem>
+</SelectContent>
+
               
               <Select 
                 value={data.rto || ""}
@@ -305,24 +334,351 @@ const Appointment: React.FC = () => {
                   <SelectValue placeholder="Select RTO" />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.rto_state === "Karnataka" && (
-                    <>
-                      <SelectItem value="KA-01">KA-01 (Bangalore Central)</SelectItem>
-                      <SelectItem value="KA-02">KA-02 (Bangalore West)</SelectItem>
-                      <SelectItem value="KA-03">KA-03 (Bangalore East)</SelectItem>
-                      <SelectItem value="KA-04">KA-04 (Bangalore North)</SelectItem>
-                      <SelectItem value="KA-05">KA-05 (Bangalore South)</SelectItem>
-                    </>
-                  )}
-                  {data.rto_state === "Tamil Nadu" && (
-                    <>
-                      <SelectItem value="TN-01">TN-01 (Chennai Central)</SelectItem>
-                      <SelectItem value="TN-02">TN-02 (Chennai North East)</SelectItem>
-                      <SelectItem value="TN-03">TN-03 (Chennai North)</SelectItem>
-                      <SelectItem value="TN-04">TN-04 (Chennai East)</SelectItem>
-                      <SelectItem value="TN-05">TN-05 (Chennai South)</SelectItem>
-                    </>
-                  )}
+{data.rto_state === "Delhi" && (
+  <>
+    <SelectItem value="DL-05">DL-05</SelectItem>
+    <SelectItem value="DL-09">DL-09</SelectItem>
+    <SelectItem value="DL-15">DL-15</SelectItem>
+    <SelectItem value="DL-16">DL-16</SelectItem>
+    <SelectItem value="DL-17">DL-17</SelectItem>
+    <SelectItem value="DL-18">DL-18</SelectItem>
+    <SelectItem value="DL-51">DL-51</SelectItem>
+  </>
+)}
+{data.rto_state === "Maharashtra" && (
+  <>
+    <SelectItem value="MH-07">MH-07</SelectItem>
+    <SelectItem value="MH-22">MH-22</SelectItem>
+    <SelectItem value="MH-25">MH-25</SelectItem>
+    <SelectItem value="MH-28">MH-28</SelectItem>
+    <SelectItem value="MH-33">MH-33</SelectItem>
+    <SelectItem value="MH-35">MH-35</SelectItem>
+    <SelectItem value="MH-36">MH-36</SelectItem>
+    <SelectItem value="MH-37">MH-37</SelectItem>
+    <SelectItem value="MH-38">MH-38</SelectItem>
+    <SelectItem value="MH-39">MH-39</SelectItem>
+    <SelectItem value="MH-44">MH-44</SelectItem>
+    <SelectItem value="MH-45">MH-45</SelectItem>
+    <SelectItem value="MH-50">MH-50</SelectItem>
+    <SelectItem value="MH-51">MH-51</SelectItem>
+    <SelectItem value="MH-52">MH-52</SelectItem>
+    <SelectItem value="MH-99">MH-99</SelectItem>
+  </>
+)}
+{data.rto_state === "Uttar Pradesh" && (
+  <>
+    <SelectItem value="UP-01">UP-01</SelectItem>
+    <SelectItem value="UP-03">UP-03</SelectItem>
+    <SelectItem value="UP-04">UP-04</SelectItem>
+    <SelectItem value="UP-05">UP-05</SelectItem>
+    <SelectItem value="UP-06">UP-06</SelectItem>
+    <SelectItem value="UP-08">UP-08</SelectItem>
+    <SelectItem value="UP-09">UP-09</SelectItem>
+    <SelectItem value="UP-10">UP-10</SelectItem>
+    <SelectItem value="UP-17">UP-17</SelectItem>
+    <SelectItem value="UP-18">UP-18</SelectItem>
+    <SelectItem value="UP-19">UP-19</SelectItem>
+    <SelectItem value="UP-20">UP-20</SelectItem>
+    <SelectItem value="UP-22">UP-22</SelectItem>
+    <SelectItem value="UP-23">UP-23</SelectItem>
+    <SelectItem value="UP-24">UP-24</SelectItem>
+    <SelectItem value="UP-26">UP-26</SelectItem>
+    <SelectItem value="UP-27">UP-27</SelectItem>
+    <SelectItem value="UP-28">UP-28</SelectItem>
+    <SelectItem value="UP-30">UP-30</SelectItem>
+    <SelectItem value="UP-31">UP-31</SelectItem>
+    <SelectItem value="UP-34">UP-34</SelectItem>
+    <SelectItem value="UP-38">UP-38</SelectItem>
+    <SelectItem value="UP-40">UP-40</SelectItem>
+    <SelectItem value="UP-41">UP-41</SelectItem>
+    <SelectItem value="UP-42">UP-42</SelectItem>
+    <SelectItem value="UP-43">UP-43</SelectItem>
+    <SelectItem value="UP-44">UP-44</SelectItem>
+    <SelectItem value="UP-45">UP-45</SelectItem>
+    <SelectItem value="UP-46">UP-46</SelectItem>
+    <SelectItem value="UP-47">UP-47</SelectItem>
+    <SelectItem value="UP-50">UP-50</SelectItem>
+    <SelectItem value="UP-51">UP-51</SelectItem>
+    <SelectItem value="UP-52">UP-52</SelectItem>
+    <SelectItem value="UP-54">UP-54</SelectItem>
+    <SelectItem value="UP-55">UP-55</SelectItem>
+    <SelectItem value="UP-56">UP-56</SelectItem>
+    <SelectItem value="UP-57">UP-57</SelectItem>
+    <SelectItem value="UP-58">UP-58</SelectItem>
+    <SelectItem value="UP-60">UP-60</SelectItem>
+    <SelectItem value="UP-61">UP-61</SelectItem>
+    <SelectItem value="UP-62">UP-62</SelectItem>
+    <SelectItem value="UP-63">UP-63</SelectItem>
+    <SelectItem value="UP-64">UP-64</SelectItem>
+    <SelectItem value="UP-66">UP-66</SelectItem>
+    <SelectItem value="UP-67">UP-67</SelectItem>
+    <SelectItem value="UP-71">UP-71</SelectItem>
+    <SelectItem value="UP-72">UP-72</SelectItem>
+    <SelectItem value="UP-73">UP-73</SelectItem>
+    <SelectItem value="UP-74">UP-74</SelectItem>
+    <SelectItem value="UP-75">UP-75</SelectItem>
+    <SelectItem value="UP-76">UP-76</SelectItem>
+    <SelectItem value="UP-77">UP-77</SelectItem>
+    <SelectItem value="UP-79">UP-79</SelectItem>
+    <SelectItem value="UP-82">UP-82</SelectItem>
+    <SelectItem value="UP-84">UP-84</SelectItem>
+    <SelectItem value="UP-86">UP-86</SelectItem>
+    <SelectItem value="UP-87">UP-87</SelectItem>
+    <SelectItem value="UP-90">UP-90</SelectItem>
+    <SelectItem value="UP-91">UP-91</SelectItem>
+    <SelectItem value="UP-92">UP-92</SelectItem>
+    <SelectItem value="UP-94">UP-94</SelectItem>
+    <SelectItem value="UP-95">UP-95</SelectItem>
+    <SelectItem value="UP-96">UP-96</SelectItem>
+  </>
+)}
+{data.rto_state === "Haryana" && (
+  <>
+    <SelectItem value="HR-04">HR-04</SelectItem>
+    <SelectItem value="HR-09">HR-09</SelectItem>
+    <SelectItem value="HR-15">HR-15</SelectItem>
+    <SelectItem value="HR-17">HR-17</SelectItem>
+    <SelectItem value="HR-18">HR-18</SelectItem>
+    <SelectItem value="HR-23">HR-23</SelectItem>
+    <SelectItem value="HR-25">HR-25</SelectItem>
+    <SelectItem value="HR-28">HR-28</SelectItem>
+    <SelectItem value="HR-32">HR-32</SelectItem>
+    <SelectItem value="HR-33">HR-33</SelectItem>
+    <SelectItem value="HR-34">HR-34</SelectItem>
+    <SelectItem value="HR-37">HR-37</SelectItem>
+    <SelectItem value="HR-39">HR-39</SelectItem>
+    <SelectItem value="HR-40">HR-40</SelectItem>
+    <SelectItem value="HR-41">HR-41</SelectItem>
+    <SelectItem value="HR-43">HR-43</SelectItem>
+    <SelectItem value="HR-44">HR-44</SelectItem>
+    <SelectItem value="HR-45">HR-45</SelectItem>
+    <SelectItem value="HR-46">HR-46</SelectItem>
+    <SelectItem value="HR-47">HR-47</SelectItem>
+    <SelectItem value="HR-48">HR-48</SelectItem>
+    <SelectItem value="HR-49">HR-49</SelectItem>
+    <SelectItem value="HR-52">HR-52</SelectItem>
+    <SelectItem value="HR-53">HR-53</SelectItem>
+    <SelectItem value="HR-54">HR-54</SelectItem>
+    <SelectItem value="HR-56">HR-56</SelectItem>
+    <SelectItem value="HR-57">HR-57</SelectItem>
+    <SelectItem value="HR-58">HR-58</SelectItem>
+    <SelectItem value="HR-59">HR-59</SelectItem>
+    <SelectItem value="HR-61">HR-61</SelectItem>
+    <SelectItem value="HR-62">HR-62</SelectItem>
+    <SelectItem value="HR-63">HR-63</SelectItem>
+    <SelectItem value="HR-64">HR-64</SelectItem>
+    <SelectItem value="HR-65">HR-65</SelectItem>
+    <SelectItem value="HR-66">HR-66</SelectItem>
+    <SelectItem value="HR-67">HR-67</SelectItem>
+    <SelectItem value="HR-68">HR-68</SelectItem>
+    <SelectItem value="HR-71">HR-71</SelectItem>
+    <SelectItem value="HR-73">HR-73</SelectItem>
+    <SelectItem value="HR-74">HR-74</SelectItem>
+    <SelectItem value="HR-75">HR-75</SelectItem>
+    <SelectItem value="HR-77">HR-77</SelectItem>
+    <SelectItem value="HR-78">HR-78</SelectItem>
+    <SelectItem value="HR-79">HR-79</SelectItem>
+    <SelectItem value="HR-80">HR-80</SelectItem>
+    <SelectItem value="HR-81">HR-81</SelectItem>
+    <SelectItem value="HR-82">HR-82</SelectItem>
+    <SelectItem value="HR-83">HR-83</SelectItem>
+    <SelectItem value="HR-84">HR-84</SelectItem>
+    <SelectItem value="HR-85">HR-85</SelectItem>
+    <SelectItem value="HR-86">HR-86</SelectItem>
+    <SelectItem value="HR-87">HR-87</SelectItem>
+    <SelectItem value="HR-88">HR-88</SelectItem>
+    <SelectItem value="HR-89">HR-89</SelectItem>
+    <SelectItem value="HR-90">HR-90</SelectItem>
+    <SelectItem value="HR-91">HR-91</SelectItem>
+    <SelectItem value="HR-92">HR-92</SelectItem>
+    <SelectItem value="HR-93">HR-93</SelectItem>
+    <SelectItem value="HR-94">HR-94</SelectItem>
+    <SelectItem value="HR-95">HR-95</SelectItem>
+    <SelectItem value="HR-96">HR-96</SelectItem>
+    <SelectItem value="HR-97">HR-97</SelectItem>
+    <SelectItem value="HR-98">HR-98</SelectItem>
+    <SelectItem value="HR-99">HR-99</SelectItem>
+  </>
+)}
+{data.rto_state === "Karnataka" && (
+  <>
+    <SelectItem value="KA-07">KA-07</SelectItem>
+    <SelectItem value="KA-08">KA-08</SelectItem>
+    <SelectItem value="KA-10">KA-10</SelectItem>
+    <SelectItem value="KA-11">KA-11</SelectItem>
+    <SelectItem value="KA-13">KA-13</SelectItem>
+    <SelectItem value="KA-14">KA-14</SelectItem>
+    <SelectItem value="KA-15">KA-15</SelectItem>
+    <SelectItem value="KA-16">KA-16</SelectItem>
+    <SelectItem value="KA-18">KA-18</SelectItem>
+    <SelectItem value="KA-21">KA-21</SelectItem>
+    <SelectItem value="KA-23">KA-23</SelectItem>
+    <SelectItem value="KA-24">KA-24</SelectItem>
+    <SelectItem value="KA-26">KA-26</SelectItem>
+    <SelectItem value="KA-27">KA-27</SelectItem>
+    <SelectItem value="KA-28">KA-28</SelectItem>
+    <SelectItem value="KA-29">KA-29</SelectItem>
+    <SelectItem value="KA-30">KA-30</SelectItem>
+    <SelectItem value="KA-31">KA-31</SelectItem>
+    <SelectItem value="KA-32">KA-32</SelectItem>
+    <SelectItem value="KA-33">KA-33</SelectItem>
+    <SelectItem value="KA-34">KA-34</SelectItem>
+    <SelectItem value="KA-35">KA-35</SelectItem>
+    <SelectItem value="KA-36">KA-36</SelectItem>
+    <SelectItem value="KA-37">KA-37</SelectItem>
+    <SelectItem value="KA-38">KA-38</SelectItem>
+    <SelectItem value="KA-39">KA-39</SelectItem>
+    <SelectItem value="KA-40">KA-40</SelectItem>
+    <SelectItem value="KA-42">KA-42</SelectItem>
+    <SelectItem value="KA-43">KA-43</SelectItem>
+    <SelectItem value="KA-44">KA-44</SelectItem>
+    <SelectItem value="KA-45">KA-45</SelectItem>
+    <SelectItem value="KA-46">KA-46</SelectItem>
+    <SelectItem value="KA-47">KA-47</SelectItem>
+    <SelectItem value="KA-48">KA-48</SelectItem>
+    <SelectItem value="KA-49">KA-49</SelectItem>
+    <SelectItem value="KA-52">KA-52</SelectItem>
+    <SelectItem value="KA-54">KA-54</SelectItem>
+    <SelectItem value="KA-56">KA-56</SelectItem>
+    <SelectItem value="KA-59">KA-59</SelectItem>
+    <SelectItem value="KA-61">KA-61</SelectItem>
+    <SelectItem value="KA-62">KA-62</SelectItem>
+    <SelectItem value="KA-64">KA-64</SelectItem>
+    <SelectItem value="KA-65">KA-65</SelectItem>
+    <SelectItem value="KA-66">KA-66</SelectItem>
+    <SelectItem value="KA-67">KA-67</SelectItem>
+    <SelectItem value="KA-68">KA-68</SelectItem>
+    <SelectItem value="KA-69">KA-69</SelectItem>
+    <SelectItem value="KA-70">KA-70</SelectItem>
+    <SelectItem value="KA-71">KA-71</SelectItem>
+  </>
+)}
+
+{data.rto_state === "Gujarat" && (
+  <>
+    <SelectItem value="GJ-14">GJ-14</SelectItem>
+    <SelectItem value="GJ-20">GJ-20</SelectItem>
+    <SelectItem value="GJ-22">GJ-22</SelectItem>
+    <SelectItem value="GJ-25">GJ-25</SelectItem>
+    <SelectItem value="GJ-26">GJ-26</SelectItem>
+    <SelectItem value="GJ-28">GJ-28</SelectItem>
+    <SelectItem value="GJ-29">GJ-29</SelectItem>
+    <SelectItem value="GJ-30">GJ-30</SelectItem>
+    <SelectItem value="GJ-31">GJ-31</SelectItem>
+    <SelectItem value="GJ-32">GJ-32</SelectItem>
+    <SelectItem value="GJ-33">GJ-33</SelectItem>
+    <SelectItem value="GJ-34">GJ-34</SelectItem>
+    <SelectItem value="GJ-35">GJ-35</SelectItem>
+    <SelectItem value="GJ-36">GJ-36</SelectItem>
+    <SelectItem value="GJ-37">GJ-37</SelectItem>
+  </>
+)}
+{data.rto_state === "Tamil Nadu" && (
+  <>
+    <SelectItem value="TN-15">TN-15</SelectItem>
+    <SelectItem value="TN-15Z">TN-15Z</SelectItem>
+    <SelectItem value="TN-16">TN-16</SelectItem>
+    <SelectItem value="TN-16Z">TN-16Z</SelectItem>
+    <SelectItem value="TN-18Y">TN-18Y</SelectItem>
+    <SelectItem value="TN-19Y">TN-19Y</SelectItem>
+    <SelectItem value="TN-19Z">TN-19Z</SelectItem>
+    <SelectItem value="TN-20X">TN-20X</SelectItem>
+    <SelectItem value="TN-23T">TN-23T</SelectItem>
+    <SelectItem value="TN-24">TN-24</SelectItem>
+    <SelectItem value="TN-25">TN-25</SelectItem>
+    <SelectItem value="TN-25Y">TN-25Y</SelectItem>
+    <SelectItem value="TN-25Z">TN-25Z</SelectItem>
+    <SelectItem value="TN-27">TN-27</SelectItem>
+    <SelectItem value="TN-28">TN-28</SelectItem>
+    <SelectItem value="TN-28Z">TN-28Z</SelectItem>
+    <SelectItem value="TN-29">TN-29</SelectItem>
+    <SelectItem value="TN-29W">TN-29W</SelectItem>
+    <SelectItem value="TN-30W">TN-30W</SelectItem>
+    <SelectItem value="TN-31">TN-31</SelectItem>
+    <SelectItem value="TN-32">TN-32</SelectItem>
+    <SelectItem value="TN-33">TN-33</SelectItem>
+    <SelectItem value="TN-34">TN-34</SelectItem>
+    <SelectItem value="TN-36">TN-36</SelectItem>
+    <SelectItem value="TN-36W">TN-36W</SelectItem>
+    <SelectItem value="TN-36Z">TN-36Z</SelectItem>
+    <SelectItem value="TN-37Z">TN-37Z</SelectItem>
+    <SelectItem value="TN-39Z">TN-39Z</SelectItem>
+    <SelectItem value="TN-40">TN-40</SelectItem>
+    <SelectItem value="TN-41">TN-41</SelectItem>
+    <SelectItem value="TN-42">TN-42</SelectItem>
+    <SelectItem value="TN-42Y">TN-42Y</SelectItem>
+    <SelectItem value="TN-43">TN-43</SelectItem>
+    <SelectItem value="TN-43Z">TN-43Z</SelectItem>
+    <SelectItem value="TN-46">TN-46</SelectItem>
+    <SelectItem value="TN-47">TN-47</SelectItem>
+    <SelectItem value="TN-48">TN-48</SelectItem>
+    <SelectItem value="TN-48X">TN-48X</SelectItem>
+    <SelectItem value="TN-48Y">TN-48Y</SelectItem>
+    <SelectItem value="TN-48Z">TN-48Z</SelectItem>
+    <SelectItem value="TN-49">TN-49</SelectItem>
+    <SelectItem value="TN-49Y">TN-49Y</SelectItem>
+    <SelectItem value="TN-50">TN-50</SelectItem>
+    <SelectItem value="TN-50Z">TN-50Z</SelectItem>
+    <SelectItem value="TN-51">TN-51</SelectItem>
+    <SelectItem value="TN-52">TN-52</SelectItem>
+    <SelectItem value="TN-54">TN-54</SelectItem>
+    <SelectItem value="TN-55">TN-55</SelectItem>
+    <SelectItem value="TN-55Y">TN-55Y</SelectItem>
+    <SelectItem value="TN-55Z">TN-55Z</SelectItem>
+    <SelectItem value="TN-56">TN-56</SelectItem>
+    <SelectItem value="TN-57">TN-57</SelectItem>
+    <SelectItem value="TN-58Z">TN-58Z</SelectItem>
+    <SelectItem value="TN-59V">TN-59V</SelectItem>
+    <SelectItem value="TN-60">TN-60</SelectItem>
+    <SelectItem value="TN-60Z">TN-60Z</SelectItem>
+    <SelectItem value="TN-61">TN-61</SelectItem>
+    <SelectItem value="TN-63">TN-63</SelectItem>
+    <SelectItem value="TN-63Z">TN-63Z</SelectItem>
+    <SelectItem value="TN-64">TN-64</SelectItem>
+    <SelectItem value="TN-65">TN-65</SelectItem>
+    <SelectItem value="TN-65Z">TN-65Z</SelectItem>
+    <SelectItem value="TN-67">TN-67</SelectItem>
+    <SelectItem value="TN-67W">TN-67W</SelectItem>
+    <SelectItem value="TN-68">TN-68</SelectItem>
+    <SelectItem value="TN-69">TN-69</SelectItem>
+    <SelectItem value="TN-72">TN-72</SelectItem>
+    <SelectItem value="TN-72V">TN-72V</SelectItem>
+    <SelectItem value="TN-73">TN-73</SelectItem>
+    <SelectItem value="TN-73Z">TN-73Z</SelectItem>
+    <SelectItem value="TN-74">TN-74</SelectItem>
+    <SelectItem value="TN-75">TN-75</SelectItem>
+    <SelectItem value="TN-76">TN-76</SelectItem>
+    <SelectItem value="TN-76V">TN-76V</SelectItem>
+    <SelectItem value="TN-77">TN-77</SelectItem>
+    <SelectItem value="TN-78">TN-78</SelectItem>
+    <SelectItem value="TN-78Z">TN-78Z</SelectItem>
+    <SelectItem value="TN-79">TN-79</SelectItem>
+    <SelectItem value="TN-81">TN-81</SelectItem>
+    <SelectItem value="TN-82">TN-82</SelectItem>
+    <SelectItem value="TN-83">TN-83</SelectItem>
+    <SelectItem value="TN-83Y">TN-83Y</SelectItem>
+    <SelectItem value="TN-83Z">TN-83Z</SelectItem>
+    <SelectItem value="TN-84">TN-84</SelectItem>
+    <SelectItem value="TN-86">TN-86</SelectItem>
+    <SelectItem value="TN-87">TN-87</SelectItem>
+    <SelectItem value="TN-88">TN-88</SelectItem>
+    <SelectItem value="TN-88Z">TN-88Z</SelectItem>
+    <SelectItem value="TN-90">TN-90</SelectItem>
+    <SelectItem value="TN-91">TN-91</SelectItem>
+    <SelectItem value="TN-91Y">TN-91Y</SelectItem>
+    <SelectItem value="TN-91Z">TN-91Z</SelectItem>
+    <SelectItem value="TN-92">TN-92</SelectItem>
+    <SelectItem value="TN-93">TN-93</SelectItem>
+    <SelectItem value="TN-94">TN-94</SelectItem>
+    <SelectItem value="TN-95">TN-95</SelectItem>
+    <SelectItem value="TN-96">TN-96</SelectItem>
+    <SelectItem value="TN-97Z">TN-97Z</SelectItem>
+    <SelectItem value="TN-99">TN-99</SelectItem>
+    <SelectItem value="TN-583">TN-583</SelectItem>
+  </>
+)}
+
+
                   {/* Add more states and RTOs as needed */}
                 </SelectContent>
               </Select>
@@ -458,37 +814,6 @@ const Appointment: React.FC = () => {
           
           <div>
             <label className="block text-sm font-medium mb-1">
-              Service History Documents
-            </label>
-            <div className="flex items-center justify-center w-full">
-              <label htmlFor="service-history" className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <Upload className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400" />
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Click to upload</span> or drag and drop
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">PDF or images (MAX. 5MB)</p>
-                </div>
-                <input 
-                  id="service-history" 
-                  type="file" 
-                  accept=".pdf,image/*" 
-                  className="hidden" 
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      handleInputChange("service_history_docs", e.target.files[0].name);
-                    }
-                  }} 
-                />
-              </label>
-            </div>
-            {data.service_history_docs && (
-              <p className="text-sm text-green-600 mt-1">File selected: {data.service_history_docs}</p>
-            )}
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">
               Fuel Type <span className="text-red-500">*</span>
             </label>
             <Select 
@@ -532,7 +857,36 @@ const Appointment: React.FC = () => {
               </SelectContent>
             </Select>
           </div>
-          
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Service History Documents
+            </label>
+            <div className="flex items-center justify-center w-full">
+              <label htmlFor="service-history" className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <Upload className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400" />
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">PDF or images (MAX. 5MB)</p>
+                </div>
+                <input 
+                  id="service-history" 
+                  type="file" 
+                  accept=".pdf,image/*" 
+                  className="hidden" 
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      handleInputChange("service_history_docs", e.target.files[0].name);
+                    }
+                  }} 
+                />
+              </label>
+            </div>
+            {data.service_history_docs && (
+              <p className="text-sm text-green-600 mt-1">File selected: {data.service_history_docs}</p>
+            )}
+          </div>
           <div>
             <label className="block text-sm font-medium mb-1">
               Color <span className="text-red-500">*</span>
