@@ -1085,6 +1085,24 @@ const Appointment: React.FC = () => {
               </SelectContent>
             </Select>
           </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Battery Condition of Vehicle
+            </label>
+            <Select 
+              value={data.vehicle_battery || ""}
+              onValueChange={(value) => handleInputChange("vehicle_battery", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Yes">Good</SelectItem>
+                <SelectItem value="No">Not Good</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">
