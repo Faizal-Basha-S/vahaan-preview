@@ -75,6 +75,13 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     roadTaxStatus: false
   });
   
+  // State to track which documents should be displayed
+  const [requiredDocuments, setRequiredDocuments] = useState({
+    batteryHealth: false,
+    loanNOC: false,
+    warranty: false
+  });
+  
   useEffect(() => {
     // Load data from localStorage for confirmation view
     if (isConfirmationView) {
@@ -120,23 +127,39 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
 
       // Try to get data from appointment steps
       try {
+        let batteryHealthExists = false;
+        let loanStatusIsNOC = false;
+        let warrantyStatusAtPresent = false;
+        
         for (let i = 1; i <= 6; i++) {
           const stepData = localStorage.getItem(`appointment_step${i}_data`);
           if (stepData) {
             const parsedData = JSON.parse(stepData);
             
-            // Update specific fields based on step data
-            if (i === 2 && parsedData.warranty_status) {
+            // Check for specific conditions from appointment steps
+            if (i === 2 && parsedData.battery_health && parsedData.battery_health.trim() !== "") {
+              batteryHealthExists = true;
+              data.batteryHealth = parsedData.battery_health;
+            }
+            
+            if (i === 3 && parsedData.warranty_status === "At Present") {
+              warrantyStatusAtPresent = true;
               data.warrantyStatus = parsedData.warranty_status;
             }
-            if (i === 2 && parsedData.loan_status) {
+            
+            if (i === 3 && parsedData.loan_status === "Yes - Got NOC") {
+              loanStatusIsNOC = true;
               data.loanStatus = parsedData.loan_status;
-            }
-            if (i === 1 && parsedData.battery_health) {
-              data.batteryHealth = parsedData.battery_health;
             }
           }
         }
+        
+        // Update required documents state based on conditions
+        setRequiredDocuments({
+          batteryHealth: batteryHealthExists,
+          loanNOC: loanStatusIsNOC,
+          warranty: warrantyStatusAtPresent
+        });
       } catch (error) {
         console.error("Error parsing appointment step data:", error);
       }
@@ -194,30 +217,29 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   };
   
   const handlePublishListing = () => {
-    // Check if all documents are selected
-    const requiredDocs = Object.entries(documents)
-      .filter(([key, value]) => {
-        // Skip battery health check if battery health is not saved
-        if (key === "batteryHealth" && !confirmationData.batteryHealth) {
-          return false;
-        }
-        
-        // Skip loan NOC document check if loan status is not "Yes-got NOC"
-        if (key === "loanNOC" && confirmationData.loanStatus !== "Yes-got NOC") {
-          return false;
-        }
-        
-        // Skip warranty document check if warranty status is not "At Present"
-        if (key === "warranty" && confirmationData.warrantyStatus !== "At Present") {
-          return false;
-        }
-        
-        return !value;
-      })
-      .map(([key]) => key);
+    // Check if all required documents are selected
+    const requiredDocs = [];
+    
+    // Always required documents
+    if (!documents.insurance) requiredDocs.push("Insurance document");
+    if (!documents.pucCertificate) requiredDocs.push("PUC certificate");
+    if (!documents.roadTaxStatus) requiredDocs.push("Road tax status");
+    
+    // Conditionally required documents
+    if (requiredDocuments.batteryHealth && !documents.batteryHealth) {
+      requiredDocs.push("Battery health proof");
+    }
+    
+    if (requiredDocuments.loanNOC && !documents.loanNOC) {
+      requiredDocs.push("Loan NOC document");
+    }
+    
+    if (requiredDocuments.warranty && !documents.warranty) {
+      requiredDocs.push("Warranty document");
+    }
     
     if (requiredDocs.length > 0) {
-      toast.error("Please agree to provide all required documents");
+      toast.error(`Please agree to provide all required documents: ${requiredDocs.join(", ")}`);
       return;
     }
     
@@ -256,7 +278,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             <Label htmlFor="document-insurance">Insurance document</Label>
           </div>
           
-          {confirmationData.batteryHealth && (
+          {requiredDocuments.batteryHealth && (
             <div className="flex items-center space-x-3">
               <Checkbox
                 id="document-battery"
@@ -267,7 +289,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             </div>
           )}
           
-          {confirmationData.loanStatus === "Yes-got NOC" && (
+          {requiredDocuments.loanNOC && (
             <div className="flex items-center space-x-3">
               <Checkbox
                 id="document-loan"
@@ -278,14 +300,14 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             </div>
           )}
           
-          {confirmationData.warrantyStatus === "At Present" && (
+          {requiredDocuments.warranty && (
             <div className="flex items-center space-x-3">
               <Checkbox
                 id="document-warranty"
                 checked={documents.warranty}
                 onCheckedChange={() => handleDocumentChange('warranty')}
               />
-              <Label htmlFor="document-warranty">Warrenty Document</Label>
+              <Label htmlFor="document-warranty">Warranty Document</Label>
             </div>
           )}
           
@@ -295,7 +317,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
               checked={documents.pucCertificate}
               onCheckedChange={() => handleDocumentChange('pucCertificate')}
             />
-            <Label htmlFor="document-puc">puc_certificate</Label>
+            <Label htmlFor="document-puc">PUC Certificate</Label>
           </div>
           
           <div className="flex items-center space-x-3">
@@ -304,7 +326,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
               checked={documents.roadTaxStatus}
               onCheckedChange={() => handleDocumentChange('roadTaxStatus')}
             />
-            <Label htmlFor="document-roadtax">road_tax_status</Label>
+            <Label htmlFor="document-roadtax">Road Tax Status</Label>
           </div>
         </div>
         
