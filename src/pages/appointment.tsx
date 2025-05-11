@@ -775,18 +775,18 @@ const Appointment: React.FC = () => {
                     variant={"outline"}
                     className={"w-full justify-start text-left font-normal"}
                   >
-                    {date ? format(date, "PPP") : "Pick a date"}
+                    {data.insurance_validity ? format(new Date(data.insurance_validity), "PPP") : "Pick a date"}
                     <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={date}
+                    selected={data.insurance_validity ? new Date(data.insurance_validity) : undefined}
                     onSelect={(newDate) => {
-                      setDate(newDate);
-                      handleInputChange("insurance_validity", newDate ? format(newDate, "yyyy-MM-dd") : null);
-                    }}
+  handleInputChange("insurance_validity", newDate ? format(newDate, "yyyy-MM-dd") : null);
+}}
+
                     initialFocus
                   />
                 </PopoverContent>
