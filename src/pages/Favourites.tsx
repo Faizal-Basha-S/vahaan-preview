@@ -33,7 +33,7 @@ const Favourites = () => {
 
   return (
     <Layout>
-      <div className="w-full px-4 py-10 lg:px-8 xl:px-12">
+      <div className="container mx-auto px-4 py-10">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold">Your Favourite Listings</h1>
           <p className="text-muted-foreground mt-2">Easily access the cars and bikes you've shortlisted.</p>
