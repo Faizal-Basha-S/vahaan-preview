@@ -9,21 +9,13 @@ import { Label } from "@/components/ui/label";
 
 interface PriceInputProps {
   onBack: () => void;
-  onNext: () => void;
-  expectedPrice: string;
-  setExpectedPrice: React.Dispatch<React.SetStateAction<string>>;
-  selectedFeatures: string[];
-  setSelectedFeatures: React.Dispatch<React.SetStateAction<string[]>>;
+  onNext: (price: string, features: string[]) => void;
 }
 
-const PriceInput: React.FC<PriceInputProps> = ({ 
-  onBack, 
-  onNext, 
-  expectedPrice, 
-  setExpectedPrice, 
-  selectedFeatures, 
-  setSelectedFeatures 
-}) => {
+const PriceInput: React.FC<PriceInputProps> = ({ onBack, onNext }) => {
+  const [price, setPrice] = useState<string>("");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  
   const features = [
     "Air Conditioning", "Power Steering", "Power Windows",
     "Anti-Lock Brakes", "Airbags", "Leather Seats",
@@ -34,7 +26,7 @@ const PriceInput: React.FC<PriceInputProps> = ({
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Only allow numbers
     const value = e.target.value.replace(/[^0-9]/g, "");
-    setExpectedPrice(value);
+    setPrice(value);
   };
   
   const handleFeatureChange = (feature: string) => {
@@ -46,21 +38,21 @@ const PriceInput: React.FC<PriceInputProps> = ({
   };
   
   const handleSubmit = () => {
-    if (!expectedPrice || parseInt(expectedPrice) <= 0) {
+    if (!price || parseInt(price) <= 0) {
       toast.error("Please enter a valid price");
       return;
     }
     
     // Store data directly in localStorage here for redundancy
-    localStorage.setItem("seller_price", expectedPrice);
+    localStorage.setItem("seller_price", price);
     localStorage.setItem("key_features", JSON.stringify(selectedFeatures));
     
-    onNext();
+    onNext(price, selectedFeatures);
   };
   
   // Format the price with commas for display
-  const formattedPrice = expectedPrice 
-    ? new Intl.NumberFormat("en-IN").format(parseInt(expectedPrice))
+  const formattedPrice = price 
+    ? new Intl.NumberFormat("en-IN").format(parseInt(price))
     : "";
   
   return (

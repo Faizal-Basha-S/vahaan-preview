@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/use-toast";
 
 interface CarDetailsProps {
   onBack: () => void;
@@ -58,7 +58,8 @@ const CarDetails: React.FC<CarDetailsProps> = ({ onBack, onNext, vehicleType }) 
     
     // Basic validation
     if (!formData.vehicleType || !formData.fuelType) {
-      toast("Missing Information", {
+      toast({
+        title: "Missing Information",
         description: "Please fill in all required fields.",
         variant: "destructive",
       });
