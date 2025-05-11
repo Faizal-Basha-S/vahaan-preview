@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +7,6 @@ import {
   Gauge, Tag, User 
 } from "lucide-react";
 import {
-  TooltipProvider,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -151,32 +151,28 @@ const VehicleCard = ({ vehicle }: VehicleCardProps) => {
           {vehicle.features && vehicle.features.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3">
               {vehicle.features.slice(0, 3).map((feature, idx) => (
-                <TooltipProvider key={idx}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Badge variant="outline" className="text-xs">
-                        {feature}
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{feature}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <Tooltip key={idx}>
+                  <TooltipTrigger asChild>
+                    <Badge variant="outline" className="text-xs">
+                      {feature}
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{feature}</p>
+                  </TooltipContent>
+                </Tooltip>
               ))}
               {vehicle.features.length > 3 && (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Badge variant="outline" className="text-xs">
-                        +{vehicle.features.length - 3} more
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      {vehicle.features.slice(3).join(", ")}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge variant="outline" className="text-xs">
+                      +{vehicle.features.length - 3} more
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {vehicle.features.slice(3).join(", ")}
+                  </TooltipContent>
+                </Tooltip>
               )}
             </div>
           )}
