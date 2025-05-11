@@ -557,10 +557,10 @@ const Appointment: React.FC = () => {
                   <SelectValue placeholder="Select Battery Health" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Excellent (> 90%)">Excellent (> 90%)</SelectItem>
+                  <SelectItem value="Excellent (greater than 90%)">Excellent (&gt; 90%)</SelectItem>
                   <SelectItem value="Good (75-90%)">Good (75-90%)</SelectItem>
                   <SelectItem value="Average (60-75%)">Average (60-75%)</SelectItem>
-                  <SelectItem value="Poor (< 60%)">Poor (< 60%)</SelectItem>
+                  <SelectItem value="Poor (less than 60%)">Poor (&lt; 60%)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
