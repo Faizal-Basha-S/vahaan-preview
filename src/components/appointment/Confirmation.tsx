@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase, handlePublishListing } from "@/lib/supabaseClient";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface ConfirmationData {
@@ -134,36 +134,151 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     setDocumentChecklist(prev => ({...prev, [document]: checked}));
   };
 
-  const handlePublish = async () => {
+  const handlePublishListing = async () => {
     if (!areAllDocumentsChecked()) {
       toast.error("Please agree to provide all required documents");
       return;
     }
 
     setIsSubmitting(true);
-    
-    // Save vehicle type to localStorage to ensure it's available for the publishing function
-    const vehicleType = isBike ? "bike" : "car";
-    localStorage.setItem('vehicle', vehicleType);
-    
-    // Add selected features to localStorage
-    localStorage.setItem('key_features', JSON.stringify(selectedFeatures));
-    
+
     try {
-      const result = await handlePublishListing();
-      
-      if (result.success) {
-        console.log(`${vehicleType} listing published successfully`, result.data);
-        toast.success(`Your ${vehicleType} listing has been published successfully!`);
-        
-        // Optional: Clear localStorage data after successful insertion
-        // localStorage.removeItem("appointment_step1_data");
-        // localStorage.removeItem("appointment_step2_data");
-        // localStorage.removeItem("appointment_step3_data");
-      } else {
-        console.error(`Error publishing ${vehicleType} listing:`, result.error);
-        toast.error("Failed to publish listing. Please try again.");
+      // Get vehicle type and determine which table to use
+      const sellFormDataStr = localStorage.getItem("sellFormData");
+      if (!sellFormDataStr) {
+        throw new Error("Sell form data not found in localStorage");
       }
+
+      const sellFormData = JSON.parse(sellFormDataStr);
+      const vehicleType = localStorage.getItem("vehicle_type");
+      const vehicle = localStorage.getItem("vehicle");
+
+      console.log("vehicle", vehicleType);
+      
+      // Get user phone number from user profile
+      let phoneNumber = confirmationData.phoneNumber;
+      
+      // Try to find userProfile in localStorage
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("userProfile_")) {
+          try {
+            const profile = JSON.parse(localStorage.getItem(key) || "{}");
+            phoneNumber = profile.phoneNumber || phoneNumber;
+          } catch (e) {
+            console.error("Error parsing user profile:", e);
+          }
+        }
+      });
+
+      // Format photos based on vehicle type
+      const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
+      let photos = {};
+      
+      if (uploadedFileUrlsStr) {
+        try {
+          const parsedUrls = JSON.parse(uploadedFileUrlsStr);
+          
+          if (vehicle === "car") {
+            photos = {
+              exterior: parsedUrls.Exterior || [],
+              interior: parsedUrls.Interior || [],
+              tyres: parsedUrls.Tyres || [],
+              features: parsedUrls.Features || [],
+              defects: parsedUrls.Defects || []
+            };
+          } else {
+            photos = {
+              front: parsedUrls.Front || [],
+              rear: parsedUrls.Rear || [],
+              left: parsedUrls.Left || [],
+              right: parsedUrls.Right || [],
+              defects: parsedUrls.Defects || []
+            };
+          }
+        } catch (error) {
+          console.error("Error parsing uploaded file URLs:", error);
+          photos = {};
+        }
+      }
+
+      const sellingPrice = parseInt(localStorage.getItem("seller_price") || "0", 10);
+      const parsedFeatures = JSON.parse(localStorage.getItem("key_features") || "[]");
+
+      if (vehicle === "car") {
+        // Prepare car listing data
+        const carData = {
+          brand: sellFormData.brand || confirmationData.brand,
+          model: sellFormData.model || confirmationData.model,
+          variant: sellFormData.variant || confirmationData.variant,
+          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
+          city: localStorage.getItem("selectedCity") || confirmationData.city,
+          color: localStorage.getItem("color") || confirmationData.color,
+          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
+          transmission: localStorage.getItem("transmission") || confirmationData.transmission || "Manual",
+          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
+          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
+          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
+          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
+          airbags: parseInt(localStorage.getItem("airbags") || confirmationData.airbags || "0", 10),
+          cylinders: parseInt(localStorage.getItem("cylinders") || confirmationData.cylinders || "0", 10),
+          wheel_drive: localStorage.getItem("wheel_drive") || confirmationData.wheelDrive,
+          sell_price: sellingPrice,
+          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
+          phone_number: phoneNumber || "0000000000",
+          vehicle_type: vehicleType,
+          photos: photos
+        };
+
+        // Insert car listing into Supabase
+        const { data: carData_res, error: carError } = await supabase
+          .from("car_seller_listings")
+          .insert([carData]);
+
+        if (carError) {
+          throw carError;
+        }
+        
+        console.log("Car listing published successfully");
+        toast.success("Car listing has been published successfully!");
+      } else {
+        // Prepare bike listing data
+        const bikeData = {
+          brand: sellFormData.brand || confirmationData.brand,
+          model: sellFormData.model || confirmationData.model,
+          variant: sellFormData.variant || confirmationData.variant,
+          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
+          city: localStorage.getItem("selectedCity") || confirmationData.city,
+          color: localStorage.getItem("color") || confirmationData.color,
+          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
+          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
+          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
+          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
+          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
+          sell_price: sellingPrice,
+          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
+          phone_number: phoneNumber || "0000000000",
+          vehicle_type: vehicleType,
+          photos: photos
+        };
+
+        // Insert bike listing into Supabase
+        const { data: bikeData_res, error: bikeError } = await supabase
+          .from("bike_seller_listings")
+          .insert([bikeData]);
+
+        if (bikeError) {
+          throw bikeError;
+        }
+        
+        console.log("Bike listing published successfully");
+        toast.success("Bike listing has been published successfully!");
+      }
+
+      // Optional: Clear certain localStorage data after successful submission
+      // localStorage.removeItem("uploadedFileUrls");
+      // localStorage.removeItem("seller_price");
+      // localStorage.removeItem("key_features");
+      
     } catch (error) {
       console.error("Error publishing listing:", error);
       toast.error("Failed to publish listing. Please try again.");
@@ -404,10 +519,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
           </Button>
           <Button 
             className="bg-green-500 hover:bg-green-600 text-white"
-            onClick={handlePublish}
+            onClick={handlePublishListing}
             disabled={isSubmitting || !areAllDocumentsChecked()}
           >
-            {isSubmitting ? "Publishing..." : "Publish Listing"}
+            {isSubmitting ? "Publishing..." : "Listing Published Successfully"}
           </Button>
         </div>
       </div>
