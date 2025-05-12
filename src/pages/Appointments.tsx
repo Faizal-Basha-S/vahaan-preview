@@ -59,7 +59,7 @@ const Appointments = () => {
 
   return (
     <Layout>
-      <div className="py-10">
+      <div className=" px-4 pt-24">
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold">Your Scheduled Appointments</h1>
           <p className="text-muted-foreground mt-2">Keep track of all your sell and service appointments.</p>
