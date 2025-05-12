@@ -36,8 +36,8 @@ const SellProcess: React.FC = () => {
     },
     {
       step: "Step 2",
-      title: "Schedule Free Inspection",
-      description: "Our expert will inspect your car at your home or office, at your convenience.",
+      title: "Schedule Quick Contact Confirmation",
+      description: "We'll contact you to confirm details and guide you forward — no home visit needed.",
       icon: <ClipboardCheck className="h-8 w-8 text-primary" />
     },
     {
