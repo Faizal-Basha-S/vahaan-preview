@@ -248,7 +248,7 @@ const Hero = () => {
               </a>
             </div>
             <div className="mt-5 bg-dark flex flex-wrap items-center space-x-4 text-white animate-slide-up" style={{ animationDelay: '800ms' }}>
-              <p className="font-medium">Call/WhatsApp: 810-810-4175</p>
+              <p className="font-medium">+91 810-810-4175</p>
             </div>
           </div>
           
