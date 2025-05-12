@@ -128,6 +128,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             const parsedData = JSON.parse(stepData);
             
             // Update specific fields based on step data
+            if (i === 4 && parsedData.seller_price) {
+              data.seller_price = parsedData.seller_price;
+            }
             if (i === 2 && parsedData.warranty_status) {
               data.warrantyStatus = parsedData.warranty_status;
             }
@@ -302,7 +305,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       accident_history: stepData.appointment_step3_data?.accident_history || null,
       major_replacements: stepData.appointment_step3_data?.major_replacements || null,
       seller_name: stepData.appointment_step5_data?.seller_name || null,
-      sell_price: stepData.appointment_step2_data?.seller_price || localStorage.getItem('seller_price') || null,
+      sell_price: stepData.appointment_step2_data?.seller_price || null,
       seller_phone_number: stepData.appointment_step5_data?.phone_number || localStorage.getItem('phoneNumber') || null,
       seller_location_city: stepData.appointment_step5_data?.location_city || localStorage.getItem('selectedCity') || null,
       preferred_contact_time: stepData.appointment_step5_data?.preferred_contact_time || null,
