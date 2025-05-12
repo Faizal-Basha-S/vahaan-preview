@@ -191,6 +191,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
           const timestamp = new Date().getTime();
           const fileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
           const filePath = `${basePath}/${category.toLowerCase()}/${fileName}`;
+
           
           const { data, error } = await supabase.storage
             .from("seller-uploads")
