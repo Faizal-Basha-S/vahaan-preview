@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1 pt-16">
-          <div className="w-full mx-auto">  // Remove px-4, sm:px-6, lg:px-8
+          <div className="w-full mx-auto">  
             {children}
           </div>
         </main>
