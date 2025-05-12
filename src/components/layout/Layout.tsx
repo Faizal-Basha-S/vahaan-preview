@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
     <TooltipProvider>
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1 pt-16">
+        <main className="flex-1">
           <div className="w-full mx-auto">  
             {children}
           </div>
