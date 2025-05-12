@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 
 interface ConfirmationData {
@@ -150,7 +150,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       }
 
       const sellFormData = JSON.parse(sellFormDataStr);
-      const vehicleType = localStorage.getItem("vehicle_type");
+      const vehicleType = localStorage.getItem("vehicle");
       const vehicle = localStorage.getItem("vehicle");
 
       console.log("vehicle", vehicleType);
