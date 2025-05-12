@@ -1103,12 +1103,17 @@ const Appointment: React.FC = () => {
                 <span className="text-gray-500">₹</span>
               </div>
               <Input 
-                type="number"
-                value={data.seller_price || ""}
-                onChange={(e) => handleInputChange("seller_price", e.target.value)}
-                className="pl-7"
-                placeholder="Enter your expected price"
-              />
+  type="number"
+  value={data.seller_price || ""}
+  onChange={(e) => {
+    const value = e.target.value;
+    handleInputChange("seller_price", value); // Update state
+    localStorage.setItem("seller_price", value); // Save to localStorage
+  }}
+  className="pl-7"
+  placeholder="Enter your expected price"
+/>
+
             </div>
           </div>
           
