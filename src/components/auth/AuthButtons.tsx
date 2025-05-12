@@ -59,12 +59,6 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
     },
     { 
       id: 4, 
-      title: "Requested Services", 
-      icon: <FileText className="h-5 w-5 text-gray-600" />,
-      path: "/services"
-    },
-    { 
-      id: 5, 
       title: "Become a Partner", 
       icon: <Bell className="h-5 w-5 text-gray-600" />,
       path: "/partner"
