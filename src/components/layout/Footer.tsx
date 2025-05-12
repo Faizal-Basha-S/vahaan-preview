@@ -31,7 +31,6 @@ const Footer = () => {
               <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="YouTube">
                 <Youtube size={20} />
               </a>
-              </a>
             </div>
           </div>
           
