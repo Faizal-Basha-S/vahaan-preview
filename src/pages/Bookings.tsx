@@ -139,7 +139,7 @@ const Bookings = () => {
 
   return (
     <Layout>
-      <div className=" px-12 pt-24">
+      <div className=" px-16 pt-24">
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold">My Vehicle Bookings</h1>
           <p className="text-muted-foreground mt-2">Manage all your vehicle purchase bookings in one place.</p>
