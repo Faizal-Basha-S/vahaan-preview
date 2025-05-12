@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Services from "./pages/Services";
 import BuyCar from "./pages/BuyCar";
 import BuyBikes from "./pages/BuyBikes";
 import Sell from "./pages/Sell";
@@ -31,7 +30,6 @@ import AboutUs from "./pages/AboutUs";
 import Favourites from "./pages/Favourites";
 import Appointments from "./pages/Appointments";
 import Bookings from "./pages/Bookings";
-import ServicesPage from "./pages/Services";
 import Partner from "./pages/Partner";
 
 const queryClient = new QueryClient();
