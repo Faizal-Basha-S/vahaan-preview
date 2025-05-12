@@ -35,7 +35,6 @@ interface ConfirmationData {
   warrantyStatus: string | null;
   loanStatus: string | null;
   batteryHealth: string | null;
-  seller_price: string | null;
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -65,7 +64,6 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     warrantyStatus: null,
     loanStatus: null,
     batteryHealth: null,
-    seller_price: null,
   });
   
   // State for document checkboxes
@@ -104,7 +102,6 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         warrantyStatus: localStorage.getItem('warranty_status'),
         loanStatus: localStorage.getItem('loan_status'),
         batteryHealth: localStorage.getItem('battery_health'),
-        seller_price: localStorage.getItem('seller_price'),
       };
       
       // Also get data from sellFormData
@@ -113,10 +110,10 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         
         // Update data with sellFormData values if they exist
         if (sellFormData.brand) data.brand = sellFormData.brand;
-        if (sellFormData.year) data.year = parseInt(sellFormData.year);
+        if (sellFormData.year) data.year = sellFormData.year;
         if (sellFormData.model) data.model = sellFormData.model;
         if (sellFormData.variant) data.variant = sellFormData.variant;
-        if (sellFormData.kilometersDriven) data.kilometers = parseInt(sellFormData.kilometersDriven);
+        if (sellFormData.kilometersDriven) data.kilometers = sellFormData.kilometersDriven;
         if (sellFormData.city) data.city = sellFormData.city;
       } catch (error) {
         console.error("Error parsing sellFormData:", error);
@@ -149,9 +146,6 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       }
       
       const step5Data = JSON.parse(localStorage.getItem('appointment_step5_data') || '{}');
-      if (step5Data.seller_price) {
-        data.seller_price = step5Data.seller_price;
-      }
       
       setConfirmationData(data);
     }
