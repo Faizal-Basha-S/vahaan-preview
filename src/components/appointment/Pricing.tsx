@@ -282,6 +282,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         console.error(`Error parsing ${key}:`, error);
       }
     }
+    
+    // Get step5Data specifically for seller_price
+    const step5Data = JSON.parse(localStorage.getItem('appointment_step5_data') || '{}');
 
     // Prepare data for submission
     const data = {
@@ -307,7 +310,11 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       accident_history: stepData.appointment_step3_data?.accident_history || null,
       major_replacements: stepData.appointment_step3_data?.major_replacements || null,
       seller_name: stepData.appointment_step5_data?.seller_name || null,
-      sell_price: step5Data.seller_price ? parseFloat(step5Data.seller_price) : null,
+      sell_price: stepData.appointment_step5_data?.seller_price 
+        ? parseFloat(stepData.appointment_step5_data.seller_price) 
+        : step5Data.seller_price 
+          ? parseFloat(step5Data.seller_price) 
+          : null,
       seller_phone_number: stepData.appointment_step5_data?.phone_number || localStorage.getItem('phoneNumber') || null,
       seller_location_city: stepData.appointment_step5_data?.location_city || localStorage.getItem('selectedCity') || null,
       preferred_contact_time: stepData.appointment_step5_data?.preferred_contact_time || null,
