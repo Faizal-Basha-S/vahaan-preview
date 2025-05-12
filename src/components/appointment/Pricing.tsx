@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabaseClient";
 
 interface PricingProps {
   onBack: () => void;
@@ -41,6 +42,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   const [promoCode, setPromoCode] = useState<string>("");
   const [promoApplied, setPromoApplied] = useState<boolean>(false);
   const [isConfirmationView, setIsConfirmationView] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [confirmationData, setConfirmationData] = useState<ConfirmationData>({
     phoneNumber: null,
     brand: null,
@@ -193,7 +195,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     toast.info("Payment integration will be available in a future update");
   };
   
-  const handlePublishListing = () => {
+  const handlePublishListing = async () => {
     // Check if all documents are selected
     const requiredDocs = Object.entries(documents)
       .filter(([key, value]) => {
@@ -224,11 +226,141 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     // Save document agreement to localStorage
     localStorage.setItem("document_agreement", JSON.stringify(documents));
     
-    // Show success message
-    toast.success("Your listing has been published successfully!");
+    // Set submitting state to show loading indicator
+    setIsSubmitting(true);
     
-    // Reset confirmation view
-    setIsConfirmationView(false);
+    // Determine the vehicle type and appropriate table
+    const vehicleType = localStorage.getItem('vehicle');
+    const table = vehicleType === 'car'
+      ? 'car_seller_listings'
+      : vehicleType === 'bike'
+      ? 'bike_seller_listings'
+      : null;
+
+    if (!table) {
+      console.error('🚫 Invalid vehicle type. Table selection failed.');
+      toast.error("Could not determine vehicle type");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const parseJSON = (key: string) => {
+      try {
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : null;
+      } catch (err) {
+        console.warn(`⚠️ Failed to parse JSON: ${key}`, err);
+        return null;
+      }
+    };
+
+    const parseIntOrNull = (key: string) => {
+      const val = localStorage.getItem(key);
+      return val ? parseInt(val) : null;
+    };
+
+    const parseFloatOrNull = (key: string) => {
+      const val = localStorage.getItem(key);
+      return val ? parseFloat(val) : null;
+    };
+
+    // Parse step data from localStorage
+    const stepData: {[key: string]: any} = {};
+    for (let i = 1; i <= 6; i++) {
+      const key = `appointment_step${i}_data`;
+      try {
+        const data = localStorage.getItem(key);
+        if (data) {
+          stepData[key] = JSON.parse(data);
+        }
+      } catch (error) {
+        console.error(`Error parsing ${key}:`, error);
+      }
+    }
+
+    // Prepare data for submission
+    const data = {
+      registration_number: stepData.appointment_step1_data?.registration_number || null,
+      rto_state: stepData.appointment_step1_data?.rto_state || null,
+      rto: stepData.appointment_step1_data?.rto || null,
+      vehicle_type: stepData.appointment_step1_data?.body_type || null,
+      cc: parseIntOrNull('cc') || (stepData.appointment_step1_data?.engine_cc ? parseInt(stepData.appointment_step1_data.engine_cc) : null),
+      load_capacity: stepData.appointment_step1_data?.load_capacity ? parseInt(stepData.appointment_step1_data.load_capacity) : null,
+      number_of_owners: stepData.appointment_step2_data?.number_of_owners ? parseInt(stepData.appointment_step2_data.number_of_owners) : null,
+      ownership_type: stepData.appointment_step2_data?.ownership_type || null,
+      fuel_type: stepData.appointment_step2_data?.fuel_type || localStorage.getItem('fuel_type') || null,
+      color: stepData.appointment_step2_data?.color || localStorage.getItem('color') || null,
+      transmission_type: stepData.appointment_step2_data?.transmission_type || localStorage.getItem('transmission') || null,
+      modifications: stepData.appointment_step2_data?.modifications || null,
+      battery_health: stepData.appointment_step2_data?.battery_health || localStorage.getItem('battery_health') || null,
+      warranty_status: stepData.appointment_step3_data?.warranty_status || localStorage.getItem('warranty_status') || null,
+      loan_status: stepData.appointment_step3_data?.loan_status || localStorage.getItem('loan_status') || null,
+      tire_condition: stepData.appointment_step3_data?.tire_condition || null,
+      permit_type: stepData.appointment_step3_data?.permit_type || null,
+      fitness_certificate: stepData.appointment_step3_data?.fitness_certificate || null,
+      vehicle_battery: stepData.appointment_step3_data?.vehicle_battery || null,
+      accident_history: stepData.appointment_step3_data?.accident_history || null,
+      major_replacements: stepData.appointment_step3_data?.major_replacements || null,
+      seller_name: stepData.appointment_step5_data?.seller_name || null,
+      sell_price: parseFloatOrNull('seller_price') || parseFloatOrNull('appointment_step5_data.seller_price') || null,
+      seller_phone_number: stepData.appointment_step5_data?.phone_number || localStorage.getItem('phoneNumber') || null,
+      seller_location_city: stepData.appointment_step5_data?.location_city || localStorage.getItem('selectedCity') || null,
+      preferred_contact_time: stepData.appointment_step5_data?.preferred_contact_time || null,
+      warranty_details: stepData.appointment_step5_data?.warranty_details || null,
+      ev_charger_included: stepData.appointment_step5_data?.ev_charger_included || null,
+      reason_for_sale: stepData.appointment_step5_data?.reason_for_sale || null,
+      accessories: stepData.appointment_step5_data?.accessories || null,
+      aadhaar_number: stepData.appointment_step6_data?.aadhaar_number || null,
+      pan_number: stepData.appointment_step6_data?.pan_number || null,
+      api_location: stepData.appointment_step6_data?.live_location || null,
+      brand: localStorage.getItem('brand') || null,
+      year: parseIntOrNull('year') || null,
+      model: localStorage.getItem('model') || null,
+      variant: localStorage.getItem('variant') || null,
+      kilometers_driven: parseIntOrNull('kilometers') || null,
+      city: localStorage.getItem('selectedCity') || null,
+      photos: parseJSON('uploadedFileUrls') || {}
+    };
+
+    // Get sellFormData if available
+    try {
+      const sellFormData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+      if (sellFormData.brand) data.brand = sellFormData.brand;
+      if (sellFormData.year) data.year = parseInt(sellFormData.year);
+      if (sellFormData.model) data.model = sellFormData.model;
+      if (sellFormData.variant) data.variant = sellFormData.variant;
+      if (sellFormData.kilometersDriven) data.kilometers_driven = parseInt(sellFormData.kilometersDriven);
+      if (sellFormData.city) data.city = sellFormData.city;
+    } catch (error) {
+      console.error("Error parsing sellFormData:", error);
+    }
+
+    console.log('📤 Uploading to table:', table);
+    console.log('🧾 Final Data Object:', data);
+
+    try {
+      const { data: insertedData, error } = await supabase
+        .from(table)
+        .insert([data]);
+
+      if (error) {
+        console.error('❌ Supabase insert error:', error.message, error.details);
+        toast.error(`Failed to publish listing: ${error.message}`);
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log('✅ Successfully inserted:', insertedData);
+      toast.success("Your listing has been published successfully!");
+      
+      // Reset confirmation view and submitting state
+      setIsConfirmationView(false);
+      setIsSubmitting(false);
+    } catch (error) {
+      console.error('🚨 Insert exception:', error);
+      toast.error("An unexpected error occurred. Please try again.");
+      setIsSubmitting(false);
+    }
   };
   
   // Format the expected price for display
@@ -311,14 +443,16 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         <Button 
           onClick={handlePublishListing}
           className="w-full py-2 bg-green-600 hover:bg-green-700"
+          disabled={isSubmitting}
         >
-          Listing publish successfully
+          {isSubmitting ? "Publishing..." : "Listing publish successfully"}
         </Button>
         
         <Button
           variant="outline"
           onClick={() => setIsConfirmationView(false)}
           className="w-full mt-4"
+          disabled={isSubmitting}
         >
           Go back
         </Button>
