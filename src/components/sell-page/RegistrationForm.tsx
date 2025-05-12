@@ -85,8 +85,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ vehicleType }) => {
       
       {/* Success Message */}
       {isSuccess && (
-        <div className="text-left text-sm text-green-600 mt-2 animate-fade-in">
-          Thank you! We'll contact you shortly with a price estimate.
+        <div className="text-left text-sm text-green-600 mt-2 bg-white animate-fade-in">
+          Please Enter Manually, we are working on this.
         </div>
       )}
     </div>
