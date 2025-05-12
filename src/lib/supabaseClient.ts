@@ -67,6 +67,30 @@ export const handlePublishListing = async () => {
   // Sell form data
   const sellFormData = parseJSON('sellFormData') || {};
 
+  // Extract phone number from localStorage sources
+  let phoneNumber = null;
+  
+  // First try to get it from step5Data
+  if (step5Data && step5Data.phone_number) {
+    phoneNumber = step5Data.phone_number;
+  }
+  
+  // If not found, check for user profile in localStorage
+  if (!phoneNumber) {
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("userProfile_")) {
+        try {
+          const profile = JSON.parse(localStorage.getItem(key) || "{}");
+          if (profile && profile.phoneNumber) {
+            phoneNumber = profile.phoneNumber;
+          }
+        } catch (e) {
+          console.error("Error parsing user profile:", e);
+        }
+      }
+    });
+  }
+
   // Construct the data object with appropriate type conversions and fallbacks
   const data = {
     registration_number: step1Data.registration_number || null,
@@ -114,23 +138,9 @@ export const handlePublishListing = async () => {
     kilometers_driven: sellFormData.kilometersDriven ? parseInt(sellFormData.kilometersDriven, 10) || null : null,
     
     city: localStorage.getItem('selectedCity') || null,
-    photos: parseJSON('uploadedFileUrls')
+    photos: parseJSON('uploadedFileUrls'),
+    phone_number: phoneNumber
   };
-
-  // Add phone number from user profile if available
-  // Try to find userProfile in localStorage
-  let phoneNumber = null;
-  Object.keys(localStorage).forEach(key => {
-    if (key.startsWith("userProfile_")) {
-      try {
-        const profile = JSON.parse(localStorage.getItem(key) || "{}");
-        phoneNumber = profile.phoneNumber || null;
-      } catch (e) {
-        console.error("Error parsing user profile:", e);
-      }
-    }
-  });
-  data.phone_number = phoneNumber;
 
   console.log("Target Table:", table);
   console.log("Data to Insert:", data);
@@ -152,4 +162,3 @@ export const handlePublishListing = async () => {
     return { error, success: false };
   }
 };
-
