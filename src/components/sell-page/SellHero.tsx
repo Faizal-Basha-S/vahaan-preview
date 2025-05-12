@@ -48,7 +48,7 @@ const SellHero: React.FC<SellHeroProps> = ({
     : {};
   
   return (
-    <section className="relative w-full z-10 min-h-[calc(120vh-64px)] flex items-stretch transition-colors duration-500">
+    <section className="relative w-full z-10 min-h-[calc(110vh-64px)] flex items-stretch transition-colors duration-500">
       {/* Background Image with gradient overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
