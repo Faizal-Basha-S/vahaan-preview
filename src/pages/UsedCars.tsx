@@ -27,7 +27,7 @@ const UsedCars = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-3 pt-16  pointer-events-none opacity-40 blur-[1px] select-none">
+      <div className="container mx-auto px-4 py-3 pt-18  pointer-events-none opacity-40 blur-[1px] select-none">
         <EconomyHeroSection />
 
         <div className="w-full">
