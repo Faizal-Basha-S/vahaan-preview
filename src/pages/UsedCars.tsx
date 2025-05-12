@@ -153,11 +153,11 @@ const UsedCars = () => {
                 <Link to={`/search?city=${city}`} key={city}>
                   <Card className="shadow-sm">
                     <CardContent className="p-4 flex flex-col items-center">
-                      <div className="w-20 sm:w-26 h-20 sm:h-26 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-3">
+                      <div className="w-26 h-26 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-3">
                         <img 
                           src={getCityImageUrl(city)}
                           alt={`${city} Icon`} 
-                          className="h-40 sm:h-50 w-40 sm:w-40 rounded-full object-cover"
+                          className="h-50 sm:h-50 w-40 sm:w-40 rounded-full object-cover"
                         />
                       </div>
                       <h3 className="font-medium text-center">{city}</h3>
