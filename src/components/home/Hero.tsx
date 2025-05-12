@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, Phone } from "lucide-react";
 import LocationInput from "../cars/LocationInput";
 import CityModal from "../cars/CityModal";
 import { useCityStore } from "@/store/useCityStore";
+import { Button } from "../ui/button";
 
 const lightThemeBackgroundImages = [
   
@@ -215,19 +215,53 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5 bg-dark flex flex-wrap items-center space-x-4 text-white animate-slide-up" style={{ animationDelay: '800ms' }}>
-              <p className="font-medium">Call/WhatsApp: 810-810-4175</p>
+
+            {/* Replace text with buttons */}
+            <div className="mt-5 flex flex-wrap items-center gap-3 animate-slide-up" style={{ animationDelay: '900ms' }}>
+              {/* Phone Button */}
+              <a 
+                href="tel:+918108104175" 
+                className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+              >
+                <Phone className="mr-2" size={16} />
+                Call Us
+              </a>
+              
+              {/* WhatsApp Button */}
+              <a 
+                href="https://wa.me/918108104175" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+              >
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                  className="mr-2"
+                >
+                  <path d="M3 21l1.65-3.8a9 9 0 113.4 2.9L3 21" />
+                  <path d="M9 10a.5.5 0 001 0V9a.5.5 0 00-1 0v1zm0 0a5 5 0 006 0m0-3a.5.5 0 00-1 0v3" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
           
-          {/* Right Container - Image */}
-          <div className="backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-6 font-poppins h-auto md:w-[30%] hidden md:block">
-    <img 
-      src="/resource-uploads/req.JPG" 
-      alt="Vehicle Marketplace" 
-      className="rounded-2xl max-h-[600px] w-auto h-auto object-contain p-4"
-    />
-  </div>
+          {/* Right Container - Image - Now disappears on devices <= 1024px */}
+          <div className="backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-6 font-poppins h-auto md:w-[30%] hidden lg:block">
+            <img 
+              src="/resource-uploads/req.JPG" 
+              alt="Vehicle Marketplace" 
+              className="rounded-2xl max-h-[600px] w-auto h-auto object-contain p-4"
+            />
+          </div>
         </div>
       </div>
       

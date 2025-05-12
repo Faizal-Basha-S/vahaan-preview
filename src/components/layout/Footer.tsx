@@ -31,6 +31,29 @@ const Footer = () => {
               <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="YouTube">
                 <Youtube size={20} />
               </a>
+              {/* Added WhatsApp Button */}
+              <a 
+                href="https://wa.me/918108104175" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-foreground hover:text-primary transition-colors" 
+                aria-label="WhatsApp"
+              >
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M3 21l1.65-3.8a9 9 0 113.4 2.9L3 21" />
+                  <path d="M9 10a.5.5 0 001 0V9a.5.5 0 00-1 0v1zm0 0a5 5 0 006 0m0-3a.5.5 0 00-1 0v3" />
+                </svg>
+              </a>
             </div>
           </div>
           
@@ -110,7 +133,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <PhoneCall size={20} className="text-primary flex-shrink-0" />
-                <a href="https://wa.me/918108104175" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="tel:+918108104175" className="text-muted-foreground hover:text-primary transition-colors">
                   +91 810-810-4175
                 </a>
               </li>
