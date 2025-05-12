@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, handlePublishListing } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 
 interface ConfirmationData {
@@ -133,200 +133,36 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     setDocumentChecklist(prev => ({...prev, [document]: checked}));
   };
 
-  const handlePublishListing = async () => {
+  const handlePublish = async () => {
     if (!areAllDocumentsChecked()) {
       toast.error("Please agree to provide all required documents");
       return;
     }
 
     setIsSubmitting(true);
-
+    
+    // Save vehicle type to localStorage to ensure it's available for the publishing function
+    const vehicleType = isBike ? "bike" : "car";
+    localStorage.setItem('vehicle', vehicleType);
+    
+    // Add selected features to localStorage
+    localStorage.setItem('key_features', JSON.stringify(selectedFeatures));
+    
     try {
-      // Get vehicle type to determine which table to use
-      const vehicle = localStorage.getItem("vehicle");
-      if (!vehicle || (vehicle !== "car" && vehicle !== "bike")) {
-        toast.error("Invalid vehicle type");
-        setIsSubmitting(false);
-        return;
+      const result = await handlePublishListing();
+      
+      if (result.success) {
+        console.log(`${vehicleType} listing published successfully`, result.data);
+        toast.success(`Your ${vehicleType} listing has been published successfully!`);
+        
+        // Optional: Clear localStorage data after successful insertion
+        // localStorage.removeItem("appointment_step1_data");
+        // localStorage.removeItem("appointment_step2_data");
+        // localStorage.removeItem("appointment_step3_data");
+      } else {
+        console.error(`Error publishing ${vehicleType} listing:`, result.error);
+        toast.error("Failed to publish listing. Please try again.");
       }
-      
-      // Build the listing data object from localStorage
-      const payload: Record<string, any> = {};
-      
-      // Get data from appointment_step1_data
-      try {
-        const step1Data = JSON.parse(localStorage.getItem("appointment_step1_data") || "{}");
-        payload.registration_number = step1Data.registration_number || null;
-        payload.rto_state = step1Data.rto_state || null;
-        payload.rto = step1Data.rto || null;
-        payload.vehicle_type = step1Data.body_type || null;
-        payload.cc = step1Data.engine_cc ? parseInt(step1Data.engine_cc, 10) : null;
-        payload.load_capacity = step1Data.load_capacity || null;
-      } catch (error) {
-        console.error("Error parsing step1 data:", error);
-      }
-      
-      // Get data from appointment_step2_data
-      try {
-        const step2Data = JSON.parse(localStorage.getItem("appointment_step2_data") || "{}");
-        payload.number_of_owners = step2Data.number_of_owners ? parseInt(step2Data.number_of_owners, 10) : null;
-        payload.ownership_type = step2Data.ownership_type || null;
-        payload.fuel_type = step2Data.fuel_type || null;
-        payload.color = step2Data.color || null;
-        payload.transmission_type = step2Data.transmission_type || null;
-        payload.modifications = step2Data.modifications || null;
-        payload.battery_health = step2Data.battery_health || null;
-      } catch (error) {
-        console.error("Error parsing step2 data:", error);
-      }
-      
-      // Get data from appointment_step3_data
-      try {
-        const step3Data = JSON.parse(localStorage.getItem("appointment_step3_data") || "{}");
-        payload.warranty_status = step3Data.warranty_status || null;
-        payload.loan_status = step3Data.loan_status || null;
-        payload.tire_condition = step3Data.tire_condition || null;
-        payload.permit_type = step3Data.permit_type || null;
-        payload.fitness_certificate = step3Data.fitness_certificate || null;
-        payload.vehicle_battery = step3Data.vehicle_battery || null;
-        payload.accident_history = step3Data.accident_history || null;
-        payload.major_replacements = step3Data.major_replacements || null;
-      } catch (error) {
-        console.error("Error parsing step3 data:", error);
-      }
-      
-      // Get data from appointment_step5_data
-      try {
-        const step5Data = JSON.parse(localStorage.getItem("appointment_step5_data") || "{}");
-        payload.seller_name = step5Data.seller_name || null;
-        payload.sell_price = step5Data.seller_price ? parseInt(step5Data.seller_price, 10) : null;
-        payload.seller_phone_number = step5Data.phone_number || null;
-        payload.seller_location_city = step5Data.location_city || null;
-        payload.preferred_contact_time = step5Data.preferred_contact_time || null;
-        payload.warranty_details = step5Data.warranty_details || null;
-        payload.ev_charger_included = step5Data.ev_charger_included || null;
-        payload.reason_for_sale = step5Data.reason_for_sale || null;
-        payload.accessories = step5Data.accessories || null;
-      } catch (error) {
-        console.error("Error parsing step5 data:", error);
-      }
-      
-      // Get data from appointment_step6_data
-      try {
-        const step6Data = JSON.parse(localStorage.getItem("appointment_step6_data") || "{}");
-        payload.aadhaar_number = step6Data.aadhaar_number || null;
-        payload.pan_number = step6Data.pan_number || null;
-        payload.api_location = step6Data.live_location || null;
-      } catch (error) {
-        console.error("Error parsing step6 data:", error);
-      }
-      
-      // Get vehicle data from sellFormData
-      try {
-        const sellFormData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
-        payload.brand = sellFormData.brand || null;
-        payload.year = sellFormData.year ? parseInt(sellFormData.year, 10) : null;
-        payload.model = sellFormData.model || null;
-        payload.variant = sellFormData.variant || null;
-        payload.kilometers_driven = sellFormData.kilometersDriven ? parseInt(sellFormData.kilometersDriven, 10) : null;
-      } catch (error) {
-        console.error("Error parsing sellFormData:", error);
-      }
-      
-      // Get city data
-      payload.city = localStorage.getItem("selectedCity") || null;
-      
-      // Get phone number from user profile
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith("userProfile_")) {
-          try {
-            const profile = JSON.parse(localStorage.getItem(key) || "{}");
-            payload.phone_number = profile.phoneNumber || null;
-          } catch (e) {
-            console.error("Error parsing user profile:", e);
-          }
-        }
-      });
-      
-      // Use confirmationData as fallback
-      if (confirmationData) {
-        if (!payload.brand) payload.brand = confirmationData.brand;
-        if (!payload.year) payload.year = confirmationData.year ? parseInt(confirmationData.year, 10) : null;
-        if (!payload.model) payload.model = confirmationData.model;
-        if (!payload.variant) payload.variant = confirmationData.variant;
-        if (!payload.kilometers_driven && confirmationData.kilometers) 
-          payload.kilometers_driven = parseInt(confirmationData.kilometers, 10) || null;
-        if (!payload.city) payload.city = confirmationData.city;
-        if (!payload.vehicle_type) payload.vehicle_type = confirmationData.vehicleType;
-        if (!payload.fuel_type) payload.fuel_type = confirmationData.fuelType;
-        if (!payload.color) payload.color = confirmationData.color;
-      }
-      
-      // Get uploaded file URLs
-      try {
-        const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
-        if (uploadedFileUrlsStr) {
-          const parsedUrls = JSON.parse(uploadedFileUrlsStr);
-          
-          // Format photos as an object
-          if (vehicle === "car") {
-            payload.photos = {
-              exterior: parsedUrls.Exterior || [],
-              interior: parsedUrls.Interior || [],
-              tyres: parsedUrls.Tyres || [],
-              features: parsedUrls.Features || [],
-              defects: parsedUrls.Defects || [],
-              odometer: parsedUrls.Odometer || [],
-              walkaround_video: parsedUrls["Walkaround video"] || []
-            };
-          } else {
-            payload.photos = {
-              front: parsedUrls.Front || [],
-              rear: parsedUrls.Rear || [],
-              left: parsedUrls.Left || [],
-              right: parsedUrls.Right || [],
-              defects: parsedUrls.Defects || [],
-              odometer: parsedUrls.Odometer || [],
-              walkaround_video: parsedUrls["Walkaround video"] || []
-            };
-          }
-        }
-      } catch (error) {
-        console.error("Error parsing uploaded file URLs:", error);
-        payload.photos = {};
-      }
-      
-      // Add selected features
-      payload.features = selectedFeatures || [];
-      
-      console.log("Submitting payload:", payload);
-      
-      // Insert data into the appropriate Supabase table
-      const tableName = vehicle === 'car' ? 'car_seller_listings' : 'bike_seller_listings';
-      const { data, error } = await supabase
-        .from(tableName)
-        .insert([payload]);
-
-      if (error) {
-        console.error("Supabase error:", error);
-        throw error;
-      }
-      
-      console.log(`${vehicle} listing published successfully`, data);
-      toast.success(`${vehicle} listing has been published successfully!`);
-      
-      // Optional: Clear localStorage data after successful insertion
-      // Uncomment if cleanup is desired
-      /*
-      localStorage.removeItem("appointment_step1_data");
-      localStorage.removeItem("appointment_step2_data");
-      localStorage.removeItem("appointment_step3_data");
-      localStorage.removeItem("appointment_step5_data");
-      localStorage.removeItem("appointment_step6_data");
-      localStorage.removeItem("sellFormData");
-      localStorage.removeItem("uploadedFileUrls");
-      */
-      
     } catch (error) {
       console.error("Error publishing listing:", error);
       toast.error("Failed to publish listing. Please try again.");
@@ -567,10 +403,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
           </Button>
           <Button 
             className="bg-green-500 hover:bg-green-600 text-white"
-            onClick={handlePublishListing}
+            onClick={handlePublish}
             disabled={isSubmitting || !areAllDocumentsChecked()}
           >
-            {isSubmitting ? "Publishing..." : "Listing Published Successfully"}
+            {isSubmitting ? "Publishing..." : "Publish Listing"}
           </Button>
         </div>
       </div>
