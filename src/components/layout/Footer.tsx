@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Facebook, Whatsapp, Twitter, Instagram, Youtube, Mail, PhoneCall, MapPin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, Mail, PhoneCall, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Footer = () => {
@@ -31,8 +31,6 @@ const Footer = () => {
               <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="YouTube">
                 <Youtube size={20} />
               </a>
-              <a href="https://wa.me/918108104175" target="_blank" className="text-foreground hover:text-primary transition-colors" aria-label="YouTube">
-                <Whatsapp size={20} />
               </a>
             </div>
           </div>
