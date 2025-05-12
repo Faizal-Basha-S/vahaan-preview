@@ -1,8 +1,7 @@
-
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 
 interface ConfirmationData {
@@ -143,141 +142,174 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Get vehicle type and determine which table to use
-      const sellFormDataStr = localStorage.getItem("sellFormData");
-      if (!sellFormDataStr) {
-        throw new Error("Sell form data not found in localStorage");
-      }
-
-      const sellFormData = JSON.parse(sellFormDataStr);
-      const vehicleType = localStorage.getItem("vehicle_type");
+      // Get vehicle type to determine which table to use
       const vehicle = localStorage.getItem("vehicle");
-
-      console.log("vehicle", vehicleType);
+      if (!vehicle || (vehicle !== "car" && vehicle !== "bike")) {
+        toast.error("Invalid vehicle type");
+        return;
+      }
       
-      // Get user phone number from user profile
-      let phoneNumber = confirmationData.phoneNumber;
+      // Build the listing data object from localStorage
+      const payload: Record<string, any> = {};
       
-      // Try to find userProfile in localStorage
+      // Get data from appointment_step1_data
+      try {
+        const step1Data = JSON.parse(localStorage.getItem("appointment_step1_data") || "{}");
+        payload.registration_number = step1Data.registration_number || null;
+        payload.rto_state = step1Data.rto_state || null;
+        payload.rto = step1Data.rto || null;
+        payload.vehicle_type = step1Data.body_type || null;
+        payload.cc = step1Data.engine_cc ? parseInt(step1Data.engine_cc, 10) : null;
+        payload.load_capacity = step1Data.load_capacity || null;
+      } catch (error) {
+        console.error("Error parsing step1 data:", error);
+      }
+      
+      // Get data from appointment_step2_data
+      try {
+        const step2Data = JSON.parse(localStorage.getItem("appointment_step2_data") || "{}");
+        payload.number_of_owners = step2Data.number_of_owners ? parseInt(step2Data.number_of_owners, 10) : null;
+        payload.ownership_type = step2Data.ownership_type || null;
+        payload.fuel_type = step2Data.fuel_type || null;
+        payload.color = step2Data.color || null;
+        payload.transmission_type = step2Data.transmission_type || null;
+        payload.modifications = step2Data.modifications || null;
+        payload.battery_health = step2Data.battery_health || null;
+      } catch (error) {
+        console.error("Error parsing step2 data:", error);
+      }
+      
+      // Get data from appointment_step3_data
+      try {
+        const step3Data = JSON.parse(localStorage.getItem("appointment_step3_data") || "{}");
+        payload.warranty_status = step3Data.warranty_status || null;
+        payload.loan_status = step3Data.loan_status || null;
+        payload.tire_condition = step3Data.tire_condition || null;
+        payload.permit_type = step3Data.permit_type || null;
+        payload.fitness_certificate = step3Data.fitness_certificate || null;
+        payload.vehicle_battery = step3Data.vehicle_battery || null;
+        payload.accident_history = step3Data.accident_history || null;
+        payload.major_replacements = step3Data.major_replacements || null;
+      } catch (error) {
+        console.error("Error parsing step3 data:", error);
+      }
+      
+      // Get data from appointment_step5_data
+      try {
+        const step5Data = JSON.parse(localStorage.getItem("appointment_step5_data") || "{}");
+        payload.seller_name = step5Data.seller_name || null;
+        payload.sell_price = step5Data.seller_price ? parseInt(step5Data.seller_price, 10) : null;
+        payload.seller_phone_number = step5Data.phone_number || null;
+        payload.seller_location_city = step5Data.location_city || null;
+        payload.preferred_contact_time = step5Data.preferred_contact_time || null;
+        payload.warranty_details = step5Data.warranty_details || null;
+        payload.ev_charger_included = step5Data.ev_charger_included || null;
+        payload.reason_for_sale = step5Data.reason_for_sale || null;
+        payload.accessories = step5Data.accessories || null;
+      } catch (error) {
+        console.error("Error parsing step5 data:", error);
+      }
+      
+      // Get data from appointment_step6_data
+      try {
+        const step6Data = JSON.parse(localStorage.getItem("appointment_step6_data") || "{}");
+        payload.aadhaar_number = step6Data.aadhaar_number || null;
+        payload.pan_number = step6Data.pan_number || null;
+        payload.api_location = step6Data.live_location || null;
+      } catch (error) {
+        console.error("Error parsing step6 data:", error);
+      }
+      
+      // Get vehicle data from sellFormData
+      try {
+        const sellFormData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+        payload.brand = sellFormData.brand || null;
+        payload.year = sellFormData.year ? parseInt(sellFormData.year, 10) : null;
+        payload.model = sellFormData.model || null;
+        payload.variant = sellFormData.variant || null;
+        payload.kilometers_driven = sellFormData.kilometersDriven ? parseInt(sellFormData.kilometersDriven, 10) : null;
+      } catch (error) {
+        console.error("Error parsing sellFormData:", error);
+      }
+      
+      // Get city data
+      payload.city = localStorage.getItem("selectedCity") || null;
+      
+      // Get phone number from user profile
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith("userProfile_")) {
           try {
             const profile = JSON.parse(localStorage.getItem(key) || "{}");
-            phoneNumber = profile.phoneNumber || phoneNumber;
+            payload.phone_number = profile.phoneNumber || null;
           } catch (e) {
             console.error("Error parsing user profile:", e);
           }
         }
       });
-
-      // Format photos based on vehicle type
-      const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
-      let photos = {};
       
-      if (uploadedFileUrlsStr) {
-        try {
+      // Get uploaded file URLs
+      try {
+        const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
+        if (uploadedFileUrlsStr) {
           const parsedUrls = JSON.parse(uploadedFileUrlsStr);
           
+          // Format photos as an object
           if (vehicle === "car") {
-            photos = {
+            payload.photos = {
               exterior: parsedUrls.Exterior || [],
               interior: parsedUrls.Interior || [],
               tyres: parsedUrls.Tyres || [],
               features: parsedUrls.Features || [],
-              defects: parsedUrls.Defects || []
+              defects: parsedUrls.Defects || [],
+              odometer: parsedUrls.Odometer || [],
+              walkaround_video: parsedUrls["Walkaround video"] || []
             };
           } else {
-            photos = {
+            payload.photos = {
               front: parsedUrls.Front || [],
               rear: parsedUrls.Rear || [],
               left: parsedUrls.Left || [],
               right: parsedUrls.Right || [],
-              defects: parsedUrls.Defects || []
+              defects: parsedUrls.Defects || [],
+              odometer: parsedUrls.Odometer || [],
+              walkaround_video: parsedUrls["Walkaround video"] || []
             };
           }
-        } catch (error) {
-          console.error("Error parsing uploaded file URLs:", error);
-          photos = {};
         }
+      } catch (error) {
+        console.error("Error parsing uploaded file URLs:", error);
+        payload.photos = {};
       }
+      
+      // Add selected features
+      payload.features = selectedFeatures || [];
+      
+      console.log("Submitting payload:", payload);
+      
+      // Insert data into the appropriate Supabase table
+      const tableName = vehicle === 'car' ? 'car_seller_listings' : 'bike_seller_listings';
+      const { data, error } = await supabase
+        .from(tableName)
+        .insert([payload]);
 
-      const sellingPrice = parseInt(localStorage.getItem("seller_price") || "0", 10);
-      const parsedFeatures = JSON.parse(localStorage.getItem("key_features") || "[]");
-
-      if (vehicle === "car") {
-        // Prepare car listing data
-        const carData = {
-          brand: sellFormData.brand || confirmationData.brand,
-          model: sellFormData.model || confirmationData.model,
-          variant: sellFormData.variant || confirmationData.variant,
-          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
-          city: localStorage.getItem("selectedCity") || confirmationData.city,
-          color: localStorage.getItem("color") || confirmationData.color,
-          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
-          transmission: localStorage.getItem("transmission") || confirmationData.transmission || "Manual",
-          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
-          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
-          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
-          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
-          airbags: parseInt(localStorage.getItem("airbags") || confirmationData.airbags || "0", 10),
-          cylinders: parseInt(localStorage.getItem("cylinders") || confirmationData.cylinders || "0", 10),
-          wheel_drive: localStorage.getItem("wheel_drive") || confirmationData.wheelDrive,
-          sell_price: sellingPrice,
-          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
-          phone_number: phoneNumber || "0000000000",
-          vehicle_type: vehicleType,
-          photos: photos
-        };
-
-        // Insert car listing into Supabase
-        const { data: carData_res, error: carError } = await supabase
-          .from("car_seller_listings")
-          .insert([carData]);
-
-        if (carError) {
-          throw carError;
-        }
-        
-        console.log("Car listing published successfully");
-        toast.success("Car listing has been published successfully!");
-      } else {
-        // Prepare bike listing data
-        const bikeData = {
-          brand: sellFormData.brand || confirmationData.brand,
-          model: sellFormData.model || confirmationData.model,
-          variant: sellFormData.variant || confirmationData.variant,
-          year: parseInt(sellFormData.year || confirmationData.year || "0", 10),
-          city: localStorage.getItem("selectedCity") || confirmationData.city,
-          color: localStorage.getItem("color") || confirmationData.color,
-          fuel_type: localStorage.getItem("fuel_type") || confirmationData.fuelType || "Petrol",
-          mileage: parseFloat(localStorage.getItem("mileage") || confirmationData.mileage || "0"),
-          seats: parseInt(localStorage.getItem("seats") || confirmationData.seats || "0", 10),
-          cc: parseInt(localStorage.getItem("cc") || confirmationData.cc || "0", 10),
-          gncap_rating: parseInt(localStorage.getItem("safety_rating") || confirmationData.safetyRating || "0", 10),
-          sell_price: sellingPrice,
-          features: selectedFeatures.length > 0 ? selectedFeatures : parsedFeatures,
-          phone_number: phoneNumber || "0000000000",
-          vehicle_type: vehicleType,
-          photos: photos
-        };
-
-        // Insert bike listing into Supabase
-        const { data: bikeData_res, error: bikeError } = await supabase
-          .from("bike_seller_listings")
-          .insert([bikeData]);
-
-        if (bikeError) {
-          throw bikeError;
-        }
-        
-        console.log("Bike listing published successfully");
-        toast.success("Bike listing has been published successfully!");
+      if (error) {
+        throw error;
       }
-
-      // Optional: Clear certain localStorage data after successful submission
-      // localStorage.removeItem("uploadedFileUrls");
-      // localStorage.removeItem("seller_price");
-      // localStorage.removeItem("key_features");
+      
+      console.log(`${vehicle} listing published successfully`, data);
+      toast.success(`${vehicle} listing has been published successfully!`);
+      
+      // Optional: Clear localStorage data after successful insertion
+      // Uncomment if cleanup is desired
+      /*
+      localStorage.removeItem("appointment_step1_data");
+      localStorage.removeItem("appointment_step2_data");
+      localStorage.removeItem("appointment_step3_data");
+      localStorage.removeItem("appointment_step5_data");
+      localStorage.removeItem("appointment_step6_data");
+      localStorage.removeItem("sellFormData");
+      localStorage.removeItem("uploadedFileUrls");
+      */
       
     } catch (error) {
       console.error("Error publishing listing:", error);
