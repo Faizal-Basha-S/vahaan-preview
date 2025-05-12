@@ -61,63 +61,162 @@ export type Database = {
       }
       bike_seller_listings: {
         Row: {
+          aadhaar_number: number | null
+          accessories: string | null
+          accident_history: string | null
+          api_location: string | null
+          battery_health: string | null
+          body_type: string | null
           brand: string | null
           cc: number | null
           city: string | null
           color: string | null
+          created_at: string | null
+          ev_charger_included: string | null
           features: string[] | null
+          fitness_certificate: string | null
           fuel_type: string | null
           gncap_rating: number | null
           id: number
+          insurance_validity: string | null
+          kilometers_driven: number | null
+          load_capacity: number | null
+          loan_status: string | null
+          major_replacements: string | null
           mileage: number | null
           model: string | null
-          phone_number: string | null
+          modifications: string | null
+          number_of_owners: number | null
+          ownership_type: string | null
+          pan_number: string | null
+          permit_type: string | null
+          phone_number: number | null
           photos: Json | null
+          preferred_contact_time: string | null
+          reason_for_sale: string | null
+          registration_number: string | null
+          rto: string | null
+          rto_state: string | null
           seats: number | null
           sell_price: number | null
+          seller_location_city: string | null
+          seller_name: string | null
+          seller_phone_number: number | null
+          seller_price: number | null
           status: string | null
+          tire_condition: string | null
+          transmission_type: string | null
           variant: string | null
+          vehicle_battery: string | null
           vehicle_type: string | null
+          warranty_details: string | null
+          warranty_status: string | null
           year: number | null
         }
         Insert: {
+          aadhaar_number?: number | null
+          accessories?: string | null
+          accident_history?: string | null
+          api_location?: string | null
+          battery_health?: string | null
+          body_type?: string | null
           brand?: string | null
           cc?: number | null
           city?: string | null
           color?: string | null
+          created_at?: string | null
+          ev_charger_included?: string | null
           features?: string[] | null
+          fitness_certificate?: string | null
           fuel_type?: string | null
           gncap_rating?: number | null
           id?: never
+          insurance_validity?: string | null
+          kilometers_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacements?: string | null
           mileage?: number | null
           model?: string | null
-          phone_number?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          ownership_type?: string | null
+          pan_number?: string | null
+          permit_type?: string | null
+          phone_number?: number | null
           photos?: Json | null
+          preferred_contact_time?: string | null
+          reason_for_sale?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
           seats?: number | null
           sell_price?: number | null
+          seller_location_city?: string | null
+          seller_name?: string | null
+          seller_phone_number?: number | null
+          seller_price?: number | null
           status?: string | null
+          tire_condition?: string | null
+          transmission_type?: string | null
           variant?: string | null
+          vehicle_battery?: string | null
           vehicle_type?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
           year?: number | null
         }
         Update: {
+          aadhaar_number?: number | null
+          accessories?: string | null
+          accident_history?: string | null
+          api_location?: string | null
+          battery_health?: string | null
+          body_type?: string | null
           brand?: string | null
           cc?: number | null
           city?: string | null
           color?: string | null
+          created_at?: string | null
+          ev_charger_included?: string | null
           features?: string[] | null
+          fitness_certificate?: string | null
           fuel_type?: string | null
           gncap_rating?: number | null
           id?: never
+          insurance_validity?: string | null
+          kilometers_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacements?: string | null
           mileage?: number | null
           model?: string | null
-          phone_number?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          ownership_type?: string | null
+          pan_number?: string | null
+          permit_type?: string | null
+          phone_number?: number | null
           photos?: Json | null
+          preferred_contact_time?: string | null
+          reason_for_sale?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
           seats?: number | null
           sell_price?: number | null
+          seller_location_city?: string | null
+          seller_name?: string | null
+          seller_phone_number?: number | null
+          seller_price?: number | null
           status?: string | null
+          tire_condition?: string | null
+          transmission_type?: string | null
           variant?: string | null
+          vehicle_battery?: string | null
           vehicle_type?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
           year?: number | null
         }
         Relationships: []
@@ -174,74 +273,173 @@ export type Database = {
       }
       car_seller_listings: {
         Row: {
+          aadhaar_number: number | null
+          accessories: string | null
+          accident_history: string | null
           airbags: number | null
+          api_location: string | null
+          battery_health: string | null
+          body_type: string | null
           brand: string | null
           cc: number | null
           city: string | null
           color: string | null
+          created_at: string | null
           cylinders: number | null
+          ev_charger_included: string | null
           features: string[] | null
+          fitness_certificate: string | null
           fuel_type: string | null
           gncap_rating: number | null
           id: number
+          insurance_validity: string | null
+          kilometers_driven: number | null
+          load_capacity: number | null
+          loan_status: string | null
+          major_replacements: string | null
           mileage: number | null
           model: string | null
-          phone_number: string | null
+          modifications: string | null
+          number_of_owners: number | null
+          ownership_type: string | null
+          pan_number: string | null
+          permit_type: string | null
+          phone_number: number | null
           photos: Json | null
+          preferred_contact_time: string | null
+          reason_for_sale: string | null
+          registration_number: string | null
+          rto: string | null
+          rto_state: string | null
           seats: number | null
           sell_price: number | null
+          seller_location_city: string | null
+          seller_name: string | null
+          seller_phone_number: number | null
+          seller_price: number | null
           status: string | null
+          tire_condition: string | null
           transmission: string | null
+          transmission_type: string | null
           variant: string | null
+          vehicle_battery: string | null
           vehicle_type: string | null
+          warranty_details: string | null
+          warranty_status: string | null
           wheel_drive: string | null
           year: number | null
         }
         Insert: {
+          aadhaar_number?: number | null
+          accessories?: string | null
+          accident_history?: string | null
           airbags?: number | null
+          api_location?: string | null
+          battery_health?: string | null
+          body_type?: string | null
           brand?: string | null
           cc?: number | null
           city?: string | null
           color?: string | null
+          created_at?: string | null
           cylinders?: number | null
+          ev_charger_included?: string | null
           features?: string[] | null
+          fitness_certificate?: string | null
           fuel_type?: string | null
           gncap_rating?: number | null
           id?: never
+          insurance_validity?: string | null
+          kilometers_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacements?: string | null
           mileage?: number | null
           model?: string | null
-          phone_number?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          ownership_type?: string | null
+          pan_number?: string | null
+          permit_type?: string | null
+          phone_number?: number | null
           photos?: Json | null
+          preferred_contact_time?: string | null
+          reason_for_sale?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
           seats?: number | null
           sell_price?: number | null
+          seller_location_city?: string | null
+          seller_name?: string | null
+          seller_phone_number?: number | null
+          seller_price?: number | null
           status?: string | null
+          tire_condition?: string | null
           transmission?: string | null
+          transmission_type?: string | null
           variant?: string | null
+          vehicle_battery?: string | null
           vehicle_type?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
           wheel_drive?: string | null
           year?: number | null
         }
         Update: {
+          aadhaar_number?: number | null
+          accessories?: string | null
+          accident_history?: string | null
           airbags?: number | null
+          api_location?: string | null
+          battery_health?: string | null
+          body_type?: string | null
           brand?: string | null
           cc?: number | null
           city?: string | null
           color?: string | null
+          created_at?: string | null
           cylinders?: number | null
+          ev_charger_included?: string | null
           features?: string[] | null
+          fitness_certificate?: string | null
           fuel_type?: string | null
           gncap_rating?: number | null
           id?: never
+          insurance_validity?: string | null
+          kilometers_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacements?: string | null
           mileage?: number | null
           model?: string | null
-          phone_number?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          ownership_type?: string | null
+          pan_number?: string | null
+          permit_type?: string | null
+          phone_number?: number | null
           photos?: Json | null
+          preferred_contact_time?: string | null
+          reason_for_sale?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
           seats?: number | null
           sell_price?: number | null
+          seller_location_city?: string | null
+          seller_name?: string | null
+          seller_phone_number?: number | null
+          seller_price?: number | null
           status?: string | null
+          tire_condition?: string | null
           transmission?: string | null
+          transmission_type?: string | null
           variant?: string | null
+          vehicle_battery?: string | null
           vehicle_type?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
           wheel_drive?: string | null
           year?: number | null
         }
