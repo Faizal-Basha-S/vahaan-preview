@@ -146,6 +146,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       const vehicle = localStorage.getItem("vehicle");
       if (!vehicle || (vehicle !== "car" && vehicle !== "bike")) {
         toast.error("Invalid vehicle type");
+        setIsSubmitting(false);
         return;
       }
       
@@ -247,6 +248,20 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         }
       });
       
+      // Use confirmationData as fallback
+      if (confirmationData) {
+        if (!payload.brand) payload.brand = confirmationData.brand;
+        if (!payload.year) payload.year = confirmationData.year ? parseInt(confirmationData.year, 10) : null;
+        if (!payload.model) payload.model = confirmationData.model;
+        if (!payload.variant) payload.variant = confirmationData.variant;
+        if (!payload.kilometers_driven && confirmationData.kilometers) 
+          payload.kilometers_driven = parseInt(confirmationData.kilometers, 10) || null;
+        if (!payload.city) payload.city = confirmationData.city;
+        if (!payload.vehicle_type) payload.vehicle_type = confirmationData.vehicleType;
+        if (!payload.fuel_type) payload.fuel_type = confirmationData.fuelType;
+        if (!payload.color) payload.color = confirmationData.color;
+      }
+      
       // Get uploaded file URLs
       try {
         const uploadedFileUrlsStr = localStorage.getItem("uploadedFileUrls");
@@ -293,6 +308,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         .insert([payload]);
 
       if (error) {
+        console.error("Supabase error:", error);
         throw error;
       }
       
