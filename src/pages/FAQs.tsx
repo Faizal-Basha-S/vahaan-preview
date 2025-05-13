@@ -8,7 +8,15 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const FAQs = () => {
   return (
     <Layout>
-      <div className="container mx-auto  px-4 pt-24 max-w-4xl">
+      <div className="container mx-auto px-4 pt-24
+  max-w-sm
+  sm:max-w-md
+  md:max-w-lg
+  lg:max-w-xl
+  xl:max-w-2xl
+  2xl:max-w-4xl
+">
+
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8 text-sm">
           <Link to="/" className="text-muted-foreground hover:text-primary flex items-center">
