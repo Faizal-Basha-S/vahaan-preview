@@ -132,7 +132,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10" />
       
       {/* Hero Content */}
-      <div className="relative z-20 h-full container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
+      <div className="relative z-10 h-full container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
         <div className="flex flex-col md:flex-row gap-6 items-stretch">
           {/* Left Container - Content */}
           <div id="formDiv" className="w-full md:w-[70%] backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-8 font-poppins">
