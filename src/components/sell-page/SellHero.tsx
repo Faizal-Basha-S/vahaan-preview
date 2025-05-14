@@ -1,3 +1,4 @@
+
 import React, { ReactNode, useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -47,7 +48,7 @@ const SellHero: React.FC<SellHeroProps> = ({
     : {};
   
   return (
-    <section className="relative w-full z-10 min-h-[100dvh] lg:min-h-[950px] xl:min-h-[800px] 2xl:min-h-[850px] flex items-stretch transition-colors duration-500">
+    <section className="relative w-full z-10 min-h-[calc(110vh-64px)] flex items-stretch transition-colors duration-500">
       {/* Background Image with gradient overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -164,7 +165,7 @@ const SellHero: React.FC<SellHeroProps> = ({
           >
             <CardContent className="p-6 md:p-8">
               {/* Scrollable content area with max height */}
-              <div className="max-h-[500px] lg:max-h-[550px] xl:max-h-[600px] 2xl:max-h-[650px] overflow-y-auto overflow-x-hidden rounded-xl transition-all duration-300 scrollbar-hide">
+              <div className="max-h-[80vh] overflow-y-auto overflow-x-hidden rounded-xl transition-all duration-300 scrollbar-hide">
                 {children}
               </div>
             </CardContent>
