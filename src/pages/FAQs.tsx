@@ -16,7 +16,10 @@ const FAQs = () => {
   xl:max-w-2xl
   2xl:max-w-4xl
 ">
+<<<<<<< HEAD
 
+=======
+>>>>>>> fac7bf5d (local repo changes)
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8 text-sm">
           <Link to="/" className="text-muted-foreground hover:text-primary flex items-center">
