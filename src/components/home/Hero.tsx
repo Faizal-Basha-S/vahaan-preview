@@ -132,19 +132,19 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10" />
       
       {/* Hero Content */}
-      <div className="relative z-20 h-full w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-10 sm:pb-12 lg:pb-16 flex flex-col items-center justify-center box-border">
-        <div className="w-full max-w-full flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 xl:gap-12 items-center">
+      <div className="relative z-20 h-full w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 pt-16 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36 2xl:pt-40 pb-10 sm:pb-12 lg:pb-16 flex flex-col items-center justify-center box-border">
+        <div className="w-full max-w-full flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-6 xl:gap-8 items-center scale-[0.97] lg:scale-100">
           {/* Left Container - Content */}
-          <div id="formDiv" className="w-full lg:w-[60%] xl:w-[65%] backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-4 sm:p-6 lg:p-8 font-poppins">
+          <div id="formDiv" className="w-full lg:w-[60%] xl:w-[65%] lg:max-w-[800px] backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-4 sm:p-6 lg:p-8 font-poppins">
             <div className="inline-block px-2 sm:px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-primary-foreground text-[clamp(0.75rem,1.5vw,0.875rem)] lg:text-sm font-medium mb-3 sm:mb-4 animate-fade-in">
               The Ultimate Car Marketplace
             </div>
             
-            <h1 className="text-[clamp(1.5rem,4vw,3rem)] lg:text-[clamp(1.75rem,3vw,2.25rem)] font-bold text-white mb-4 sm:mb-6 leading-tight animate-slide-up" style={{ animationDelay: '200ms' }}>
+            <h1 className="text-[clamp(1.5rem,4vw,3rem)] lg:text-[clamp(1.75rem,3vw,2.25rem)] xl:text-[clamp(1.75rem,3vw,2.25rem)] font-bold text-white mb-4 sm:mb-6 leading-tight animate-slide-up" style={{ animationDelay: '200ms' }}>
               Buy or Sell Your Vehicle - Directly, Without Any Commission
             </h1>
             
-            <p className="text-[clamp(0.875rem,2.5vw,1.125rem)] lg:text-[clamp(0.875rem,2vw,1rem)] text-gray-200 mb-6 sm:mb-8 max-w-2xl animate-slide-up" style={{ animationDelay: '400ms' }}>
+            <p className="text-[clamp(0.875rem,2.5vw,1.125rem)] lg:text-[clamp(0.875rem,2vw,1rem)] xl:text-[clamp(0.875rem,2vw,1rem)] text-gray-200 mb-6 sm:mb-8 max-w-2xl animate-slide-up" style={{ animationDelay: '400ms' }}>
               No brokers, No hidden charges. Verified buyers and sellers, Price predictor helps you get the best deal!
             </p>
             
@@ -157,7 +157,7 @@ const Hero = () => {
                   <input
                     type="text"
                     placeholder="Search car name, bikes name..."
-                    className="w-full bg-white/10 border border-white/20 backdrop-blur-md text-white rounded-md pl-8 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full bg-white/10 border border-white/20 backdrop-blur-md text-white rounded-md pl-8 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={(e) => {
@@ -184,7 +184,7 @@ const Hero = () => {
                   </svg>
                 </div>
                 <div className="ml-2 sm:ml-3">
-                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Fast & Easy</p>
+                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Fast & Easy</p>
                   <p className="text-[clamp(0.75rem,1.5vw,0.875rem)] lg:text-sm text-gray-300">Find vehicles in minutes</p>
                 </div>
               </div>
@@ -197,7 +197,7 @@ const Hero = () => {
                   </svg>
                 </div>
                 <div className="ml-2 sm:ml-3">
-                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Location Based</p>
+                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Location Based</p>
                   <p className="text-[clamp(0.75rem,1.5vw,0.875rem)] lg:text-sm text-gray-300">Find vehicles near you</p>
                 </div>
               </div>
@@ -210,7 +210,7 @@ const Hero = () => {
                   </svg>
                 </div>
                 <div className="ml-2 sm:ml-3">
-                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Verified Sellers</p>
+                  <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)]">Verified Sellers</p>
                   <p className="text-[clamp(0.75rem,1.5vw,0.875rem)] lg:text-sm text-gray-300">Trusted platform</p>
                 </div>
               </div>
@@ -219,8 +219,8 @@ const Hero = () => {
             {/* Contact Buttons */}
             <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-3 animate-slide-up" style={{ animationDelay: '900ms' }}>
               <div className="w-1/1.5 bg-black/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 flex flex-wrap items-center gap-2 sm:gap-3">
-                <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] text-white">Contact : </p>
-                <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] text-white">+91 810-810-4175</p>
+                <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)] text-white">Contact : </p>
+                <p className="font-medium text-[clamp(0.875rem,2vw,1rem)] lg:text-[clamp(0.875rem,1.5vw,0.9375rem)] xl:text-[clamp(0.875rem,1.5vw,0.9375rem)] text-white">+91 810-810-4175</p>
                 <div className="flex items-center gap-2 sm:gap-3 ml-auto">
                   <a 
                     href="tel:+918108104175" 
@@ -254,9 +254,9 @@ const Hero = () => {
           {/* Right Container - Image */}
           <div className="backdrop-blur-[6px] border-t-2 border-l-2 border-r border-white/30 border-l-white/10 border-r-white/20 rounded-lg shadow-[inset_0_0_0_300px_rgba(255,255,255,0.09)] p-4 sm:p-6 font-poppins h-auto lg:w-[40%] xl:w-[35%] hidden lg:flex items-center justify-center">
             <img 
-              src="/resource-uploads/req.JPG" 
+              src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Hero/req.JPG" 
               alt="Vehicle Marketplace" 
-              className="rounded-2xl w-full h-auto max-h-[500px] lg:max-h-[550px] xl:max-h-[600px] 2xl:max-h-[650px] object-contain p-2 sm:p-4"
+              className="rounded-xl w-full max-w-[90%] h-auto max-h-[480px] object-contain p-2 sm:p-4"
             />
           </div>
         </div>
