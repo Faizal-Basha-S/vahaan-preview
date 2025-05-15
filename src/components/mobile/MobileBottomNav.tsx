@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Car, Bike, Phone } from "lucide-react";
+import { Car, Bike, Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const MobileBottomNav = () => {
@@ -23,7 +23,11 @@ const MobileBottomNav = () => {
             isActive("/") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
-          <Home className="h-5 w-5 mb-1" />
+          <img 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_home.png" 
+            alt="Home" 
+            className="h-5 w-5 mb-1" 
+          />
           <span className="text-xs">Home</span>
         </Link>
         
