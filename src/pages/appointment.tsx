@@ -1407,7 +1407,7 @@ const Appointment: React.FC = () => {
           <ProgressBar currentStep={progressStep} totalSteps={steps.length} steps={steps} />
         </div>
         
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-4 sm:p-6 lg:p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-6 sm:p-4 lg:p-6">
           {renderCurrentStep()}
           
           {/* Navigation buttons for steps that don't have custom navigation */}
