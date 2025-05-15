@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -243,4 +244,71 @@
 .scrollbar-hide::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  /* Typography adjustments */
+  h1 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  
+  h3 {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  
+  p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Card adjustments */
+  .card {
+    border-radius: 12px;
+  }
+  
+  /* Input adjustments */
+  input, select, textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  /* Spacing adjustments */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  /* Component-specific */
+  .mobile-footer-space {
+    padding-bottom: 70px; /* Space for bottom nav */
+  }
+  
+  /* Touch targets */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Mobile small specific */
+@media (max-width: 320px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  h1 {
+    font-size: 22px;
+  }
+  
+  h2 {
+    font-size: 18px;
+  }
 }

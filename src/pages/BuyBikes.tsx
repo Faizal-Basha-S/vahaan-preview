@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Separator } from "@/components/ui/separator";
 import FilterSidebar from "@/components/bikes/FilterSidebar";
 import BikeListings from "@/components/bikes/BikeListings";
+import MobileBikeListings from "@/components/bikes/MobileBikeListings";
 import PopularBrands from "@/components/bikes/PopularBrands";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal, X, Plus, Minus } from "lucide-react";
@@ -14,6 +16,8 @@ import SearchBar from "@/components/bikes/SearchBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileFilterDrawer from "@/components/mobile/MobileFilterDrawer";
 
 // Use the mockBikeListings from the component file
 import { mockBikeListings } from "@/components/bikes/mockBikeListings";
@@ -27,6 +31,7 @@ const BuyBikes = () => {
   const { selectedCity, setSelectedCity } = useCityStore();
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   // Check for city in URL or open modal if no city is selected
   useEffect(() => {
@@ -92,7 +97,7 @@ const BuyBikes = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
       )}
       
-      <div className="container mx-auto px-4 pt-24  pointer-events-none opacity-40 blur-[1px] select-none">
+      <div className={`container mx-auto px-4 ${isMobile ? 'pt-16' : 'pt-24'} ${pageBlocked ? 'pointer-events-none opacity-40 blur-[1px] select-none' : ''}`}>
         
         {/* Search Bar and Location Input */}
         <div className="mb-6 pl-0">
@@ -114,21 +119,43 @@ const BuyBikes = () => {
         {/* Mobile filter toggle */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              onClick={toggleFilters}
-              className="flex items-center gap-2 shadow-sm hover:shadow-md"
-            >
-              {isFilterVisible ? (
-                <>
-                  <X className="h-4 w-4" /> Hide Filters
-                </>
-              ) : (
-                <>
-                  <SlidersHorizontal className="h-4 w-4" /> Advanced Search
-                </>
-              )}
-            </Button>
+            {isMobile ? (
+              <MobileFilterDrawer
+                trigger={
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2 shadow-sm hover:shadow-md"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" /> Filters
+                  </Button>
+                }
+                title="Filter Bikes"
+                onApplyFilters={applyFilters}
+                onClearFilters={clearFilters}
+              >
+                <FilterSidebar 
+                  onApplyFilters={applyFilters} 
+                  appliedFilters={appliedFilters}
+                  onClearFilters={clearFilters}
+                />
+              </MobileFilterDrawer>
+            ) : (
+              <Button 
+                variant="outline" 
+                onClick={toggleFilters}
+                className="flex items-center gap-2 shadow-sm hover:shadow-md"
+              >
+                {isFilterVisible ? (
+                  <>
+                    <X className="h-4 w-4" /> Hide Filters
+                  </>
+                ) : (
+                  <>
+                    <SlidersHorizontal className="h-4 w-4" /> Advanced Search
+                  </>
+                )}
+              </Button>
+            )}
           </div>
           
           <Button 
@@ -141,24 +168,26 @@ const BuyBikes = () => {
         </div>
         
         <div className="flex flex-col lg:flex-row gap-6 relative">
-          {/* Sidebar with slide animation */}
-          <div 
-            className={`absolute lg:relative w-full lg:w-1/4 xl:w-1/5 top-0 left-0 z-30 h-[calc(100vh-150px)] 
-              overflow-y-auto transition-all duration-[1500ms] ease-in-out transform ${
-              isFilterVisible ? 'translate-x-0 opacity-100 shadow-lg' : '-translate-x-full lg:translate-x-0 opacity-0 lg:opacity-100 lg:hidden'
-            }`}
-          >
-            <ScrollArea className="h-full pr-4">
-              <FilterSidebar 
-                onApplyFilters={applyFilters} 
-                appliedFilters={appliedFilters}
-                onClearFilters={clearFilters}
-              />
-            </ScrollArea>
-          </div>
+          {/* Sidebar with slide animation - ONLY FOR DESKTOP */}
+          {!isMobile && (
+            <div 
+              className={`absolute lg:relative w-full lg:w-1/4 xl:w-1/5 top-0 left-0 z-30 h-[calc(100vh-150px)] 
+                overflow-y-auto transition-all duration-[1500ms] ease-in-out transform ${
+                isFilterVisible ? 'translate-x-0 opacity-100 shadow-lg' : '-translate-x-full lg:translate-x-0 opacity-0 lg:opacity-100 lg:hidden'
+              }`}
+            >
+              <ScrollArea className="h-full pr-4">
+                <FilterSidebar 
+                  onApplyFilters={applyFilters} 
+                  appliedFilters={appliedFilters}
+                  onClearFilters={clearFilters}
+                />
+              </ScrollArea>
+            </div>
+          )}
           
           {/* Main content */}
-          <div className={`w-full transition-all duration-[1500ms] ease-in-out ${isFilterVisible ? 'lg:w-2/3 xl:w-3/4' : 'w-full'}`}>
+          <div className={`w-full transition-all duration-[1500ms] ease-in-out ${isFilterVisible && !isMobile ? 'lg:w-2/3 xl:w-3/4' : 'w-full'}`}>
             <div className="mb-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
@@ -190,10 +219,14 @@ const BuyBikes = () => {
             
             {/* Bike listings - Update grid layout with transition */}
             <div className="transition-all duration-[1500ms] ease-in-out">
-              <BikeListings 
-                bikes={mockBikeListings} 
-                gridClass={isFilterVisible ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"} 
-              />
+              {isMobile ? (
+                <MobileBikeListings bikes={mockBikeListings} />
+              ) : (
+                <BikeListings 
+                  bikes={mockBikeListings} 
+                  gridClass={isFilterVisible ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"} 
+                />
+              )}
             </div>
             
             <Separator className="my-12" />
