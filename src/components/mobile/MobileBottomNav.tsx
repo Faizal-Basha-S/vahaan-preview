@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Search, Car, Bike, User } from "lucide-react";
+import { Home, Car, PlusCircle, Bike, Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const MobileBottomNav = () => {
@@ -30,7 +30,7 @@ const MobileBottomNav = () => {
         <Link 
           to="/used-cars" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("cars") || isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
           <Car className="h-5 w-5 mb-1" />
@@ -38,7 +38,17 @@ const MobileBottomNav = () => {
         </Link>
         
         <Link 
-          to="/bikes" 
+          to="/sell" 
+          className={`flex flex-col items-center justify-center w-1/5 h-full ${
+            isActive("sell") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+          }`}
+        >
+          <PlusCircle className="h-6 w-6 mb-1 text-orange-500" />
+          <span className="text-xs font-medium">Post Ad</span>
+        </Link>
+        
+        <Link 
+          to="/bike-buy-section" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
             isActive("bike") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
@@ -48,23 +58,13 @@ const MobileBottomNav = () => {
         </Link>
         
         <Link 
-          to="/sell" 
+          to="/contact" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("sell") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
-          <Search className="h-5 w-5 mb-1" />
-          <span className="text-xs">Search</span>
-        </Link>
-        
-        <Link 
-          to="/profile" 
-          className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("profile") ? "text-primary" : "text-gray-500 dark:text-gray-400"
-          }`}
-        >
-          <User className="h-5 w-5 mb-1" />
-          <span className="text-xs">Profile</span>
+          <Phone className="h-5 w-5 mb-1" />
+          <span className="text-xs">Contact</span>
         </Link>
       </div>
     </div>

@@ -1,25 +1,33 @@
 
+import React from 'react';
 import { MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useCityStore } from '@/store/useCityStore';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface LocationInputProps {
   onClick: () => void;
   className?: string;
 }
 
-const LocationInput = ({ onClick, className = "" }: LocationInputProps) => {
+const LocationInput: React.FC<LocationInputProps> = ({ onClick, className = '' }) => {
   const { selectedCity } = useCityStore();
+  const isMobile = useIsMobile();
 
   return (
-    <div 
-      className={`flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:border-primary transition-colors shadow-lg hover:shadow-md ${className}`}
+    <Button
+      variant="outline"
+      className={`flex items-center justify-between gap-2 w-full md:w-auto bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-left ${className}`}
       onClick={onClick}
     >
-      <MapPin className="h-4 w-4 text-primary" />
-      <span className="text-sm font-medium truncate">
-        {selectedCity || "Location"}
-      </span>
-    </div>
+      <div className="flex items-center gap-2 overflow-hidden">
+        <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+        <span className="truncate">
+          {selectedCity ? selectedCity : isMobile ? 'Select city' : 'Select your city'}
+        </span>
+      </div>
+      <span className="text-xs text-primary">Change</span>
+    </Button>
   );
 };
 
