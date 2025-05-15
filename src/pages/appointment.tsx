@@ -275,7 +275,7 @@ const Appointment: React.FC = () => {
     const isBike = vehicleType === "bike";
     
     return (
-      <div className="space-y-6  px-4 pt-24">
+      <div className="space-y-6  px-4 pt-2">
         <h3 className="text-lg font-medium">Basic Vehicle Information</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
