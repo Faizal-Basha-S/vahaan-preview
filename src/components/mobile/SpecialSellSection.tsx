@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Handshake, BadgePercent, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ShieldCheck, Clock, DollarSign } from "lucide-react";
 
 const SpecialSellSection = () => {
   const [activeTab, setActiveTab] = useState("others");
@@ -12,7 +10,7 @@ const SpecialSellSection = () => {
   return (
     <Card className="w-full mb-8 shadow-sm overflow-hidden">
       <CardHeader className="p-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs defaultValue="others" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-transparent h-auto rounded-none">
             <TabsTrigger 
               value="others" 
@@ -35,106 +33,88 @@ const SpecialSellSection = () => {
               Sell to Us
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="others" className="p-4">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <ShieldCheck size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">100% Buyer Verification</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Every buyer is Aadhar-verified for maximum security.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <Clock size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">Fast Response Times</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Get inquiries and schedule viewings quickly.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <DollarSign size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">Zero Brokerage</h3>
+                  <p className="text-xs text-muted-foreground">
+                    You keep 100% of what you sell for.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="us" className="p-4">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <DollarSign size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">Fair & Transparent Pricing</h3>
+                  <p className="text-xs text-muted-foreground">
+                    We offer competitive prices based on market value.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <Clock size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">Quick Process</h3>
+                  <p className="text-xs text-muted-foreground">
+                    We complete the purchase within 24-48 hours.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
+                  <ShieldCheck size={20} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium mb-1">Hassle-Free Experience</h3>
+                  <p className="text-xs text-muted-foreground">
+                    We handle all the paperwork and transfer processes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
         </Tabs>
       </CardHeader>
-      <CardContent className="p-4">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsContent value="others" className="mt-0 animate-fade-in">
-            <div className="py-4">
-              <div className="flex items-start gap-3 mb-4">
-                <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
-                  <Handshake className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-1">Selling with Value</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    List your vehicle on our platform and connect directly with buyers. 
-                    No middleman fees, just honest transactions.
-                  </p>
-                  <ul className="space-y-2 mb-4">
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      Direct negotiations with buyers
-                    </li>
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      Set your own price
-                    </li>
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      AI-suggested fair market value
-                    </li>
-                  </ul>
-                  <Link to="/sell">
-                    <Button className="w-full bg-primary hover:bg-primary/90 mt-2">
-                      Post Your Ad <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-          <TabsContent value="us" className="mt-0 animate-fade-in">
-            <div className="py-4">
-              <div className="flex items-start gap-3 mb-4">
-                <div className="bg-orange-100 dark:bg-orange-900/30 p-2 rounded-full">
-                  <BadgePercent className="h-6 w-6 text-orange-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-1">Zero Commission Sale</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Sell your vehicle directly to us. Quick assessment, instant payment, 
-                    and absolutely no commission or hidden charges.
-                  </p>
-                  <ul className="space-y-2 mb-4">
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      Fast transaction within hours
-                    </li>
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      Immediate payment transfer
-                    </li>
-                    <li className="flex items-center text-sm">
-                      <span className="bg-green-100 dark:bg-green-900/30 p-1 rounded-full mr-2">
-                        <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      Zero paperwork hassle
-                    </li>
-                  </ul>
-                  <Link to="/appointment">
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600 mt-2">
-                      Get Instant Quote <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
     </Card>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
@@ -25,9 +24,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { cn } from "@/lib/utils";
 import AIFloatingButton from "../components/ui/AIFloatingButton";
 import { useIsMobile } from "@/hooks/use-mobile";
-import SpecialSellSection from "@/components/mobile/SpecialSellSection";
-import AppDownloadSection from "@/components/mobile/AppDownloadSection";
-import ReviewsSection from "@/components/mobile/ReviewsSection";
+import MobileHomeUI from "@/components/mobile/MobileHomeUI";
 
 const BrandName = () => (
   <span className="relative">
@@ -63,6 +60,17 @@ const Index = () => {
     return () => clearInterval(interval);
   }, [api]);
 
+  // Render mobile-specific UI for small screens
+  if (isMobile) {
+    return (
+      <Layout>
+        <MobileHomeUI />
+        <AIFloatingButton />
+      </Layout>
+    );
+  }
+
+  // Desktop UI - only rendered on larger screens
   return (
     <Layout>
       {/* Hero Section */}
@@ -206,24 +214,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Mobile-specific sections */}
-      {isMobile && (
-        <section className="py-8">
-          <div className="container mx-auto px-4">
-            {/* What's Special About Us Section */}
-            <h2 className="text-xl font-bold mb-4">What's Special About Us</h2>
-            <SpecialSellSection />
-            
-            {/* Download Our App Section */}
-            <h2 className="text-xl font-bold mb-4">Download Our App</h2>
-            <AppDownloadSection />
-            
-            {/* Review Section */}
-            <ReviewsSection />
-          </div>
-        </section>
-      )}
-      
       {/* Call to Action - Now a Slideshow */}
       <section className="py-12 md:py-16 bg-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -321,100 +311,98 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Testimonials - conditional rendering for desktop */}
-      {!isMobile && (
-        <section className="py-12 md:py-16 dot-pattern">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">What Our Users Say</h2>
-              <p className="text-muted-foreground mt-2">Hear from our satisfied buyers and sellers</p>
+      {/* Testimonials - only shown on desktop */}
+      <section className="py-12 md:py-16 dot-pattern">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold">What Our Users Say</h2>
+            <p className="text-muted-foreground mt-2">Hear from our satisfied buyers and sellers</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Testimonial 1 */}
+            <div className="glass-card p-6 rounded-xl hover-scale">
+              <div className="flex items-center mb-4">
+                <div className="mr-4">
+                  <img 
+                    src="https://randomuser.me/api/portraits/men/32.jpg" 
+                    alt="User" 
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-semibold">Michael Brown</h4>
+                  <p className="text-sm text-muted-foreground">Car Buyer</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground">
+                "I found my dream car within a week of searching on VahaanXchange. The filters made it easy to narrow down exactly what I was looking for, and the seller was verified which gave me extra confidence."
+              </p>
+              <div className="mt-4 flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Testimonial 1 */}
-              <div className="glass-card p-6 rounded-xl hover-scale">
-                <div className="flex items-center mb-4">
-                  <div className="mr-4">
-                    <img 
-                      src="https://randomuser.me/api/portraits/men/32.jpg" 
-                      alt="User" 
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Michael Brown</h4>
-                    <p className="text-sm text-muted-foreground">Car Buyer</p>
-                  </div>
+            {/* Testimonial 2 */}
+            <div className="glass-card p-6 rounded-xl hover-scale">
+              <div className="flex items-center mb-4">
+                <div className="mr-4">
+                  <img 
+                    src="https://randomuser.me/api/portraits/women/44.jpg" 
+                    alt="User" 
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
                 </div>
-                <p className="text-muted-foreground">
-                  "I found my dream car within a week of searching on VahaanXchange. The filters made it easy to narrow down exactly what I was looking for, and the seller was verified which gave me extra confidence."
-                </p>
-                <div className="mt-4 flex">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
+                <div>
+                  <h4 className="font-semibold">Sarah Johnson</h4>
+                  <p className="text-sm text-muted-foreground">Car Seller</p>
                 </div>
               </div>
-              
-              {/* Testimonial 2 */}
-              <div className="glass-card p-6 rounded-xl hover-scale">
-                <div className="flex items-center mb-4">
-                  <div className="mr-4">
-                    <img 
-                      src="https://randomuser.me/api/portraits/women/44.jpg" 
-                      alt="User" 
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Sarah Johnson</h4>
-                    <p className="text-sm text-muted-foreground">Car Seller</p>
-                  </div>
+              <p className="text-muted-foreground">
+                "Selling my car on VahaanXchange was incredibly simple. I had multiple inquiries within days and sold for a great price. The platform made it easy to communicate with potential buyers."
+              </p>
+              <div className="mt-4 flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+            
+            {/* Testimonial 3 */}
+            <div className="glass-card p-6 rounded-xl hover-scale">
+              <div className="flex items-center mb-4">
+                <div className="mr-4">
+                  <img 
+                    src="https://randomuser.me/api/portraits/men/62.jpg" 
+                    alt="User" 
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
                 </div>
-                <p className="text-muted-foreground">
-                  "Selling my car on VahaanXchange was incredibly simple. I had multiple inquiries within days and sold for a great price. The platform made it easy to communicate with potential buyers."
-                </p>
-                <div className="mt-4 flex">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
+                <div>
+                  <h4 className="font-semibold">David Wilson</h4>
+                  <p className="text-sm text-muted-foreground">Car Dealer</p>
                 </div>
               </div>
-              
-              {/* Testimonial 3 */}
-              <div className="glass-card p-6 rounded-xl hover-scale">
-                <div className="flex items-center mb-4">
-                  <div className="mr-4">
-                    <img 
-                      src="https://randomuser.me/api/portraits/men/62.jpg" 
-                      alt="User" 
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">David Wilson</h4>
-                    <p className="text-sm text-muted-foreground">Car Dealer</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">
-                  "As a small dealership, VahaanXchange has become an essential part of our business. The platform's reach and user-friendly interface has helped us connect with more customers than ever before."
-                </p>
-                <div className="mt-4 flex">
-                  {[1, 2, 3, 4, 5].map((star, index) => (
-                    <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={index === 4 ? "none" : "currentColor"} stroke={index === 4 ? "currentColor" : "none"} strokeWidth="2" className="text-primary">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
-                </div>
+              <p className="text-muted-foreground">
+                "As a small dealership, VahaanXchange has become an essential part of our business. The platform's reach and user-friendly interface has helped us connect with more customers than ever before."
+              </p>
+              <div className="mt-4 flex">
+                {[1, 2, 3, 4, 5].map((star, index) => (
+                  <svg key={star} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={index === 4 ? "none" : "currentColor"} stroke={index === 4 ? "currentColor" : "none"} strokeWidth="2" className="text-primary">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
       
       <AIFloatingButton />
     </Layout>
