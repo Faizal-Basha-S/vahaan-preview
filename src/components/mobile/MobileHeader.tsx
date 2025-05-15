@@ -13,7 +13,7 @@ import { Separator } from "../ui/separator";
 
 const MobileHeader = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const { currentUser, logout } = useAuth();
+  const { currentUser, signOut } = useAuth();
   const [openDropdowns, setOpenDropdowns] = useState<{
     cars: boolean;
     bikes: boolean;
@@ -31,7 +31,7 @@ const MobileHeader = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await signOut();
     } catch (error) {
       console.error("Logout error:", error);
     }
