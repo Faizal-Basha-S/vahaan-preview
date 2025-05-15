@@ -50,7 +50,7 @@ const MobileBottomNav = () => {
               />
             </div>
           </div>
-          <span className="text-xs font-medium -mt-1">Post Ad</span>
+          <span className="text-xs font-medium ">Post Ad</span>
         </Link>
         
         <Link 
