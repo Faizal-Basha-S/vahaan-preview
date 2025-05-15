@@ -42,7 +42,7 @@ const MobileBottomNav = () => {
           className="flex flex-col items-center justify-center w-1/5 h-full"
         >
           <div className="relative -top-4 bg-white dark:bg-gray-900 rounded-full p-2 shadow-lg">
-            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-r from-pink-400 via-purple-500 to-orange-400">
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-l from-pink-400 via-purple-500 to-orange-400">
               <img 
                 src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/postad_plus_icon.png"
                 alt="Post Ad"
