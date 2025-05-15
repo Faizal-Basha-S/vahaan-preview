@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Car, PlusCircle, Bike, Phone } from "lucide-react";
+import { Home, Car, Bike, Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const MobileBottomNav = () => {
@@ -16,7 +16,7 @@ const MobileBottomNav = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg border-t border-gray-200 dark:border-gray-800 z-50 md:hidden">
-      <div className="flex justify-around items-center h-16 px-2">
+      <div className="flex justify-around items-center h-16 px-2 relative">
         <Link 
           to="/" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
@@ -39,12 +39,18 @@ const MobileBottomNav = () => {
         
         <Link 
           to="/sell" 
-          className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("sell") ? "text-primary" : "text-gray-500 dark:text-gray-400"
-          }`}
+          className="flex flex-col items-center justify-center w-1/5 h-full"
         >
-          <PlusCircle className="h-6 w-6 mb-1 text-orange-500" />
-          <span className="text-xs font-medium">Post Ad</span>
+          <div className="relative -top-4 bg-white dark:bg-gray-900 rounded-full p-2 shadow-lg">
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-r from-pink-400 via-purple-500 to-orange-400">
+              <img 
+                src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/postad_plus_icon.png"
+                alt="Post Ad"
+                className="w-6 h-6"
+              />
+            </div>
+          </div>
+          <span className="text-xs font-medium -mt-1">Post Ad</span>
         </Link>
         
         <Link 
