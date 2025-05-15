@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -1402,18 +1401,18 @@ const Appointment: React.FC = () => {
   
   return (
     <Layout>
-      <div className="container max-w-screen-lg mx-auto py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Schedule an Appointment</h1>
+      <div className="container max-w-screen-lg mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 mt-8 sm:mt-12 lg:mt-16">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 lg:mb-8">Schedule an Appointment</h1>
           <ProgressBar currentStep={progressStep} totalSteps={steps.length} steps={steps} />
         </div>
         
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-4 sm:p-6 lg:p-8">
           {renderCurrentStep()}
           
           {/* Navigation buttons for steps that don't have custom navigation */}
           {currentStep !== 3 && currentStep !== 6 && (
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between mt-6 sm:mt-8 lg:mt-10">
               <Button variant="outline" onClick={handleBack} className="flex items-center gap-2">
                 Back
               </Button>
