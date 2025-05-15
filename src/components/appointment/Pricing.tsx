@@ -35,6 +35,7 @@ interface ConfirmationData {
   warrantyStatus: string | null;
   loanStatus: string | null;
   batteryHealth: string | null;
+  seller_price: string | null; // Added this field to fix the error
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -64,6 +65,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     warrantyStatus: null,
     loanStatus: null,
     batteryHealth: null,
+    seller_price: null,
   });
   
   // State for document checkboxes
