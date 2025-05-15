@@ -12,11 +12,10 @@ const SpecialSellSection = () => {
   return (
     <Card className="w-full mb-8 shadow-sm overflow-hidden">
       <CardHeader className="p-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-        <div className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-transparent h-auto rounded-none">
             <TabsTrigger 
               value="others" 
-              onClick={() => setActiveTab("others")}
               className={`py-3 ${
                 activeTab === "others" 
                   ? "bg-white dark:bg-gray-800 border-b-2 border-primary shadow-sm" 
@@ -27,7 +26,6 @@ const SpecialSellSection = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="us" 
-              onClick={() => setActiveTab("us")}
               className={`py-3 ${
                 activeTab === "us" 
                   ? "bg-white dark:bg-gray-800 border-b-2 border-primary shadow-sm" 
@@ -37,7 +35,7 @@ const SpecialSellSection = () => {
               Sell to Us
             </TabsTrigger>
           </TabsList>
-        </div>
+        </Tabs>
       </CardHeader>
       <CardContent className="p-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
