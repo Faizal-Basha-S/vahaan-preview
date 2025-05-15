@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
@@ -104,6 +105,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         warrantyStatus: localStorage.getItem('warranty_status'),
         loanStatus: localStorage.getItem('loan_status'),
         batteryHealth: localStorage.getItem('battery_health'),
+        seller_price: localStorage.getItem('seller_price'), // Added this property to fix the error
       };
       
       // Also get data from sellFormData
