@@ -70,9 +70,9 @@ const MobileBottomNav = () => {
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/favourites.png" 
             alt="My Favourites" 
-            className="h-5 w-5 mb-1" 
+            className="h-6 w-6 mb-1" 
           />
-          <span className="text-xs">My Favourites</span>
+          <span className="text-xs">Favourites</span>
         </Link>
         
         <Link 
