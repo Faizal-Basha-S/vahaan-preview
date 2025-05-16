@@ -55,7 +55,7 @@ const MobileHomeUI = () => {
     <div className="pt-16 pb-20">
       {/* Hero Carousel */}
       <div className="relative w-full mb-6 overflow-hidden">
-  <div className="relative h-[280px]">
+  <div className="relative h-[200px]">
     {carouselSlides.map((slide, index) => (
       <div
         key={index}
@@ -63,33 +63,35 @@ const MobileHomeUI = () => {
           activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
         }`}
       >
-        <div className="relative h-full w-full overflow-hidden rounded-xl shadow-md">
-          {/* Background Image */}
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-full h-full object-cover object-center"
-          />
-
-          {/* Gradient Overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30"></div>
-
-          {/* Content */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-            <h1 className="text-2xl font-bold text-white mb-3 drop-shadow-md">
-              {slide.title}
-            </h1>
-            <p className="text-sm text-white mb-4 max-w-xs">{slide.description}</p>
-            <Link
-              to={slide.linkTo}
-              className="bg-primary text-white px-5 py-2 rounded-full font-medium text-sm shadow-md hover:bg-primary/90 transition-colors"
-            >
-              {index === 0 ? "Sell Now" : "Explore Vehicles"}
-            </Link>
-          </div>
+        <div
+          className={`relative h-full w-full mx-4 rounded-xl shadow-md p-6 flex flex-col justify-center transition-all duration-500 ${
+            index === 0 ? "bg-blue-600 text-white" : "bg-yellow-400 text-black"
+          }`}
+        >
+          <h1 className="text-xl font-bold mb-2">{slide.title}</h1>
+          <p className="text-sm">{slide.description}</p>
         </div>
       </div>
     ))}
+
+    {/* Indicators */}
+    <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+      {carouselSlides.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => goToSlide(index)}
+          className={`h-[3px] rounded-full transition-all ${
+            activeSlide === index
+              ? "bg-white w-6"
+              : "bg-white/60 w-3"
+          }`}
+          aria-label={`Go to slide ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  </div>
+</div>
+
 
     {/* Indicators */}
     <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
