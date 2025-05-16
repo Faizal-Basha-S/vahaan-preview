@@ -54,74 +54,79 @@ const MobileHomeUI = () => {
     <div className="pt-20 pb-20 px-2">
       {/* Hero Carousel - Updated with solid background colors */}
       <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
-  <div className="relative h-[200px] rounded-xl">
-    {carouselSlides.map((slide, index) => {
-      // Determine slide position based on activeSlide and previous slide direction
-      const isEntering = index === activeSlide;
-      const isExiting = index === prevSlide;
-      const isNextSlide = index > activeSlide || (activeSlide === 0 && index === carouselSlides.length - 1);
-      const isPrevSlide = index < activeSlide || (activeSlide === carouselSlides.length - 1 && index === 0);
-
-      let translateClass = "translate-x-0";
-      let opacityClass = "opacity-100 z-10";
-
-      if (!isEntering) {
-        if (isExiting) {
-          // Exiting slide should move to the right
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else if (isNextSlide) {
-          // Future slides start on the right
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else if (isPrevSlide) {
-          // Previous slides also start on the right (for right-to-right flow)
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else {
-          // Default for non-adjacent slides
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        }
-      }
-
-      return (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-all duration-1000 transform ${translateClass} ${opacityClass}`}
-        >
-          <div
-            className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
-            style={{ backgroundColor: slide.color }}
-          >
-            <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
-            <p className="text-sm text-white">{slide.description}</p>
-            <Link
-              to={slide.linkTo}
-              className="mt-4 inline-flex self-start bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+        <div className="relative h-[200px] rounded-xl">
+          {carouselSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-all duration-700 transform ${
+                activeSlide === index
+                  ? "translate-x-[-100%] opacity-100 z-10"
+                  : "translate-x-full opacity-0 z-0"
+              }`}
             >
-              Learn More
-            </Link>
+              <div
+                className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
+                style={{ backgroundColor: slide.color }}
+              >
+                <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
+                <p className="text-sm text-white">{slide.description}</p>
+                <Link 
+                  to={slide.linkTo} 
+                  className="mt-4 inline-flex self-start bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+          ))}
+
+          {/* Indicators */}
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+            {carouselSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`h-[3px] rounded-full transition-all ${
+                  activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              ></button>
+            ))}
           </div>
         </div>
-      );
-    })}
+      </div>
 
-    {/* Indicators */}
-    <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
-      {carouselSlides.map((_, index) => (
-        <button
-          key={index}
-          onClick={() => goToSlide(index)}
-          className={`h-[3px] rounded-full transition-all ${
-            activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        ></button>
-      ))}
-    </div>
-  </div>
-</div>
+      {/* Desktop Hero - Keep the original implementation for lg breakpoint and above */}
+      <div className="hidden lg:block relative w-full mb-6 overflow-hidden px-4">
+        <div className="relative h-[200px] rounded-xl">
+          {carouselSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+            >
+              <div className="relative h-full w-full rounded-xl shadow-md overflow-hidden">
+                {/* Background Color */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ backgroundColor: slide.color }}
+                />
+
+                {/* Text Content */}
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
+                  <h1 className="text-xl font-bold text-white mb-2 drop-shadow">{slide.title}</h1>
+                  <p className="text-sm text-white drop-shadow">{slide.description}</p>
+                  <Link 
+                    to={slide.linkTo} 
+                    className="mt-4 inline-flex bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+                  >
+                    Learn More
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
 
           {/* Indicators */}
           <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
