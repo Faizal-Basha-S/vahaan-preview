@@ -110,7 +110,7 @@ const CarDetail = () => {
       case 'inspection':
         return <InspectionReportSection />;
       case 'faq':
-        return <FAQSection />;
+        return car ? <FAQSection car={car} /> : null;
       default:
         return null;
     }
