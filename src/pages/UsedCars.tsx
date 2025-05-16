@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -11,6 +10,8 @@ import { mockCarListings } from "@/data/mockCarListings";
 import PopularBrands from "@/components/cars/PopularBrands";
 import { getCityImageUrl } from "@/utils/cityImages";
 import { indianCities } from "@/utils/cityList";
+import MobileUsedCarsUI from "@/components/mobile/MobileUsedCarsUI"; 
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Carousel,
   CarouselContent,
@@ -24,10 +25,23 @@ const UsedCars = () => {
   const budgetRanges = ["Under 5 Lakh", "5-10 Lakh", "10-15 Lakh", "15-20 Lakh", "Above 20 Lakh"];
   const popularCities = ["Ahmedabad", "Bangalore", "Chandigarh", "Chennai", "Delhi NCR", "Gurgaon", "Hyderabad", "Jaipur", "Mumbai", "New Delhi", "Noida", "Pune"];
   const fuelTypes = ["Petrol", "Diesel", "CNG", "Electric", "LPG"];
-
+  
+  // Use the hook to check if we're on mobile
+  const isMobile = useIsMobile();
+  
+  // Render mobile UI for viewport < 1024px
+  if (isMobile) {
+    return (
+      <Layout>
+        <MobileUsedCarsUI />
+      </Layout>
+    );
+  }
+  
+  // Desktop UI (unchanged)
   return (
     <Layout>
-      <div className="container mx-auto px-4 pt-24  pointer-events-none opacity-40 blur-[1px] select-none">
+      <div className="container mx-auto px-4 pt-24">
         <EconomyHeroSection />
 
         <div className="w-full">
