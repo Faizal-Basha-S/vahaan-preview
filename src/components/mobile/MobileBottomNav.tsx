@@ -26,7 +26,7 @@ const MobileBottomNav = () => {
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_home.png" 
             alt="Home" 
-            className="h-5 w-5 mb-1" 
+            className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Home</span>
         </Link>
@@ -40,7 +40,7 @@ const MobileBottomNav = () => {
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
             alt="Profile" 
-            className="h-5 w-5 mb-1" 
+            className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Buy</span>
         </Link>
@@ -84,7 +84,7 @@ const MobileBottomNav = () => {
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/profile.png" 
             alt="Profile" 
-            className="h-5 w-5 mb-1" 
+            className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Profile</span>
         </Link>
