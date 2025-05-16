@@ -39,7 +39,7 @@ const MobileHomeUI = () => {
     {
       title: "Sell with Us, with verified Buyers",
       description: "No Commission, No Fees – Set a Fair Price, Negotiate Directly with Verified Buyers!",
-      color: "#ff0303",
+      color: "#ff3333",
       linkTo: "/sell"
     },
     {
