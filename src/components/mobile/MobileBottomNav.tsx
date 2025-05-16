@@ -37,8 +37,12 @@ const MobileBottomNav = () => {
             isActive("cars") || isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
-          <Car className="h-5 w-5 mb-1" />
-          <span className="text-xs">Cars</span>
+          <img 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
+            alt="Profile" 
+            className="h-5 w-5 mb-1" 
+          />
+          <span className="text-xs">Buy</span>
         </Link>
         
         <Link 
@@ -63,8 +67,12 @@ const MobileBottomNav = () => {
             isActive("bike") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
-          <Bike className="h-5 w-5 mb-1" />
-          <span className="text-xs">Bikes</span>
+          <img 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/favourites.png" 
+            alt="My Favourites" 
+            className="h-5 w-5 mb-1" 
+          />
+          <span className="text-xs">My Favourites</span>
         </Link>
         
         <Link 
@@ -73,8 +81,12 @@ const MobileBottomNav = () => {
             isActive("contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
-          <Phone className="h-5 w-5 mb-1" />
-          <span className="text-xs">Contact</span>
+          <img 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/profile.png" 
+            alt="Profile" 
+            className="h-5 w-5 mb-1" 
+          />
+          <span className="text-xs">Profile</span>
         </Link>
       </div>
     </div>
