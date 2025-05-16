@@ -31,17 +31,15 @@ const MobileBottomNav = () => {
           <span className="text-xs">Home</span>
         </Link>
         
-        {/* Updated to prevent automatic state updates during redirection */}
         <Link 
           to="/used-cars" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
             isActive("cars") || isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
-          state={{ fromNavigation: true }}
         >
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
-            alt="Buy" 
+            alt="Profile" 
             className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Buy</span>
@@ -60,13 +58,13 @@ const MobileBottomNav = () => {
               />
             </div>
           </div>
-          <span className="text-xs font-medium">Post Ad</span>
+          <span className="text-xs font-medium ">Post Ad</span>
         </Link>
         
         <Link 
-          to="/favourites" 
+          to="/bike-buy-section" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("favourites") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("bike") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
           <img 

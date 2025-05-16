@@ -13,11 +13,11 @@ const MobileHomeUI = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const totalSlides = 2;
 
-  // Auto-sliding functionality - updated to 4 seconds
+  // Auto-sliding functionality - updated to 6 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % totalSlides);
-    }, 4000); // Change slide every 4 seconds
+    }, 8000); // Change slide every 6 seconds
     
     return () => clearInterval(interval);
   }, []);
@@ -39,7 +39,7 @@ const MobileHomeUI = () => {
     {
       title: "Sell with Us, with verified Buyers",
       description: "No Commission, No Fees – Set a Fair Price, Negotiate Directly with Verified Buyers!",
-      color: "#ff3700",
+      color: "#ff3333",
       linkTo: "/sell"
     },
     {
@@ -54,47 +54,59 @@ const MobileHomeUI = () => {
     <div className="pt-20 pb-20 px-2">
       {/* Hero Carousel - Updated with solid background colors */}
       <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
-        <div className="relative h-[200px] rounded-xl">
-          {carouselSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-all duration-700 transform ${
-                activeSlide === index
-                  ? "translate-x-0 opacity-100 z-10"
-                  : "translate-x-full opacity-0 z-0"
-              }`}
-            >
-              <div
-                className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
-                style={{ backgroundColor: slide.color }}
-              >
-                <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
-                <p className="text-sm text-white">{slide.description}</p>
-                <Link 
-                  to={slide.linkTo} 
-                  className="mt-4 inline-flex self-start bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-          ))}
+  <div className="relative h-[200px] rounded-xl">
+    {carouselSlides.map((slide, index) => {
+      let slideClass = "";
 
-          {/* Indicators */}
-          <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
-            {carouselSlides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-[3px] rounded-full transition-all ${
-                  activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              ></button>
-            ))}
+      if (index === activeSlide) {
+        slideClass = "translate-x-0 opacity-100 z-10";
+      } else if (
+        (index === (activeSlide + 1) % carouselSlides.length) ||
+        (activeSlide === carouselSlides.length - 1 && index === 0)
+      ) {
+        slideClass = "translate-x-full opacity-0 z-0";
+      } else {
+        slideClass = "-translate-x-full opacity-0 z-0";
+      }
+
+      return (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-all duration-700 transform ${slideClass}`}
+        >
+          <div
+            className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
+            style={{ backgroundColor: slide.color }}
+          >
+            <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
+            <p className="text-sm text-white">{slide.description}</p>
+            <Link
+              to={slide.linkTo}
+              className="mt-4 inline-flex self-start bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+            >
+              Learn More
+            </Link>
           </div>
         </div>
-      </div>
+      );
+    })}
+
+    {/* Indicators */}
+    <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+      {carouselSlides.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => goToSlide(index)}
+          className={`h-[3px] rounded-full transition-all ${
+            activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
+          }`}
+          aria-label={`Go to slide ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  </div>
+</div>
+
 
       {/* Desktop Hero - Keep the original implementation for lg breakpoint and above */}
       <div className="hidden lg:block relative w-full mb-6 overflow-hidden px-4">
