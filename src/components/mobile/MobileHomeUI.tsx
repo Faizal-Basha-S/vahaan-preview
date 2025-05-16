@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -14,11 +13,11 @@ const MobileHomeUI = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const totalSlides = 2;
 
-  // Auto-sliding functionality - updated to 5 seconds
+  // Auto-sliding functionality - updated to 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % totalSlides);
-    }, 5000); // Change slide every 3 seconds
+    }, 4000); // Change slide every 4 seconds
     
     return () => clearInterval(interval);
   }, []);
@@ -40,21 +39,65 @@ const MobileHomeUI = () => {
     {
       title: "Sell with Us, with verified Buyers",
       description: "No Commission, No Fees – Set a Fair Price, Negotiate Directly with Verified Buyers!",
-      image: "https://images.unsplash.com/photo-1618005198919-4993ee3b99e3",
+      color: "#ff3700",
       linkTo: "/sell"
     },
     {
       title: "Buy with Us, with verified Buyers",
       description: "No Brokerage, No Hidden Charges – Contact Sellers with a Fair Price & Save Big!",
-      image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
+      color: "#0033ff",
       linkTo: "/used-cars"
     }
   ];
 
   return (
     <div className="pt-20 pb-20 px-2">
-      {/* Hero Carousel - Updated with new design */}
-      <div className="relative w-full mb-6 overflow-hidden px-4">
+      {/* Hero Carousel - Updated with solid background colors */}
+      <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
+        <div className="relative h-[200px] rounded-xl">
+          {carouselSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-all duration-700 transform ${
+                activeSlide === index
+                  ? "translate-x-0 opacity-100 z-10"
+                  : "translate-x-full opacity-0 z-0"
+              }`}
+            >
+              <div
+                className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
+                style={{ backgroundColor: slide.color }}
+              >
+                <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
+                <p className="text-sm text-white">{slide.description}</p>
+                <Link 
+                  to={slide.linkTo} 
+                  className="mt-4 inline-flex self-start bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+          ))}
+
+          {/* Indicators */}
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+            {carouselSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`h-[3px] rounded-full transition-all ${
+                  activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Hero - Keep the original implementation for lg breakpoint and above */}
+      <div className="hidden lg:block relative w-full mb-6 overflow-hidden px-4">
         <div className="relative h-[200px] rounded-xl">
           {carouselSlides.map((slide, index) => (
             <div
@@ -64,20 +107,22 @@ const MobileHomeUI = () => {
               }`}
             >
               <div className="relative h-full w-full rounded-xl shadow-md overflow-hidden">
-                {/* Background Image */}
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="w-full h-full object-cover"
+                {/* Background Color */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ backgroundColor: slide.color }}
                 />
-
-                {/* Overlay Gradient for text readability */}
-                <div className="absolute inset-0 bg-black/30" />
 
                 {/* Text Content */}
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
                   <h1 className="text-xl font-bold text-white mb-2 drop-shadow">{slide.title}</h1>
                   <p className="text-sm text-white drop-shadow">{slide.description}</p>
+                  <Link 
+                    to={slide.linkTo} 
+                    className="mt-4 inline-flex bg-white text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90 transition-colors"
+                  >
+                    Learn More
+                  </Link>
                 </div>
               </div>
             </div>
