@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,9 +28,26 @@ const UsedCars = () => {
   const fuelTypes = ["Petrol", "Diesel", "CNG", "Electric", "LPG"];
   
   const isMobile = useIsMobile();
+  const location = useLocation();
   
   // For animation
   const [pageBlocked, setPageBlocked] = useState(false);
+  // Added to control layout rendering and prevent flashing
+  const [layoutReady, setLayoutReady] = useState(false);
+
+  useEffect(() => {
+    // Wait a short moment to ensure stable layout rendering
+    // This helps prevent the desktop UI flash on mobile redirect
+    const timer = setTimeout(() => {
+      setLayoutReady(true);
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Don't render anything until layoutReady is true
+  if (!layoutReady) {
+    return <div className="min-h-screen"></div>;
+  }
 
   return (
     <Layout>

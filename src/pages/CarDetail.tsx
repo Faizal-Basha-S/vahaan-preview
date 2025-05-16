@@ -1,5 +1,6 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { 
   Calendar, MapPin, Fuel, Heart, Phone, Gauge, 
   ChevronRight, Star, Share, ThumbsUp
@@ -19,15 +20,21 @@ import FAQSection from '@/components/cars/FAQSection';
 import DetailTabs from '@/components/cars/DetailTabs';
 import FloatingNavBar from '@/components/cars/FloatingNavBar';
 import SimilarCarsCarousel from '@/components/cars/SimilarCarsCarousel';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const CarDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const fromMobile = location.state?.fromMobile || false;
   const [car, setCar] = useState<CarType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [isNavVisible, setIsNavVisible] = useState(true);
+  const [layoutReady, setLayoutReady] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  
   const contentRefs = {
     overview: useRef<HTMLDivElement>(null),
     photos: useRef<HTMLDivElement>(null),
@@ -75,7 +82,16 @@ const CarDetail = () => {
       observer.observe(navRef.current);
     }
 
-    return () => observer.disconnect();
+    // Wait a short moment to ensure stable layout rendering
+    // This helps prevent layout flashing
+    const timer = setTimeout(() => {
+      setLayoutReady(true);
+    }, 10);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 
   const handleTabChange = (tab: string) => {
@@ -86,20 +102,18 @@ const CarDetail = () => {
     setIsBookmarked(prev => !prev);
   };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'overview':
-        return <CarOverviewSection car={car} />;
-      case 'photos':
-        return <CarPhotosSection images={mockImages} carTitle={car.title} />;
-      case 'inspection':
-        return <InspectionReportSection />;
-      case 'faq':
-        return <FAQSection car={car} />;
-      default:
-        return null;
-    }
-  };
+  // Don't render anything until layoutReady is true
+  if (!layoutReady) {
+    return (
+      <Layout>
+        <div className="container mx-auto p-4 flex justify-center items-center min-h-[50vh]">
+          <div className="animate-pulse text-center">
+            <div className="h-8 w-64 bg-gray-200 dark:bg-gray-700 rounded mb-4 mx-auto"></div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (isLoading) {
     return (

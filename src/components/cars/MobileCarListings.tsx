@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { Heart, ChevronDown, ChevronUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Pagination } from "@/components/ui/pagination";
 import { PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
@@ -34,6 +33,7 @@ const getPriceBadge = (car: any) => {
 const CarCard = ({ car }: { car: any }) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const priceBadge = getPriceBadge(car);
+  const navigate = useNavigate();
   
   // Simplify numbers for display
   const formatPrice = (price: number) => {
@@ -49,10 +49,18 @@ const CarCard = ({ car }: { car: any }) => {
     const emi = (price / 36) * 1.08;
     return `₹${Math.round(emi).toLocaleString('en-IN')}/m`;
   };
+
+  // Handle card click to navigate to detail page
+  const handleCardClick = () => {
+    navigate(`/buy/${car.id}`, { state: { fromMobile: true }});
+  };
   
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
-      <div className="relative">
+      <div 
+        className="relative cursor-pointer" 
+        onClick={handleCardClick}
+      >
         <img 
           src={car.imageUrl || "https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/placeholders/car-placeholder.jpg"} 
           alt={car.title}
@@ -60,14 +68,17 @@ const CarCard = ({ car }: { car: any }) => {
         />
         
         <button 
-          onClick={() => setIsFavorited(!isFavorited)}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click when favoriting
+            setIsFavorited(!isFavorited);
+          }}
           className="absolute top-2 right-2 p-2 rounded-full bg-white shadow"
         >
           <Heart fill={isFavorited ? "#ff3700" : "none"} stroke={isFavorited ? "#ff3700" : "currentColor"} className="h-5 w-5" />
         </button>
       </div>
       
-      <div className="p-4">
+      <div className="p-4" onClick={handleCardClick}>
         <Link to={`/car-detail/${car.id}`}>
           <h3 className="text-lg font-bold mb-1">{car.year} {car.brand} {car.model}</h3>
         </Link>

@@ -31,11 +31,13 @@ const MobileBottomNav = () => {
           <span className="text-xs">Home</span>
         </Link>
         
+        {/* Updated to prevent automatic state updates during redirection */}
         <Link 
           to="/used-cars" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
             isActive("cars") || isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
+          state={{ fromNavigation: true }}
         >
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
