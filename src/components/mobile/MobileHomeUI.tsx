@@ -17,7 +17,7 @@ const MobileHomeUI = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % totalSlides);
-    }, 6000); // Change slide every 6 seconds
+    }, 8000); // Change slide every 6 seconds
     
     return () => clearInterval(interval);
   }, []);
