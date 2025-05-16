@@ -56,39 +56,23 @@ const MobileHomeUI = () => {
       <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
   <div className="relative h-[200px] rounded-xl">
     {carouselSlides.map((slide, index) => {
-      // Determine slide position based on activeSlide and previous slide direction
-      const isEntering = index === activeSlide;
-      const isExiting = index === prevSlide;
-      const isNextSlide = index > activeSlide || (activeSlide === 0 && index === carouselSlides.length - 1);
-      const isPrevSlide = index < activeSlide || (activeSlide === carouselSlides.length - 1 && index === 0);
+      let slideClass = "";
 
-      let translateClass = "translate-x-0";
-      let opacityClass = "opacity-100 z-10";
-
-      if (!isEntering) {
-        if (isExiting) {
-          // Exiting slide should move to the right
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else if (isNextSlide) {
-          // Future slides start on the right
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else if (isPrevSlide) {
-          // Previous slides also start on the right (for right-to-right flow)
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        } else {
-          // Default for non-adjacent slides
-          translateClass = "translate-x-full";
-          opacityClass = "opacity-0 z-0";
-        }
+      if (index === activeSlide) {
+        slideClass = "translate-x-0 opacity-100 z-10";
+      } else if (
+        (index === (activeSlide + 1) % carouselSlides.length) ||
+        (activeSlide === carouselSlides.length - 1 && index === 0)
+      ) {
+        slideClass = "translate-x-full opacity-0 z-0";
+      } else {
+        slideClass = "-translate-x-full opacity-0 z-0";
       }
 
       return (
         <div
           key={index}
-          className={`absolute inset-0 transition-all duration-1000 transform ${translateClass} ${opacityClass}`}
+          className={`absolute inset-0 transition-all duration-700 transform ${slideClass}`}
         >
           <div
             className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
@@ -122,6 +106,7 @@ const MobileHomeUI = () => {
     </div>
   </div>
 </div>
+
 
       {/* Desktop Hero - Keep the original implementation for lg breakpoint and above */}
       <div className="hidden lg:block relative w-full mb-6 overflow-hidden px-4">
