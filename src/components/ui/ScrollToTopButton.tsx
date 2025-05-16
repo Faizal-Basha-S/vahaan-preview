@@ -44,7 +44,7 @@ const ScrollToTopButton = () => {
       aria-label="Back to top"
     >
       <ChevronUp size={16} />
-      Back to top
+      Reach top
     </button>
   );
 };
