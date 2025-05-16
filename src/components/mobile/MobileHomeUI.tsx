@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -55,60 +54,42 @@ const MobileHomeUI = () => {
     <div className="pt-16 pb-20">
       {/* Hero Carousel */}
       <div className="relative w-full mb-6 overflow-hidden">
-  <div className="relative h-[200px]">
-    {carouselSlides.map((slide, index) => (
-      <div
-        key={index}
-        className={`absolute inset-0 transition-opacity duration-700 ${
-          activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
-        }`}
-      >
-        <div
-          className={`relative h-full w-full mx-4 rounded-xl shadow-md p-6 flex flex-col justify-center transition-all duration-500 ${
-            index === 0 ? "bg-blue-600 text-white" : "bg-yellow-400 text-black"
-          }`}
-        >
-          <h1 className="text-xl font-bold mb-2">{slide.title}</h1>
-          <p className="text-sm">{slide.description}</p>
+        <div className="relative h-[200px]">
+          {carouselSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+            >
+              <div
+                className={`relative h-full w-full mx-4 rounded-xl shadow-md p-6 flex flex-col justify-center transition-all duration-500 ${
+                  index === 0 ? "bg-blue-600 text-white" : "bg-yellow-400 text-black"
+                }`}
+              >
+                <h1 className="text-xl font-bold mb-2">{slide.title}</h1>
+                <p className="text-sm">{slide.description}</p>
+              </div>
+            </div>
+          ))}
+
+          {/* Indicators */}
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+            {carouselSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`h-[3px] rounded-full transition-all ${
+                  activeSlide === index
+                    ? "bg-white w-6"
+                    : "bg-white/60 w-3"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
         </div>
       </div>
-    ))}
-
-    {/* Indicators */}
-    <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
-      {carouselSlides.map((_, index) => (
-        <button
-          key={index}
-          onClick={() => goToSlide(index)}
-          className={`h-[3px] rounded-full transition-all ${
-            activeSlide === index
-              ? "bg-white w-6"
-              : "bg-white/60 w-3"
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        ></button>
-      ))}
-    </div>
-  </div>
-</div>
-
-
-    {/* Indicators */}
-    <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
-      {carouselSlides.map((_, index) => (
-        <button
-          key={index}
-          onClick={() => goToSlide(index)}
-          className={`w-2 h-2 rounded-full transition-all ${
-            activeSlide === index ? "bg-white w-4" : "bg-white/50"
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        ></button>
-      ))}
-    </div>
-  </div>
-</div>
-
 
       {/* Quick Access Cards */}
       <div className="px-4 mb-8">
