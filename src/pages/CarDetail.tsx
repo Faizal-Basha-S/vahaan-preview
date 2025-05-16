@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { 
@@ -100,6 +99,21 @@ const CarDetail = () => {
 
   const handleBookmark = () => {
     setIsBookmarked(prev => !prev);
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return car ? <CarOverviewSection car={car} /> : null;
+      case 'photos':
+        return car ? <CarPhotosSection images={mockImages} carTitle={car.title} /> : null;
+      case 'inspection':
+        return <InspectionReportSection />;
+      case 'faq':
+        return <FAQSection />;
+      default:
+        return null;
+    }
   };
 
   // Don't render anything until layoutReady is true
