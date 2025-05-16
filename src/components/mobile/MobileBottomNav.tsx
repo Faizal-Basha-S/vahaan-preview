@@ -34,12 +34,12 @@ const MobileBottomNav = () => {
         <Link 
           to="/used-cars" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("cars") || isActive("used-cars") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
           <img 
             src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
-            alt="Buy Cars" 
+            alt="Profile" 
             className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Buy</span>
