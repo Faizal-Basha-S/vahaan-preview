@@ -59,7 +59,7 @@ const MobileHomeUI = () => {
           {carouselSlides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-700 ${
+              className={`absolute inset-0 transition-opacity duration-1200 ${
                 activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
