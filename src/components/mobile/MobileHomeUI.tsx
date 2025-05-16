@@ -38,13 +38,13 @@ const MobileHomeUI = () => {
 
   const carouselSlides = [
     {
-      title: "Sell Your Car or Bike Today",
-      description: "List your vehicle in minutes. Reach thousands of buyers instantly. Hassle-free, fast, and reliable — just like the ride you're selling.",
+      title: "Sell with Us, with verified Buyers",
+      description: "No Commission, No Fees – Set a Fair Price, Negotiate Directly with Verified Buyers!",
       image: "https://images.unsplash.com/photo-1618005198919-4993ee3b99e3",
       linkTo: "/sell"
     },
     {
-      title: "Buy from Us, Save Big",
+      title: "Buy with Us, Save Big",
       description: "No Brokerage, No Hidden Charges – Contact Sellers with a Fair Price & Save Big!",
       image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
       linkTo: "/used-cars"
@@ -59,7 +59,7 @@ const MobileHomeUI = () => {
           {carouselSlides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1200 ${
+              className={`absolute inset-0 transition-opacity duration-4000 ${
                 activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
