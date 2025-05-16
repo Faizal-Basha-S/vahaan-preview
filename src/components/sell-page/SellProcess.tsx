@@ -42,8 +42,8 @@ const SellProcess: React.FC = () => {
     },
     {
       step: "Step 3",
-      title: "Get Paid Instantly",
-      description: "Finalize the offer and receive instant payment on the spot.",
+      title: "Get best offers from direct buyers",
+      description: "Accept the best deal and get paid by direct buyers.",
       icon: <Banknote className="h-8 w-8 text-primary" />
     }
   ];
