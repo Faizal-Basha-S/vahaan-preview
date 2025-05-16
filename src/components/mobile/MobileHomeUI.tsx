@@ -52,7 +52,7 @@ const MobileHomeUI = () => {
   ];
 
   return (
-    <div className="pt-16 pb-20">
+    <div className="pt-20 pb-20 px-3">
       {/* Hero Carousel - Updated with new design */}
       <div className="relative w-full mb-6 overflow-hidden px-4">
         <div className="relative h-[200px] rounded-xl">
