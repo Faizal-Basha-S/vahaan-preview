@@ -13,11 +13,11 @@ const MobileHomeUI = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const totalSlides = 2;
 
-  // Auto-sliding functionality - updated to 4 seconds
+  // Auto-sliding functionality - updated to 6 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % totalSlides);
-    }, 4000); // Change slide every 4 seconds
+    }, 6000); // Change slide every 6 seconds
     
     return () => clearInterval(interval);
   }, []);
@@ -60,7 +60,7 @@ const MobileHomeUI = () => {
               key={index}
               className={`absolute inset-0 transition-all duration-700 transform ${
                 activeSlide === index
-                  ? "translate-x-0 opacity-100 z-10"
+                  ? "translate-x-[-100%] opacity-100 z-10"
                   : "translate-x-full opacity-0 z-0"
               }`}
             >
