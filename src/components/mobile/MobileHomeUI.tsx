@@ -44,8 +44,8 @@ const MobileHomeUI = () => {
       linkTo: "/sell"
     },
     {
-      title: "Buy Without Commission",
-      description: "Find your dream vehicle with zero commission and full transparency.",
+      title: "Buy from Us, Save Big",
+      description: "No Brokerage, No Hidden Charges – Contact Sellers with a Fair Price & Save Big!",
       image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
       linkTo: "/used-cars"
     }
