@@ -31,7 +31,7 @@ const SellProcess: React.FC = () => {
     {
       step: "Step 1",
       title: "Check Your Car's Price",
-      description: "Tell us about your car and get a quick, accurate price estimate.",
+      description: "Tell us about your car and get a quick, accurate price estimate for posting the ad.",
       icon: <Car className="h-8 w-8 text-primary" />
     },
     {
@@ -43,7 +43,7 @@ const SellProcess: React.FC = () => {
     {
       step: "Step 3",
       title: "Get best offers from direct buyers",
-      description: "Accept the best deal and get paid by direct buyers.",
+      description: "Finalize the best deal with verified buyers and ensure a transparent payment process.",
       icon: <Banknote className="h-8 w-8 text-primary" />
     }
   ];
