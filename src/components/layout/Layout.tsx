@@ -16,6 +16,11 @@ const Layout = ({ children, mobilePadding = true }) => {
 
   const isMobile = useIsMobile();
 
+  // Don't render anything until we know if it's mobile or not
+  if (isMobile === undefined) {
+    return null;
+  }
+
   return (
     <TooltipProvider>
       <div className="flex flex-col min-h-screen">

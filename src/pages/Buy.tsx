@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Car, Bike } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Buy = () => {
   const navigate = useNavigate();
@@ -18,8 +18,13 @@ const Buy = () => {
     }
   }, [isMobile, navigate]);
 
-  // If we're still determining if it's mobile, or if it's not mobile, don't render anything
-  if (isMobile === undefined || isMobile === false) {
+  // If we're still determining if it's mobile, don't render anything
+  if (isMobile === undefined) {
+    return null;
+  }
+
+  // If it's not mobile, don't render anything
+  if (isMobile === false) {
     return null;
   }
 
@@ -46,6 +51,8 @@ const Buy = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
               <Button
                 onClick={() => navigate("/search")}
@@ -62,6 +69,8 @@ const Buy = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
               <Button
                 onClick={() => navigate("/bikes")}

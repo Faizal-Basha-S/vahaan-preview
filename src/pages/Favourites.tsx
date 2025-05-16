@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,7 +8,7 @@ import { Star, Eye, Trash2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Favourites = () => {
   const { currentUser } = useAuth();
@@ -41,6 +42,11 @@ const Favourites = () => {
     }
   }, [currentUser, navigate, isMobile]);
 
+  // If we're still determining if it's mobile, don't render anything
+  if (isMobile === undefined) {
+    return null;
+  }
+
   // If user is not authenticated, don't render anything
   if (!currentUser) return null;
   
@@ -64,12 +70,12 @@ const Favourites = () => {
         
         <TabsContent value="cars" className="space-y-4">
           {mockFavouriteCars.length > 0 ? (
-            mockFavouriteCars.map((car) => (
+            mockFavouriteCars.map((car, index) => (
               <motion.div 
                 key={car.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <Card className="overflow-hidden">
                   <div className="relative">
@@ -111,25 +117,30 @@ const Favourites = () => {
               </motion.div>
             ))
           ) : (
-            <div className="text-center py-12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="text-center py-12"
+            >
               <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="h-8 w-8 text-muted-foreground" />
               </div>
               <h3 className="text-lg font-medium">No saved cars yet</h3>
               <p className="text-muted-foreground mt-1">Start browsing and add cars to your favourites</p>
               <Button className="mt-4" onClick={() => navigate("/search")}>Browse Cars</Button>
-            </div>
+            </motion.div>
           )}
         </TabsContent>
         
         <TabsContent value="bikes" className="space-y-4">
           {mockFavouriteBikes.length > 0 ? (
-            mockFavouriteBikes.map((bike) => (
+            mockFavouriteBikes.map((bike, index) => (
               <motion.div 
                 key={bike.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <Card className="overflow-hidden">
                   <div className="relative">
@@ -171,14 +182,19 @@ const Favourites = () => {
               </motion.div>
             ))
           ) : (
-            <div className="text-center py-12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="text-center py-12"
+            >
               <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="h-8 w-8 text-muted-foreground" />
               </div>
               <h3 className="text-lg font-medium">No saved bikes yet</h3>
               <p className="text-muted-foreground mt-1">Start browsing and add bikes to your favourites</p>
               <Button className="mt-4" onClick={() => navigate("/bikes")}>Browse Bikes</Button>
-            </div>
+            </motion.div>
           )}
         </TabsContent>
       </Tabs>

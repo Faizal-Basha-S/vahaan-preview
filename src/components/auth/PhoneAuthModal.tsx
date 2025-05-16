@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -549,6 +548,11 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
+
+  // Don't render anything until we know if it's mobile or not
+  if (isMobile === undefined) {
+    return null;
+  }
 
   return (
     <Dialog open={modalOpen} onOpenChange={(open) => !open && handleModalClose()}>
