@@ -1,11 +1,12 @@
 
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import PhoneAuthModal from "../auth/PhoneAuthModal";
 
 const MobileBottomNav = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { pathname } = location;
   const { currentUser } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -22,6 +23,15 @@ const MobileBottomNav = () => {
       setShowAuthModal(true);
     }
     // If user is logged in, navigate normally via the Link component
+  };
+
+  const handleFavouritesClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!currentUser) {
+      setShowAuthModal(true);
+      return;
+    }
+    navigate("/favourites");
   };
 
   return (
@@ -72,8 +82,10 @@ const MobileBottomNav = () => {
           <span className="text-xs font-medium">Post Ad</span>
         </Link>
         
-        <Link 
-          to="/favourites" 
+        {/* Modified: Using onClick handler instead of just Link */}
+        <a 
+          href="#"
+          onClick={handleFavouritesClick}
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
             isActive("/favourites") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
@@ -84,7 +96,7 @@ const MobileBottomNav = () => {
             className="h-6 w-6 mb-1" 
           />
           <span className="text-xs">Favourites</span>
-        </Link>
+        </a>
         
         <div onClick={handleProfileClick} className="w-1/5">
           <Link 

@@ -28,17 +28,11 @@ const Favourites = () => {
     { id: 2, title: "Bajaj Pulsar NS200", price: "₹1,25,000", year: 2021, km: "8,000", location: "Chennai", image: "/placeholder.svg" },
   ];
   
-  // Check authentication
+  // Check authentication - BUT don't redirect immediately on mobile
   useEffect(() => {
-    if (!currentUser) {
-      // Show sign-in modal on mobile instead of redirecting
-      if (isMobile) {
-        // We'll trigger the auth modal through the bottom nav
-        // For now, just go back to home
-        navigate("/");
-      } else {
-        navigate("/");
-      }
+    // Only redirect on desktop if not authenticated
+    if (!currentUser && isMobile === false) {
+      navigate("/");
     }
   }, [currentUser, navigate, isMobile]);
 
@@ -47,8 +41,32 @@ const Favourites = () => {
     return null;
   }
 
-  // If user is not authenticated, don't render anything
-  if (!currentUser) return null;
+  // Special handling for mobile - Show auth modal via bottom nav instead
+  // of immediate redirect
+  if (!currentUser && isMobile) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center"
+          >
+            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+              <Star className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-medium">Sign in to view favorites</h3>
+            <p className="text-muted-foreground mt-2 mb-4">
+              Please sign in to see your saved vehicles
+            </p>
+            <Button onClick={() => navigate("/")}>
+              Return to Home
+            </Button>
+          </motion.div>
+        </div>
+      </Layout>
+    );
+  }
   
   const MobileFavouritesView = () => (
     <div className="px-4 pt-6 pb-20">
