@@ -34,7 +34,7 @@ const UsedCars = () => {
 
   return (
     <Layout>
-      <div className={`container mx-auto px-4 ${isMobile ? 'pt-16' : 'pt-24'} ${pageBlocked ? 'pointer-events-none opacity-40 blur-[1px] select-none' : ''}`}>
+      <div className={`container mx-auto px-4 ${isMobile ? 'pt-16' : 'pt-24'} ${pageBlocked ? '' : ''}`}>
         {isMobile ? (
           <MobileCarListings cars={mockCarListings} />
         ) : (
