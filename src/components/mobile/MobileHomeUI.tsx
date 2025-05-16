@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Separator } from "@/components/ui/separator";
@@ -11,28 +11,122 @@ import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
 
 const MobileHomeUI = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const totalSlides = 2;
+
+  // Auto-sliding functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % totalSlides);
+    }, 5000); // Change slide every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle manual navigation
+  const goToSlide = (index: number) => {
+    setActiveSlide(index);
+  };
+
+  const nextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setActiveSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const carouselSlides = [
+    {
+      title: "Sell Your Car or Bike Today",
+      description: "List your vehicle in minutes. Reach thousands of buyers instantly. Hassle-free, fast, and reliable — just like the ride you're selling.",
+      image: "https://images.unsplash.com/photo-1618005198919-4993ee3b99e3",
+      linkTo: "/sell"
+    },
+    {
+      title: "Find Your Perfect Ride",
+      description: "Explore a curated list of vehicles. Buy with zero commission, full transparency, and confidence backed by our platform.",
+      image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
+      linkTo: "/used-cars"
+    }
+  ];
+
   return (
     <div className="pt-16 pb-20">
-      {/* Hero Banner */}
-      <div className="relative w-full mb-6">
-        <AspectRatio ratio={16/9} className="w-full">
-          <img 
-            src="/resource-uploads/34d3d5e5-cad4-4b3b-9abc-dd06f637bf79.jpg" 
-            alt="Find your perfect vehicle" 
-            className="w-full h-full object-cover object-center brightness-[0.85]"
-          />
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-            <h1 className="text-2xl font-bold text-white mb-3 drop-shadow-md">
-              Find Your Perfect Vehicle
-            </h1>
-            <Link 
-              to="/used-cars" 
-              className="bg-primary text-white px-5 py-2 rounded-full font-medium text-sm shadow-md"
+      {/* Hero Carousel */}
+      <div className="relative w-full mb-6 overflow-hidden">
+        <div className="relative h-[280px]">
+          {carouselSlides.map((slide, index) => (
+            <div 
+              key={index} 
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
             >
-              Explore Cars & Bikes
-            </Link>
+              <div className="relative h-full w-full overflow-hidden rounded-xl shadow-md">
+                {/* Background Image */}
+                <img 
+                  src={slide.image} 
+                  alt={slide.title} 
+                  className="w-full h-full object-cover object-center"
+                />
+                
+                {/* Gradient Overlay for better text readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30"></div>
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
+                  <h1 className="text-2xl font-bold text-white mb-3 drop-shadow-md">
+                    {slide.title}
+                  </h1>
+                  <p className="text-sm text-white mb-4 max-w-xs">
+                    {slide.description}
+                  </p>
+                  <Link 
+                    to={slide.linkTo} 
+                    className="bg-primary text-white px-5 py-2 rounded-full font-medium text-sm shadow-md hover:bg-primary/90 transition-colors"
+                  >
+                    {index === 0 ? "Sell Now" : "Explore Vehicles"}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Navigation Arrows */}
+          <button 
+            onClick={prevSlide}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center"
+            aria-label="Previous slide"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button 
+            onClick={nextSlide}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center"
+            aria-label="Next slide"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          {/* Indicators */}
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center z-20 gap-2">
+            {carouselSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  activeSlide === index ? "bg-white w-4" : "bg-white/50"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              ></button>
+            ))}
           </div>
-        </AspectRatio>
+        </div>
       </div>
 
       {/* Quick Access Cards */}
