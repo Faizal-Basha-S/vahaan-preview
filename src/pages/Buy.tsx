@@ -25,7 +25,7 @@ const Buy = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen pt-6 pb-24 px-4 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen pt-8 pb-24 px-4 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-md mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -34,13 +34,10 @@ const Buy = () => {
             className="text-center mb-8"
           >
             <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              Your Dream Ride Awaits
+              Find Your Perfect Ride 🚗🏍️
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Choose from a wide range of trusted cars and bikes
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Select your category below to get started
+              Choose a category to start browsing vehicles near you
             </p>
           </motion.div>
 
@@ -51,7 +48,7 @@ const Buy = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Button
-                onClick={() => navigate("/used-cars")}
+                onClick={() => navigate("/search")}
                 className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col items-center">
@@ -67,7 +64,7 @@ const Buy = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <Button
-                onClick={() => navigate("/bike-buy-section")}
+                onClick={() => navigate("/bikes")}
                 variant="secondary"
                 className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
               >

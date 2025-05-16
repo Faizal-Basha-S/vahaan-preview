@@ -8,7 +8,7 @@ import MobileHeader from "../mobile/MobileHeader";
 import MobileBottomNav from "../mobile/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, mobilePadding = true }) => {
   // This useEffect ensures scroll is reset when Layout is mounted (which happens on each page change)
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
         
         <main className="flex-1">
           {/* Content with paddings adjusted for mobile */}
-          <div className="w-full mx-auto">  
+          <div className={`w-full mx-auto ${isMobile && mobilePadding ? 'pt-14' : ''}`}>  
             {children}
           </div>
         </main>

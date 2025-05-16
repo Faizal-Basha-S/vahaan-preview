@@ -1,16 +1,27 @@
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import PhoneAuthModal from "../auth/PhoneAuthModal";
 
 const MobileBottomNav = () => {
   const location = useLocation();
   const { pathname } = location;
+  const { currentUser } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/" && pathname === "/") return true;
-    if (path !== "/" && pathname.includes(path)) return true;
+    if (path !== "/" && pathname.startsWith(path)) return true;
     return false;
+  };
+
+  const handleProfileClick = (e: React.MouseEvent) => {
+    if (!currentUser) {
+      e.preventDefault();
+      setShowAuthModal(true);
+    }
+    // If user is logged in, navigate normally via the Link component
   };
 
   return (
@@ -33,7 +44,8 @@ const MobileBottomNav = () => {
         <Link 
           to="/buy" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("buy") || isActive("used-cars") || isActive("bikes") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("/buy") || isActive("/used-cars") || isActive("/bikes") || isActive("/search") ? 
+            "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
           <img 
@@ -57,13 +69,13 @@ const MobileBottomNav = () => {
               />
             </div>
           </div>
-          <span className="text-xs font-medium ">Post Ad</span>
+          <span className="text-xs font-medium">Post Ad</span>
         </Link>
         
         <Link 
           to="/favourites" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("favourites") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            isActive("/favourites") ? "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
           <img 
@@ -74,20 +86,28 @@ const MobileBottomNav = () => {
           <span className="text-xs">Favourites</span>
         </Link>
         
-        <Link 
-          to="/contact" 
-          className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
-          }`}
-        >
-          <img 
-            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/profile.png" 
-            alt="Profile" 
-            className="h-6 w-6 mb-1" 
-          />
-          <span className="text-xs">Profile</span>
-        </Link>
+        <div onClick={handleProfileClick} className="w-1/5">
+          <Link 
+            to={currentUser ? "/profile" : "#"} 
+            className={`flex flex-col items-center justify-center w-full h-full ${
+              isActive("/profile") || isActive("/contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            <img 
+              src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/profile.png" 
+              alt="Profile" 
+              className="h-6 w-6 mb-1" 
+            />
+            <span className="text-xs">Profile</span>
+          </Link>
+        </div>
       </div>
+
+      {/* Auth Modal for mobile sign-in */}
+      <PhoneAuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+      />
     </div>
   );
 };
