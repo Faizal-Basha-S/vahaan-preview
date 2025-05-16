@@ -60,7 +60,7 @@ const MobileHomeUI = () => {
               key={index}
               className={`absolute inset-0 transition-all duration-700 transform ${
                 activeSlide === index
-                  ? "translate-x-[-100%] opacity-100 z-10"
+                  ? "translate-x-0 opacity-100 z-10"
                   : "translate-x-full opacity-0 z-0"
               }`}
             >
