@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -13,11 +14,11 @@ const MobileHomeUI = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const totalSlides = 2;
 
-  // Auto-sliding functionality
+  // Auto-sliding functionality - updated to 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % totalSlides);
-    }, 5000); // Change slide every 5 seconds
+    }, 3000); // Change slide every 3 seconds
     
     return () => clearInterval(interval);
   }, []);
@@ -43,8 +44,8 @@ const MobileHomeUI = () => {
       linkTo: "/sell"
     },
     {
-      title: "Find Your Perfect Ride",
-      description: "Explore a curated list of vehicles. Buy with zero commission, full transparency, and confidence backed by our platform.",
+      title: "Buy Without Commission",
+      description: "Find your dream vehicle with zero commission and full transparency.",
       image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
       linkTo: "/used-cars"
     }
@@ -52,9 +53,9 @@ const MobileHomeUI = () => {
 
   return (
     <div className="pt-16 pb-20">
-      {/* Hero Carousel */}
-      <div className="relative w-full mb-6 overflow-hidden">
-        <div className="relative h-[200px]">
+      {/* Hero Carousel - Updated with new design */}
+      <div className="relative w-full mb-6 overflow-hidden px-4">
+        <div className="relative h-[200px] rounded-xl">
           {carouselSlides.map((slide, index) => (
             <div
               key={index}
@@ -62,13 +63,22 @@ const MobileHomeUI = () => {
                 activeSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
-              <div
-                className={`relative h-full w-full mx-4 rounded-xl shadow-md p-6 flex flex-col justify-center transition-all duration-500 ${
-                  index === 0 ? "bg-blue-600 text-white" : "bg-yellow-400 text-black"
-                }`}
-              >
-                <h1 className="text-xl font-bold mb-2">{slide.title}</h1>
-                <p className="text-sm">{slide.description}</p>
+              <div className="relative h-full w-full rounded-xl shadow-md overflow-hidden">
+                {/* Background Image */}
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Overlay Gradient for text readability */}
+                <div className="absolute inset-0 bg-black/30" />
+
+                {/* Text Content */}
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
+                  <h1 className="text-xl font-bold text-white mb-2 drop-shadow">{slide.title}</h1>
+                  <p className="text-sm text-white drop-shadow">{slide.description}</p>
+                </div>
               </div>
             </div>
           ))}
@@ -80,9 +90,7 @@ const MobileHomeUI = () => {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`h-[3px] rounded-full transition-all ${
-                  activeSlide === index
-                    ? "bg-white w-6"
-                    : "bg-white/60 w-3"
+                  activeSlide === index ? "bg-white w-6" : "bg-white/60 w-3"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               ></button>
