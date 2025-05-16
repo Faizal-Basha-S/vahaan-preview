@@ -44,7 +44,7 @@ const MobileHomeUI = () => {
       linkTo: "/sell"
     },
     {
-      title: "Buy with Us, Save Big",
+      title: "Buy with Us, with verified Buyers",
       description: "No Brokerage, No Hidden Charges – Contact Sellers with a Fair Price & Save Big!",
       image: "https://images.unsplash.com/photo-1583267743275-bd4fd04ef480",
       linkTo: "/used-cars"
