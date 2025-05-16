@@ -59,7 +59,7 @@ const MobileHomeUI = () => {
       let slideClass = "";
 
       if (index === activeSlide) {
-        slideClass = "translate-x-0 opacity-100 z-10";
+        slideClass = "translate-x-full opacity-100 z-10";
       } else if (
         (index === (activeSlide + 1) % carouselSlides.length) ||
         (activeSlide === carouselSlides.length - 1 && index === 0)
