@@ -53,7 +53,7 @@ const MobileHomeUI = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel Container */}
-      <div className="w-full bg-[#f4e7ff] pt-6 pb-5">
+      <div className="w-full bg-light pt-6 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
           <div className="relative h-[200px] rounded-xl">
@@ -160,7 +160,7 @@ const MobileHomeUI = () => {
 
       {/* Content Container */}
       <div className="bg-[#f4e7ff]">
-      <div className="w-full bg-light pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
+      <div className="w-full bg-white pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
         <div className="px-10 mb-8">
           <div className="grid grid-cols-2 gap-7">
