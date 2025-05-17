@@ -38,11 +38,11 @@ const Buy = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              Find Your Perfect Ride 🚗🏍️
+            <h1 className="text-3xl font-bold mb-3 text-transparent">
+              Start Your New Journey with Perfect Ride </br>🚗🏍️
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Choose a category to start browsing vehicles near you
+              Choose a vehicles for you
             </p>
           </motion.div>
 
@@ -58,7 +58,7 @@ const Buy = () => {
                 onClick={() => navigate("/search")}
                 className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex flex-col items-center">
+                <div className="items-center">
                   <Car size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Cars</span>
                 </div>
@@ -77,7 +77,7 @@ const Buy = () => {
                 variant="secondary"
                 className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex flex-col items-center">
+                <div className="items-center">
                   <Bike size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Bikes</span>
                 </div>
