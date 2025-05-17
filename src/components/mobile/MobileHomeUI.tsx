@@ -160,12 +160,12 @@ const MobileHomeUI = () => {
 
       {/* Content Container */}
       <div className="bg-[#f4e7ff]">
-      <div className="w-full bg-white pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
+      <div className="w-full bg-[#fff3f9] pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
         <div className="px-10 mb-8">
           <div className="grid grid-cols-2 gap-7">
             <Link to="/used-cars" className="block">
-            <Card className="border border-white bg-[#faf4ff] rounded-t-xl shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
+            <Card className="border border-white bg-[#fffbfd] rounded-t-xl shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-3">
                     <Car className="h-6 w-6 text-blue-600 dark:text-blue-400" />
