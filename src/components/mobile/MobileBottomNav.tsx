@@ -44,7 +44,7 @@ const MobileBottomNav = () => {
           }`}
         >
           <img 
-            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_home.png" 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_home_icon.png" 
             alt="Home" 
             className="h-6 w-6 mb-1" 
           />
@@ -59,7 +59,7 @@ const MobileBottomNav = () => {
           }`}
         >
           <img 
-            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy.png" 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_buy_icon.png" 
             alt="Buy" 
             className="h-6 w-6 mb-1" 
           />
@@ -73,7 +73,7 @@ const MobileBottomNav = () => {
           <div className="relative -top-4 bg-white dark:bg-gray-900 rounded-full p-2 shadow-lg">
             <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-l from-pink-400 via-purple-500 to-orange-400">
               <img 
-                src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/postad_plus_icon.png"
+                src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_postad_icon.png"
                 alt="Post Ad"
                 className="w-6 h-6"
               />
@@ -91,7 +91,7 @@ const MobileBottomNav = () => {
           }`}
         >
           <img 
-            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/favourites.png" 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_favourites_icon.png" 
             alt="My Favourites" 
             className="h-6 w-6 mb-1" 
           />
@@ -106,7 +106,7 @@ const MobileBottomNav = () => {
             }`}
           >
             <img 
-              src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/profile.png" 
+              src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_profile_icon.png" 
               alt="Profile" 
               className="h-6 w-6 mb-1" 
             />
