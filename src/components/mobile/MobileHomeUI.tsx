@@ -171,7 +171,7 @@ const MobileHomeUI = () => {
                     <Car className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                   </div>
                   <h3 className="font-medium text-sm">Buy Used Car</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Find your perfect car</p>
+                  <p className="text-xs text-muted-foreground mt-1">Buy from Sellers</p>
                 </CardContent>
               </Card>
             </Link>
@@ -183,7 +183,7 @@ const MobileHomeUI = () => {
                     <Bike className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
                   <h3 className="font-medium text-sm">Buy Used Bike</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Find your perfect bike</p>
+                  <p className="text-xs text-muted-foreground mt-1">Buy from Sellers</p>
                 </CardContent>
               </Card>
             </Link>
@@ -195,7 +195,7 @@ const MobileHomeUI = () => {
                     <DollarSign className="h-6 w-6 text-amber-600 dark:text-amber-400" />
                   </div>
                   <h3 className="font-medium text-sm">Sell Car</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Get instant valuation</p>
+                  <p className="text-xs text-muted-foreground mt-1">Sell to Buyers</p>
                 </CardContent>
               </Card>
             </Link>
@@ -207,7 +207,7 @@ const MobileHomeUI = () => {
                     <ShoppingCart className="h-6 w-6 text-rose-600 dark:text-rose-400" />
                   </div>
                   <h3 className="font-medium text-sm">Sell Bike</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Fastest way to sell bikes</p>
+                  <p className="text-xs text-muted-foreground mt-1">Sell to Buyers</p>
                 </CardContent>
               </Card>
             </Link>
