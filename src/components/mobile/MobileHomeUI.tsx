@@ -160,7 +160,7 @@ const MobileHomeUI = () => {
 
       {/* Content Container */}
       <div className="bg-[#f4e7ff]">
-      <div className="w-full bg-[#f9f2ff] pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
+      <div className="w-full bg-light pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
         <div className="px-10 mb-8">
           <div className="grid grid-cols-2 gap-7">
