@@ -182,7 +182,7 @@ const Index = () => {
       
       {/* Featured Cars */}
       <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8  pointer-events-none opacity-40 blur-[1px] select-none">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <FeaturedCars />
           
           <div className="mt-10 text-center">
@@ -199,7 +199,7 @@ const Index = () => {
       
       {/* Featured Bikes */}
       <section className="py-12 md:py-16 bg-primary/5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8  pointer-events-none opacity-40 blur-[1px] select-none">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <FeaturedBikes />
           
           <div className="mt-10 text-center">
