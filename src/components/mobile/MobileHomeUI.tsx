@@ -56,7 +56,7 @@ const MobileHomeUI = () => {
       <div className="w-full bg-light pt-8 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
-          <div className="relative h-[200px] rounded-xl">
+          <div className="relative h-[200px] rounded-xl border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
             {carouselSlides.map((slide, index) => {
               let slideClass = "";
 
@@ -162,7 +162,7 @@ const MobileHomeUI = () => {
       <div className="bg-light">
       <div className="w-full bg-[#fff3f9] pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
-        <div className="px-10 mb-8">
+        <div className="px-10 mb-8 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
           <div className="grid grid-cols-2 gap-7">
             <Link to="/used-cars" className="block">
             <Card className="border border-white bg-[#fffbfd] rounded-t-xl shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
