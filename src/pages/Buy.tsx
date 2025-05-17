@@ -59,7 +59,6 @@ const Buy = () => {
                 className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-row items-center">
-                  <Car size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Cars</span>
                 </div>
               </Button>
@@ -78,7 +77,6 @@ const Buy = () => {
                 className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-row items-center">
-                  <Bike size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Bikes</span>
                 </div>
               </Button>
