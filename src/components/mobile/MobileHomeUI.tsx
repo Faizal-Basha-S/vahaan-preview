@@ -1,10 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
-import { Car, Bike, DollarSign, ShoppingCart } from "lucide-react";
 import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
@@ -168,7 +168,12 @@ const MobileHomeUI = () => {
             <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-3">
-                    <Car className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    <img 
+                      src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/mobile_home_buy_cars_icon.png" 
+                      alt="Buy Used Car" 
+                      className="h-6 w-6 object-contain" 
+                      loading="lazy"
+                    />
                   </div>
                   <h3 className="font-medium text-sm">Buy Used Car</h3>
                   <p className="text-xs text-muted-foreground mt-1">Buy from Sellers</p>
@@ -180,7 +185,12 @@ const MobileHomeUI = () => {
             <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-3">
-                    <Bike className="h-6 w-6 text-green-600 dark:text-green-400" />
+                    <img 
+                      src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/mobile_home_buy_bikes_icon.png" 
+                      alt="Buy Used Bike" 
+                      className="h-6 w-6 object-contain" 
+                      loading="lazy"
+                    />
                   </div>
                   <h3 className="font-medium text-sm">Buy Used Bike</h3>
                   <p className="text-xs text-muted-foreground mt-1">Buy from Sellers</p>
@@ -192,7 +202,12 @@ const MobileHomeUI = () => {
             <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-3">
-                    <DollarSign className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                    <img 
+                      src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/mobile_home_sell_icon.png" 
+                      alt="Sell Car" 
+                      className="h-6 w-6 object-contain" 
+                      loading="lazy"
+                    />
                   </div>
                   <h3 className="font-medium text-sm">Sell Car</h3>
                   <p className="text-xs text-muted-foreground mt-1">Sell to Buyers</p>
@@ -204,7 +219,12 @@ const MobileHomeUI = () => {
             <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mb-3">
-                    <ShoppingCart className="h-6 w-6 text-rose-600 dark:text-rose-400" />
+                    <img 
+                      src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/mobile_home_sell_icon.png" 
+                      alt="Sell Bike" 
+                      className="h-6 w-6 object-contain" 
+                      loading="lazy"
+                    />
                   </div>
                   <h3 className="font-medium text-sm">Sell Bike</h3>
                   <p className="text-xs text-muted-foreground mt-1">Sell to Buyers</p>

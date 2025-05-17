@@ -1,136 +1,151 @@
 
-import React, { useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import React, { useRef, useEffect, KeyboardEvent } from "react";
+import { Input } from "@/components/ui/input";
 
 interface OTPInputProps {
-  value: string;
+  length: number;
+  onComplete: (value: string) => void;
   onChange: (value: string) => void;
-  maxLength?: number;
-  disabled?: boolean;
-  className?: string;
+  value: string;
 }
 
-const OTPInput: React.FC<OTPInputProps> = ({
-  value,
-  onChange,
-  maxLength = 6,
-  disabled = false,
-  className
-}) => {
+const OTPInput: React.FC<OTPInputProps> = ({ length, onComplete, onChange, value }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  
-  // Initialize refs array based on maxLength
-  useEffect(() => {
-    inputRefs.current = inputRefs.current.slice(0, maxLength);
-    while (inputRefs.current.length < maxLength) {
-      inputRefs.current.push(null);
-    }
-  }, [maxLength]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const target = e.target;
-    let updatedValue = target.value;
-    
-    // Only allow numbers
-    updatedValue = updatedValue.replace(/\D/g, '');
-    
-    // Take only the last character if multiple are pasted or entered
-    if (updatedValue.length > 1) {
-      updatedValue = updatedValue.slice(-1);
-    }
-    
-    // Update the input value
-    target.value = updatedValue;
-    
-    // Create new OTP value
-    const newOtp = value.split('');
-    newOtp[index] = updatedValue;
-    const newOtpValue = newOtp.join('');
-    
-    // Call onChange with new OTP value
-    onChange(newOtpValue);
-    
-    // Move to next input if this one is filled
-    if (updatedValue && index < maxLength - 1) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
+  // Initialize value state
+  const valueArray = value.split("");
   
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    // Move to previous input on backspace if current input is empty
-    if (e.key === 'Backspace' && !value[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
+  // When OTP input is mounted, focus the first input field
+  useEffect(() => {
+    if (inputRefs.current[0]) {
+      inputRefs.current[0].focus();
     }
+  }, []);
+
+  // Handle input change
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newValue = e.target.value;
     
-    // Handle arrow keys
-    if (e.key === 'ArrowLeft' && index > 0) {
-      e.preventDefault();
-      inputRefs.current[index - 1]?.focus();
+    // If input is not a number, do nothing
+    if (!/^\d*$/.test(newValue)) {
+      return;
     }
+
+    // Get all values
+    const newValueArray = [...valueArray];
     
-    if (e.key === 'ArrowRight' && index < maxLength - 1) {
-      e.preventDefault();
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
-  
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, index: number) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData('text/plain').trim();
-    
-    // Only process if it looks like an OTP
-    if (!/^\d+$/.test(pastedData)) return;
-    
-    // Take only what we need
-    const otpCharacters = pastedData.substring(0, maxLength).split('');
-    
-    // Update OTP value
-    const newOtp = value.split('');
-    
-    // Fill from current position
-    for (let i = 0; i < otpCharacters.length; i++) {
-      const targetIndex = index + i;
-      if (targetIndex < maxLength) {
-        newOtp[targetIndex] = otpCharacters[i];
+    // If the input has a value, and it's one character
+    if (newValue && newValue.length === 1) {
+      // Update the value
+      newValueArray[index] = newValue;
+      
+      // Move to next input if not the last
+      if (index < length - 1 && inputRefs.current[index + 1]) {
+        inputRefs.current[index + 1]?.focus();
       }
+    } 
+    // If input is empty (e.g. backspace was pressed)
+    else if (newValue === "") {
+      // Clear the current input
+      newValueArray[index] = "";
     }
     
-    const newOtpValue = newOtp.join('');
-    onChange(newOtpValue);
+    // Update the parent component
+    const combinedValue = newValueArray.join("");
+    onChange(combinedValue);
     
-    // Focus the appropriate input
-    const focusIndex = Math.min(index + otpCharacters.length, maxLength - 1);
-    inputRefs.current[focusIndex]?.focus();
+    // If all fields are filled, trigger onComplete
+    if (combinedValue.length === length) {
+      onComplete(combinedValue);
+    }
   };
+
+  // Handle paste
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text/plain").trim();
+    
+    if (!/^\d+$/.test(pastedData)) {
+      return;
+    }
+    
+    // Only use up to the required length
+    const pastedValues = pastedData.slice(0, length).split("");
+    
+    const newValueArray = Array(length).fill("");
+    pastedValues.forEach((val, i) => {
+      newValueArray[i] = val;
+    });
+    
+    // Update inputs
+    newValueArray.forEach((val, i) => {
+      if (inputRefs.current[i]) {
+        inputRefs.current[i]!.value = val;
+      }
+    });
+    
+    // Focus the next empty input or the last one if all are filled
+    const nextEmptyIndex = newValueArray.findIndex(v => v === "");
+    const focusIndex = nextEmptyIndex === -1 ? length - 1 : nextEmptyIndex;
+    inputRefs.current[focusIndex]?.focus();
+    
+    // Update the parent component
+    const combinedValue = newValueArray.join("");
+    onChange(combinedValue);
+    
+    // If all fields are filled, trigger onComplete
+    if (combinedValue.length === length) {
+      onComplete(combinedValue);
+    }
+  };
+
+  // Handle key press
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    // Move to previous input on backspace if current input is empty
+    if (e.key === "Backspace" && !valueArray[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+    
+    // Move left on arrow left
+    if (e.key === "ArrowLeft" && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+    
+    // Move right on arrow right
+    if (e.key === "ArrowRight" && index < length - 1) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  // Generate input elements
+  const inputs = Array(length).fill(0).map((_, i) => (
+    <div key={i} className="w-9 mx-1">
+      <Input
+        ref={(el) => (inputRefs.current[i] = el)}
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        maxLength={1}
+        value={valueArray[i] || ""}
+        onChange={(e) => handleChange(e, i)}
+        onKeyDown={(e) => handleKeyDown(e, i)}
+        onPaste={i === 0 ? handlePaste : undefined}
+        className="text-center w-full h-12 rounded-md text-lg font-medium border-2 focus:border-primary focus:ring-primary"
+        autoComplete="one-time-code"
+      />
+    </div>
+  ));
 
   return (
-    <div className={cn("flex items-center justify-between gap-2", className)}>
-      {Array.from({ length: maxLength }).map((_, index) => (
-        <div 
-          key={index}
-          className="relative w-full max-w-[56px] aspect-square"
-        >
-          <input
-            ref={(el) => inputRefs.current[index] = el}
-            type="text"
-            inputMode="numeric"
-            pattern="\d*"
-            maxLength={1}
-            value={value[index] || ''}
-            onChange={(e) => handleChange(e, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            onPaste={(e) => handlePaste(e, index)}
-            disabled={disabled}
-            className={cn(
-              "w-full h-full text-center text-2xl font-bold bg-background border rounded-md transition-all duration-200",
-              "focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
-              value[index] ? "border-primary" : "border-input"
-            )}
-            autoComplete="one-time-code"
-          />
-        </div>
-      ))}
+    <div ref={containerRef} className="flex justify-center items-center">
+      {inputs}
     </div>
   );
 };

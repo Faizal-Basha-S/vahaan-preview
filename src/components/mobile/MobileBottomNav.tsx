@@ -54,7 +54,7 @@ const MobileBottomNav = () => {
         <Link 
           to="/buy" 
           className={`flex flex-col items-center justify-center w-1/5 h-full ${
-            isActive("/buy") || isActive("/used-cars") || isActive("/bikes") || isActive("/search") ? 
+            isActive("/buy") || isActive("/used-cars") || isActive("/bike-buy-section") || isActive("/search") ? 
             "text-primary" : "text-gray-500 dark:text-gray-400"
           }`}
         >
