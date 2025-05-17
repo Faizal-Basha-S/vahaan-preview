@@ -53,7 +53,7 @@ const MobileHomeUI = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel Container */}
-      <div className="w-full bg-light pt-6 pb-5">
+      <div className="w-full bg-light pt-8 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
           <div className="relative h-[200px] rounded-xl">
