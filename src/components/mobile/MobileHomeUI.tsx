@@ -238,12 +238,6 @@ const MobileHomeUI = () => {
                     <span className="text-sm font-medium text-gray-800">15 Lakhs</span>
                   </div>
                 </Link>
-                
-                <Link to="/search?budget=20 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm font-medium text-gray-800">20 Lakhs</span>
-                  </div>
-                </Link>
               </div>
             </ScrollArea>
           </div>
@@ -268,12 +262,6 @@ const MobileHomeUI = () => {
                 <Link to="/bikes?budget=15 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
                     <span className="text-sm font-medium text-gray-800">15 Lakhs</span>
-                  </div>
-                </Link>
-
-                <Link to="/bikes?budget=20 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm font-medium text-gray-800">20 Lakhs</span>
                   </div>
                 </Link>
               </div>
