@@ -165,7 +165,7 @@ const MobileHomeUI = () => {
         <div className="px-6 mb-8">
           <div className="grid grid-cols-2 gap-7">
             <Link to="/used-cars" className="block">
-            <Card className="border border-black bg-white rounded-t-xl">
+            <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-3">
                     <Car className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -177,7 +177,7 @@ const MobileHomeUI = () => {
             </Link>
             
             <Link to="/bike-buy-section" className="block">
-            <Card className="border border-black bg-white rounded-t-xl">
+            <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-3">
                     <Bike className="h-6 w-6 text-green-600 dark:text-green-400" />
@@ -189,7 +189,7 @@ const MobileHomeUI = () => {
             </Link>
             
             <Link to="/sell?mode=car" className="block">
-            <Card className="border border-black bg-white rounded-t-xl">
+            <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-3">
                     <DollarSign className="h-6 w-6 text-amber-600 dark:text-amber-400" />
@@ -201,7 +201,7 @@ const MobileHomeUI = () => {
             </Link>
             
             <Link to="/sell?mode=bike" className="block">
-            <Card className="border border-black bg-white rounded-t-xl">
+            <Card className="border border-grey bg-white rounded-t-xl">
                 <CardContent className="p-4 flex flex-col items-center">
                   <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mb-3">
                     <ShoppingCart className="h-6 w-6 text-rose-600 dark:text-rose-400" />
