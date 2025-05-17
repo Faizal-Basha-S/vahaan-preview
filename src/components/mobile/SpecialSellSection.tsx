@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,7 +19,7 @@ const SpecialSellSection = () => {
                   : "bg-transparent"
               }`}
             >
-              Sell to Others
+              Others Platforms
             </TabsTrigger>
             <TabsTrigger 
               value="us" 
@@ -30,7 +29,7 @@ const SpecialSellSection = () => {
                   : "bg-transparent"
               }`}
             >
-              Sell to Us
+              Vahaanxchange
             </TabsTrigger>
           </TabsList>
 
@@ -38,12 +37,12 @@ const SpecialSellSection = () => {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
-                  <ShieldCheck size={20} />
+                  <DollarSign size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">100% Buyer Verification</h3>
+                  <h3 className="text-sm font-medium mb-1">Commission Eats Profit</h3>
                   <p className="text-xs text-muted-foreground">
-                    Every buyer is Aadhar-verified for maximum security.
+                    Brokers, agents, or platform commission eat into your profit
                   </p>
                 </div>
               </div>
@@ -53,21 +52,21 @@ const SpecialSellSection = () => {
                   <Clock size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">Fast Response Times</h3>
+                  <h3 className="text-sm font-medium mb-1">Interference in Deals</h3>
                   <p className="text-xs text-muted-foreground">
-                    Get inquiries and schedule viewings quickly.
+                    Platform or agents often interfere in final deal
                   </p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
                 <div className="bg-primary/10 text-primary w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0">
-                  <DollarSign size={20} />
+                  <ShieldCheck size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">Zero Brokerage</h3>
+                  <h3 className="text-sm font-medium mb-1">Dependent on Approval</h3>
                   <p className="text-xs text-muted-foreground">
-                    You keep 100% of what you sell for.
+                    Dependent on platform approval or 3rd-party mediation
                   </p>
                 </div>
               </div>
@@ -81,9 +80,9 @@ const SpecialSellSection = () => {
                   <DollarSign size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">Fair & Transparent Pricing</h3>
+                  <h3 className="text-sm font-medium mb-1">Zero Commission</h3>
                   <p className="text-xs text-muted-foreground">
-                    We offer competitive prices based on market value.
+                    Zero brokerage, zero commission – 100% direct deal
                   </p>
                 </div>
               </div>
@@ -93,9 +92,9 @@ const SpecialSellSection = () => {
                   <Clock size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">Quick Process</h3>
+                  <h3 className="text-sm font-medium mb-1">Direct Negotiation</h3>
                   <p className="text-xs text-muted-foreground">
-                    We complete the purchase within 24-48 hours.
+                    Direct negotiation between buyer & seller
                   </p>
                 </div>
               </div>
@@ -105,9 +104,9 @@ const SpecialSellSection = () => {
                   <ShieldCheck size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-1">Hassle-Free Experience</h3>
+                  <h3 className="text-sm font-medium mb-1">Full Control</h3>
                   <p className="text-xs text-muted-foreground">
-                    We handle all the paperwork and transfer processes.
+                    Full control – meet, negotiate, finalize
                   </p>
                 </div>
               </div>
