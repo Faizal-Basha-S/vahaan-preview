@@ -55,7 +55,7 @@ const Buy = () => {
               whileTap={{ scale: 0.97 }}
             >
               <Button
-                onClick={() => navigate("/search")}
+                onClick={() => navigate("/used-cars")}
                 className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-row items-center">
@@ -72,7 +72,7 @@ const Buy = () => {
               whileTap={{ scale: 0.97 }}
             >
               <Button
-                onClick={() => navigate("/bikes")}
+                onClick={() => navigate("/bike-buy-section")}
                 variant="secondary"
                 className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
               >
