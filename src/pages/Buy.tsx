@@ -1,148 +1,106 @@
 
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { Car, Bike } from "lucide-react";
+import Layout from "@/components/layout/Layout";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Buy = () => {
   const navigate = useNavigate();
-  
-  // Function to detect if we're on mobile
-  const isMobile = () => window.innerWidth < 1024;
-  
-  // Redirect to home if not on mobile
+  const isMobile = useIsMobile();
+
+  // Redirect to homepage if not on mobile
   useEffect(() => {
-    if (!isMobile()) {
+    if (isMobile === false) {
       navigate("/");
     }
-    
-    // Add resize listener to redirect if screen size changes
-    const handleResize = () => {
-      if (!isMobile()) {
-        navigate("/");
-      }
-    };
-    
-    window.addEventListener("resize", handleResize);
-    
-    return () => window.removeEventListener("resize", handleResize);
-  }, [navigate]);
+  }, [isMobile, navigate]);
 
-  // If not mobile, don't render anything (will redirect)
-  if (!isMobile()) {
+  // If we're still determining if it's mobile, don't render anything
+  if (isMobile === undefined) {
     return null;
   }
-  
+
+  // If it's not mobile, don't render anything
+  if (isMobile === false) {
+    return null;
+  }
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-[#fff9fc] pt-16 pb-24 px-5">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <motion.h1 
-          className="text-2xl font-bold text-gray-800 mb-2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Your Dream Ride Awaits
-        </motion.h1>
-        <motion.p 
-          className="text-gray-600 text-sm px-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          Choose from a wide range of trusted cars and bikes
-        </motion.p>
+    <Layout>
+      <div className="min-h-screen pt-8 pb-24 px-4 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-8"
+          >
+            <h1 className="text-3xl font-bold mb-3 text-blue bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              Start Your New Journey with Perfect Ride <br/>🚗🏍️
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Choose a vehicles for you
+            </p>
+          </motion.div>
+
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Button
+                onClick={() => navigate("/search")}
+                className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex flex-row items-center">
+                  <span className="text-lg font-medium">Buy Used Cars</span>
+                </div>
+              </Button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Button
+                onClick={() => navigate("/bikes")}
+                variant="secondary"
+                className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex flex-row items-center">
+                  <span className="text-lg font-medium">Buy Used Bikes</span>
+                </div>
+              </Button>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-1 bg-gradient-to-r from-primary to-blue-600 rounded-full"></div>
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Browse through thousands of verified vehicles
+              <br />
+              with complete history and inspection reports
+            </p>
+          </motion.div>
+        </div>
       </div>
-      
-      {/* Illustration */}
-      <motion.div 
-        className="flex justify-center mb-10"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        <img
-          src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/buy_page_illustration.png"
-          alt="Find your perfect vehicle"
-          className="w-64 h-auto"
-          loading="lazy"
-        />
-      </motion.div>
-      
-      {/* Instruction */}
-      <motion.p 
-        className="text-center text-gray-600 mb-8 font-medium"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-      >
-        Select your category below to get started
-      </motion.p>
-      
-      {/* Buttons */}
-      <div className="space-y-5 px-3">
-        <motion.button
-          className="w-full py-4 px-5 bg-white rounded-xl shadow-lg border border-gray-50 flex items-center justify-between"
-          onClick={() => navigate("/used-cars")}
-          whileTap={{ scale: 0.98 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-              <Car className="h-6 w-6 text-blue-600" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-gray-800">Buy Used Cars</h3>
-              <p className="text-xs text-gray-500">Find your perfect car</p>
-            </div>
-          </div>
-          <div className="text-gray-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </motion.button>
-        
-        <motion.button
-          className="w-full py-4 px-5 bg-white rounded-xl shadow-lg border border-gray-50 flex items-center justify-between"
-          onClick={() => navigate("/bike-buy-section")}
-          whileTap={{ scale: 0.98 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-        >
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <Bike className="h-6 w-6 text-green-600" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-gray-800">Buy Used Bikes</h3>
-              <p className="text-xs text-gray-500">Explore bikes near you</p>
-            </div>
-          </div>
-          <div className="text-gray-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </motion.button>
-      </div>
-      
-      {/* Footer Note */}
-      <motion.div 
-        className="mt-auto pt-10 text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-      >
-        <p className="text-xs text-gray-500">
-          All vehicles on our platform are verified and trusted
-        </p>
-      </motion.div>
-    </div>
+    </Layout>
   );
 };
 
