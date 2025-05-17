@@ -38,7 +38,7 @@ const Buy = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl font-bold mb-3 text-transparent">
+            <h1 className="text-3xl font-bold mb-3 text-blue text-transparent">
               Start Your New Journey with Perfect Ride <br/>🚗🏍️
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
@@ -58,7 +58,7 @@ const Buy = () => {
                 onClick={() => navigate("/search")}
                 className="w-full py-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="items-center">
+                <div className="flex flex-row items-center">
                   <Car size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Cars</span>
                 </div>
@@ -77,7 +77,7 @@ const Buy = () => {
                 variant="secondary"
                 className="w-full py-8 rounded-xl dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="items-center">
+                <div className="flex flex-row items-center">
                   <Bike size={36} className="mb-2" />
                   <span className="text-lg font-medium">Buy Used Bikes</span>
                 </div>
