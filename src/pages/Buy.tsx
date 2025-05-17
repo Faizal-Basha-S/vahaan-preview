@@ -38,7 +38,7 @@ const Buy = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl font-bold mb-3 text-blue text-transparent">
+            <h1 className="text-3xl font-bold mb-3 text-blue bg-clip-text  text-transparent">
               Start Your New Journey with Perfect Ride <br/>🚗🏍️
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
