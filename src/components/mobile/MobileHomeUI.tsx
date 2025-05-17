@@ -162,7 +162,7 @@ const MobileHomeUI = () => {
       <div className="bg-light">
       <div className="w-full bg-[#fff9fc] pt-9 rounded-t-3xl border-t-2 border-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
-        <div className="px-10 mb-8">
+        <div className="px-6 mb-8">
           <div className="grid grid-cols-2 gap-7">
             <Link to="/used-cars" className="block">
             <Card className="border border-white bg-white rounded-t-xl shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
