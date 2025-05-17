@@ -74,7 +74,7 @@ const MobileHomeUI = () => {
               return (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-all duration-700 transform ${slideClass}`}
+                  className={`absolute inset-0 transition-all duration-700 transform ${slideClass}  border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]`}
                 >
                   <div
                     className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]"
