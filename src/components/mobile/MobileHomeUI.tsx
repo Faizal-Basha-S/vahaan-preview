@@ -56,7 +56,7 @@ const MobileHomeUI = () => {
       <div className="w-full bg-light pt-8 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
-          <div className="relative h-[200px] rounded-xl border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]">
+          <div className="relative h-[200px] rounded-xl">
             {carouselSlides.map((slide, index) => {
               let slideClass = "";
 
@@ -77,7 +77,7 @@ const MobileHomeUI = () => {
                   className={`absolute inset-0 transition-all duration-700 transform ${slideClass}`}
                 >
                   <div
-                    className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center"
+                    className="h-full w-full rounded-xl shadow-md p-6 flex flex-col justify-center border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)]"
                     style={{ backgroundColor: slide.color }}
                   >
                     <h1 className="text-xl font-bold mb-2 text-white">{slide.title}</h1>
