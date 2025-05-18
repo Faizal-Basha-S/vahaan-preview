@@ -9,7 +9,7 @@ interface FloatingVideoButtonProps {
 
 const FloatingVideoButton: React.FC<FloatingVideoButtonProps> = ({ onClick }) => {
   return (
-    <div className="fixed bottom-10 right-6 z-50">
+    <div className="fixed bottom-32 right-6 z-50">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
