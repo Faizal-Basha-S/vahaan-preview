@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import CarCard from "./CarCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -14,6 +15,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     fuelType: "Petrol",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   },
   {
@@ -26,6 +28,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1554744512-d6c603f27c54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     fuelType: "Electric",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   },
   {
@@ -38,6 +41,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     fuelType: "Petrol",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   },
   {
@@ -50,6 +54,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
     fuelType: "Diesel",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   },
   {
@@ -62,6 +67,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     fuelType: "Petrol",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   },
   {
@@ -74,6 +80,7 @@ const sampleCars = [
     imageUrl: "https://images.unsplash.com/photo-1583870908951-31df91caa240?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80",
     fuelType: "Diesel",
     transmission: "Automatic",
+    owner: "First Owner",
     featured: true
   }
 ];

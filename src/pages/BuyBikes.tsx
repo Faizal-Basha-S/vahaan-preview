@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Separator } from "@/components/ui/separator";
@@ -217,7 +216,7 @@ const BuyBikes = () => {
               )}
             </div>
             
-            {/* Bike listings - Update grid layout with transition */}
+            {/* Bike listings - Update grid layout */}
             <div className="transition-all duration-[1500ms] ease-in-out">
               {isMobile ? (
                 <MobileBikeListings bikes={mockBikeListings} />

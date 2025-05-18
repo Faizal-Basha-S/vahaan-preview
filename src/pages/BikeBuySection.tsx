@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -47,22 +46,22 @@ const BikeBuySection = () => {
               </Link>
             </div>
           
-            <Carousel className="w-full overflow-visible">
-              <CarouselContent className="">
-                {mockBikeListings.map(bike => (
-                <CarouselItem key={bike.id} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2 sm:p-4">
-                      <BikeCard bike={bike} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <div className="hidden md:flex justify-end gap-2 mt-4 px-2">
-                <CarouselPrevious className="static translate-y-0 ml-auto" />
-                <CarouselNext className="static translate-y-0" />
-              </div>
-            </Carousel>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+              {mockBikeListings.slice(0, 4).map(bike => (
+                <div key={bike.id} className="p-2">
+                  <BikeCard bike={bike} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </section>
           
           <section className="mb-12 px-0 sm:px-4">
@@ -73,22 +72,22 @@ const BikeBuySection = () => {
               </Link>
             </div>
 
-            <Carousel className="w-full overflow-visible">
-              <CarouselContent className="">
-                {mockBikeListings.slice().reverse().map(bike => (
-                  <CarouselItem key={`discount-${bike.id}`} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2 sm:p-4">
-                      <BikeCard bike={{ ...bike, price: Math.round(bike.price * 0.9), badges: [...bike.badges, "On Sale"] }} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <div className="hidden md:flex justify-end gap-2 mt-4 px-2">
-                <CarouselPrevious className="static translate-y-0 ml-auto" />
-                <CarouselNext className="static translate-y-0" />
-              </div>
-            </Carousel>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+              {mockBikeListings.slice().reverse().slice(0, 4).map(bike => (
+                <div key={`discount-${bike.id}`} className="p-2">
+                  <BikeCard bike={{ ...bike, price: Math.round(bike.price * 0.9), badges: [...bike.badges, "On Sale"] }} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </section>
 
           <section className="mb-12">

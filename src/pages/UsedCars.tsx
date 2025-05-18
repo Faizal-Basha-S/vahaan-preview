@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -47,22 +46,22 @@ const UsedCars = () => {
               </Link>
             </div>
           
-            <Carousel className="w-full overflow-visible">
-              <CarouselContent className="">
-                {mockCarListings.map(car => (
-                <CarouselItem key={car.id} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2 sm:p-4"> {/* Add internal padding to reveal shadows */}
-                      <CarCard car={car} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <div className="hidden md:flex justify-end gap-2 mt-4 px-2">
-                <CarouselPrevious className="static translate-y-0 ml-auto" />
-                <CarouselNext className="static translate-y-0" />
-              </div>
-            </Carousel>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+              {mockCarListings.slice(0, 4).map(car => (
+                <div key={car.id} className="p-2">
+                  <CarCard car={car} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </section>
           
           <section className="mb-12 px-0 sm:px-4">
@@ -73,22 +72,22 @@ const UsedCars = () => {
               </Link>
             </div>
 
-            <Carousel className="w-full overflow-visible">
-              <CarouselContent className="">
-                {mockCarListings.slice().reverse().map(car => (
-                  <CarouselItem key={`discount-${car.id}`} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2 sm:p-4"> {/* Add padding to make shadow fully visible */}
-                      <CarCard car={{ ...car, price: car.price * 0.9, featured: true }} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <div className="hidden md:flex justify-end gap-2 mt-4 px-2">
-                <CarouselPrevious className="static translate-y-0 ml-auto" />
-                <CarouselNext className="static translate-y-0" />
-              </div>
-            </Carousel>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+              {mockCarListings.slice().reverse().slice(0, 4).map(car => (
+                <div key={`discount-${car.id}`} className="p-2">
+                  <CarCard car={{ ...car, price: car.price * 0.9, featured: true }} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </section>
 
           <section className="mb-12">

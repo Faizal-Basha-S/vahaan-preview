@@ -56,7 +56,7 @@ const AI = () => {
             </div>
           </div>
 
-          <div className="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
             <div className="text-left">
               <h3 className="text-xl font-semibold mb-2">Can't find what you're looking for?</h3>
               <p className="text-muted-foreground">

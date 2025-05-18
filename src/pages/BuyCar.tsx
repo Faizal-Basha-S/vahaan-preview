@@ -186,7 +186,7 @@ const BuyCar = () => {
               )}
             </div>
             
-            {/* Car listings - Update grid layout with transition */}
+            {/* Car listings - Update grid layout to be consistent */}
             <div className="transition-all duration-[1500ms] ease-in-out">
               <CarListings 
                 cars={mockCarListings} 

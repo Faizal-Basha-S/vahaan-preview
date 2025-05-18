@@ -16,7 +16,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
   description, 
   icon 
 }) => (
-  <Card className="p-6 flex flex-col items-center text-center transition-all hover:shadow-lg">
+  <Card className="p-6 flex flex-col items-center text-center transition-all shadow-sm hover:shadow-md">
     <div className="bg-primary/10 rounded-full p-4 mb-4">
       {icon}
     </div>
