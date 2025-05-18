@@ -16,21 +16,40 @@ const Appointment = () => {
   const navigate = useNavigate();
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  
+  // Additional state for features that PriceInput component needs
+  const [expectedPrice, setExpectedPrice] = useState("");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  
+  // Vehicle details for confirmation
+  const [confirmationData, setConfirmationData] = useState({
+    phoneNumber: "",
     brand: "",
     model: "",
     year: "",
     variant: "",
-    color: "",
+    kilometers: "",
+    city: "",
+    vehicleType: "",
     fuelType: "",
     transmission: "",
-    kilometers: "",
-    registrationState: "",
-    ownerNumber: "",
-    insuranceStatus: "",
-    photos: [],
-    expectedPrice: "",
+    color: "",
+    mileage: "",
+    seats: "",
+    safetyRating: "",
+    cc: "",
+    airbags: "",
+    cylinders: "",
+    wheelDrive: ""
   });
+  
+  // Determine if we're dealing with a bike or car
+  const isBike = (localStorage.getItem("vehicle_type") || "").toLowerCase() === "bike";
+  
+  // Format price for display
+  const formattedPrice = expectedPrice 
+    ? new Intl.NumberFormat("en-IN").format(parseInt(expectedPrice))
+    : "0";
 
   // Show video modal on initial page load
   useEffect(() => {
@@ -52,12 +71,31 @@ const Appointment = () => {
     setStep(step - 1);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  // Collect data for confirmation view
+  const setIsConfirmationView = (isConfirmation: boolean) => {
+    if (isConfirmation) {
+      // Gather data from localStorage for confirmation
+      setConfirmationData({
+        phoneNumber: localStorage.getItem("phoneNumber") || "",
+        brand: localStorage.getItem("brand") || "",
+        model: localStorage.getItem("model") || "",
+        year: localStorage.getItem("year") || "",
+        variant: localStorage.getItem("variant") || "",
+        kilometers: localStorage.getItem("kilometers") || "",
+        city: localStorage.getItem("selectedCity") || "",
+        vehicleType: localStorage.getItem("vehicle_type") || "",
+        fuelType: localStorage.getItem("fuel_type") || "",
+        transmission: localStorage.getItem("transmission") || "",
+        color: localStorage.getItem("color") || "",
+        mileage: localStorage.getItem("mileage") || "",
+        seats: localStorage.getItem("seats") || "",
+        safetyRating: localStorage.getItem("safety_rating") || "",
+        cc: localStorage.getItem("cc") || "",
+        airbags: localStorage.getItem("airbags") || "",
+        cylinders: localStorage.getItem("cylinders") || "",
+        wheelDrive: localStorage.getItem("wheel_drive") || ""
+      });
+    }
   };
 
   // Render current step
@@ -66,37 +104,48 @@ const Appointment = () => {
       case 1:
         return (
           <CarDetails
-            formData={formData}
-            handleInputChange={handleInputChange}
-            nextStep={nextStep}
+            onBack={() => navigate(-1)}
+            onNext={nextStep}
+            vehicleType={localStorage.getItem("vehicle_type")}
           />
         );
       case 2:
         return (
           <PhotoUpload
-            formData={formData}
-            setFormData={setFormData}
-            nextStep={nextStep}
-            prevStep={prevStep}
+            onBack={prevStep}
+            onNext={nextStep}
           />
         );
       case 3:
         return (
           <Pricing
-            formData={formData}
-            handleInputChange={handleInputChange}
-            nextStep={nextStep}
-            prevStep={prevStep}
+            expectedPrice={expectedPrice}
+            setExpectedPrice={setExpectedPrice}
+            selectedFeatures={selectedFeatures}
+            setSelectedFeatures={setSelectedFeatures}
+            onBack={prevStep}
+            onNext={() => {
+              nextStep();
+              setIsConfirmationView(true);
+            }}
           />
         );
       case 4:
-        return <Confirmation formData={formData} prevStep={prevStep} />;
+        return (
+          <Confirmation
+            confirmationData={confirmationData}
+            isBike={isBike}
+            formattedPrice={formattedPrice}
+            selectedFeatures={selectedFeatures}
+            setIsConfirmationView={() => prevStep()}
+          />
+        );
       default:
         return (
           <CarDetails
-            formData={formData}
-            handleInputChange={handleInputChange}
-            nextStep={nextStep}
+            onBack={() => navigate(-1)}
+            onNext={nextStep}
+            vehicleType={localStorage.getItem("vehicle_type")}
           />
         );
     }
