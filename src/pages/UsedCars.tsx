@@ -1,9 +1,10 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Car, Calendar, Fuel, Tag } from "lucide-react";
+import { Car, Calendar, Fuel, Tag, ChevronLeft, ChevronRight } from "lucide-react";
 import EconomyHeroSection from "@/components/cars/EconomyHeroSection";
 import CarCard from "@/components/cars/CarCard";
 import { mockCarListings } from "@/data/mockCarListings";
