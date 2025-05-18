@@ -90,6 +90,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           try {
             const formData = JSON.parse(savedFormData);
             
+            // If we have stored form data, navigate to appointment page
+            if (formData && window.location.pathname !== '/appointment') {
+              // Use setTimeout to ensure this runs after component rendering
+              setTimeout(() => {
+                window.location.href = '/appointment';
+              }, 100);
+            }
+            
             // Dispatch event to notify components that login is complete and form data is ready
             window.dispatchEvent(new CustomEvent('userSignedIn', { 
               detail: { formData } 
