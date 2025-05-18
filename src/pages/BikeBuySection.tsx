@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bike, Calendar, Fuel, Tag, Users, Shield, Star } from "lucide-react";
+import { Bike, Calendar, Fuel, Tag, Users, Shield, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import BikeHeroSection from "@/components/bikes/BikeHeroSection";
 import BikeCard from "@/components/bikes/BikeCard";
 import { mockBikeListings } from "@/components/bikes/mockBikeListings";
