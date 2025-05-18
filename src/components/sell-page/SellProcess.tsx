@@ -30,7 +30,7 @@ const SellProcess: React.FC = () => {
   const steps = [
     {
       step: "Step 1",
-      title: "Check Your Car's Price",
+      title: "Tell Us Your Car's Price",
       description: "Tell us about your car and get a quick, accurate price estimate for posting the ad.",
       icon: <Car className="h-8 w-8 text-primary" />
     },
