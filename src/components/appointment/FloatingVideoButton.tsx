@@ -15,7 +15,7 @@ const FloatingVideoButton: React.FC<FloatingVideoButtonProps> = ({ onClick }) =>
           <TooltipTrigger asChild>
             <button
               onClick={onClick}
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-red text-primary-foreground shadow-lg hover:bg-red/90 transition-all duration-300 hover:scale-105"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all duration-300 hover:scale-105"
               aria-label="Watch Guide Video"
             >
               <Play className="h-6 w-6" />
