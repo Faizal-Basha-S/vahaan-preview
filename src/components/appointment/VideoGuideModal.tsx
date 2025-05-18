@@ -19,13 +19,6 @@ const VideoGuideModal: React.FC<VideoGuideModalProps> = ({ isOpen, onClose }) =>
       <DialogContent className="sm:max-w-[700px] p-0 overflow-hidden">
         <DialogHeader className="p-4 pb-0 flex justify-between items-center">
           <DialogTitle className="text-xl font-semibold">How to Fill Out the Appointment Form</DialogTitle>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
         </DialogHeader>
         <div className="p-4 pt-2">
           <div className="aspect-video w-full overflow-hidden rounded-md">
