@@ -10,8 +10,11 @@ import { supabase } from "@/lib/supabaseClient";
 
 interface PricingProps {
   onBack: () => void;
+  onNext: () => void;
   expectedPrice: string;
+  setExpectedPrice: React.Dispatch<React.SetStateAction<string>>;
   selectedFeatures: string[];
+  setSelectedFeatures: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 interface ConfirmationData {
@@ -36,10 +39,17 @@ interface ConfirmationData {
   warrantyStatus: string | null;
   loanStatus: string | null;
   batteryHealth: string | null;
-  seller_price: string | null; // Added this field to fix the error
+  seller_price: string | null;
 }
 
-const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
+const Pricing: React.FC<PricingProps> = ({ 
+  onBack, 
+  onNext, 
+  expectedPrice, 
+  setExpectedPrice, 
+  selectedFeatures, 
+  setSelectedFeatures 
+}) => {
   const [promoCode, setPromoCode] = useState<string>("");
   const [promoApplied, setPromoApplied] = useState<boolean>(false);
   const [isConfirmationView, setIsConfirmationView] = useState<boolean>(false);
@@ -105,7 +115,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         warrantyStatus: localStorage.getItem('warranty_status'),
         loanStatus: localStorage.getItem('loan_status'),
         batteryHealth: localStorage.getItem('battery_health'),
-        seller_price: localStorage.getItem('seller_price'), // Added this property to fix the error
+        seller_price: localStorage.getItem('seller_price'),
       };
       
       // Also get data from sellFormData
@@ -178,6 +188,10 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
   };
   
   const handleProceedToPay = () => {
+    // Save price and features to localStorage before proceeding
+    localStorage.setItem("seller_price", expectedPrice);
+    localStorage.setItem("key_features", JSON.stringify(selectedFeatures));
+
     // If the promo is applied, show the confirmation view
     if (promoApplied) {
       // Save additional data to localStorage for bike listings
@@ -198,6 +212,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       setIsConfirmationView(true);
       return;
     }
+    
+    // Call the onNext function to proceed to the next step
+    onNext();
     
     // This will be integrated with Razorpay in a future phase
     toast.info("Payment integration will be available in a future update");
@@ -313,7 +330,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       accident_history: stepData.appointment_step3_data?.accident_history || null,
       major_replacements: stepData.appointment_step3_data?.major_replacements || null,
       seller_name: stepData.appointment_step5_data?.seller_name || null,
-      sell_price: localStorage.getItem('seller_price') || null,
+      sell_price: localStorage.getItem('seller_price') || expectedPrice || null,
       seller_phone_number: stepData.appointment_step5_data?.phone_number || localStorage.getItem('phoneNumber') || null,
       seller_location_city: stepData.appointment_step5_data?.location_city || localStorage.getItem('selectedCity') || null,
       preferred_contact_time: stepData.appointment_step5_data?.preferred_contact_time || null,
@@ -330,7 +347,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       variant: localStorage.getItem('variant') || null,
       kilometers_driven: parseIntOrNull('kilometers') || null,
       city: localStorage.getItem('selectedCity') || null,
-      photos: parseJSON('uploadedFileUrls') || {}
+      photos: parseJSON('uploadedFileUrls') || {},
+      features: selectedFeatures || []  // Added selected features to the data
     };
 
     // Get sellFormData if available
