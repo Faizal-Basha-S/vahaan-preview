@@ -45,6 +45,9 @@ type StepData = Record<string, any>;
 const Appointment: React.FC = () => {
   // Auth state
   const { currentUser } = useAuth();
+
+  // Video guide modal state
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<AppointmentStep>(0);
@@ -62,6 +65,9 @@ const Appointment: React.FC = () => {
   
   // Get vehicle type from localStorage on component mount
   useEffect(() => {
+    // Only show video modal on initial page load
+    setIsVideoModalOpen(true);
+    
     const storedVehicleType = localStorage.getItem("vehicle");
     if (storedVehicleType === "car" || storedVehicleType === "bike") {
       setVehicleType(storedVehicleType);
