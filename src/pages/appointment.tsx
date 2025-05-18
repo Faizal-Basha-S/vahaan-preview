@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { useAuth } from "@/context/AuthContext";
+import VideoGuideModal from "@/components/appointment/VideoGuideModal";
+import FloatingVideoButton from "@/components/appointment/FloatingVideoButton";
 import ProgressBar from "@/components/appointment/ProgressBar";
 import PhotoUpload from "@/components/appointment/PhotoUpload";
 import PriceInput from "@/components/appointment/PriceInput";
