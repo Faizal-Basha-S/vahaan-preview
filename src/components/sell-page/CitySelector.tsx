@@ -72,19 +72,18 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   }, []);
   
   const handleGetPrice = () => {
-  // Step 1: Ensure city is selected
+  // 1. Check if city is selected
   if (!selectedCity) {
     toast.error("Please select your city before proceeding.");
     return;
   }
 
-  // Step 2: Save vehicle type and selected city
+  // 2. Save current vehicle type and city
   localStorage.setItem("vehicle", vehicleType);
   handleUserSelection("city", selectedCity);
 
-  // Step 3: Check if user is logged in
+  // 3. If user is NOT logged in
   if (!currentUser) {
-    // Store form data for post-login use
     const formData = {
       vehicleType,
       brand: selectedBrand,
@@ -95,17 +94,21 @@ const CitySelector: React.FC<CitySelectorProps> = ({
       city: selectedCity,
       currentPage: "city"
     };
+
     localStorage.setItem("vehicleFormData", JSON.stringify(formData));
 
-    // Open the sign-in modal safely
+    console.log("[handleGetPrice] User not logged in — dispatching 'openSignInModal'");
+
+    // Dispatch the event in the next event loop tick
     setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("openSignInModal"));
+      const event = new CustomEvent("openSignInModal");
+      window.dispatchEvent(event);
     }, 0);
 
     return;
   }
 
-  // Step 4: Navigate to appointment page if user is logged in
+  // 4. If user IS logged in, proceed to appointment
   navigate("/appointment");
 };
 
