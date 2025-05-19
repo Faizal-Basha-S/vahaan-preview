@@ -210,10 +210,6 @@ const CarDetail = () => {
                       ₹{car.price.toLocaleString()}
                     </div>
                     
-                    <div className="text-sm text-muted-foreground mb-4">
-                      EMI Starts at ₹{car.emi?.toLocaleString() || '6,500'}/month.
-                    </div>
-                    
                     <Separator className="mb-4" />
                     
                     <div className="grid grid-cols-3 gap-4 mb-4">
