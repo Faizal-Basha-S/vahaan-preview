@@ -108,7 +108,7 @@ const SellHero: React.FC<SellHeroProps> = ({
             </div>
           </div>
           {/* Steps card with consistent spacing */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl flex flex-col md:flex-row items-stretch justify-center md:gap-0 px-2 md:px-4 py-2 w-full max-w-4xl mb-10 mx-auto md:mx-0 overflow-x-auto dark:bg-[#1F2633]/40">
+          <div className="hidden lg:flex bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl flex-col md:flex-row items-stretch justify-center md:gap-0 px-2 md:px-4 py-2 w-full max-w-4xl mb-10 mx-auto md:mx-0 overflow-x-auto dark:bg-[#1F2633]/40">
             {/* Step Pills with uniform dimensions and spacing */}
             <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] max-w-[220px] relative group">
               <span className="w-6 h-6 text-orange-500">
