@@ -18,11 +18,9 @@ const sampleBikes = [
     color: "Black",
     seats: 2,
     price: 195000,
-    emi: 5200,
     location: "Mumbai",
     seller: "Certified Dealer",
-    badges: ["Certified", "Well Maintained"],
-    features: ["ABS", "Digital Console", "Alloy Wheels"]
+    badges: ["Certified", "Well Maintained"]
   },
   {
     id: 2,
@@ -37,11 +35,9 @@ const sampleBikes = [
     color: "Blue",
     seats: 2,
     price: 75000,
-    emi: 2000,
     location: "Delhi",
     seller: "Individual",
-    badges: ["Good Condition"],
-    features: ["LED Headlights", "Alloy Wheels"]
+    badges: ["Good Condition"]
   },
   {
     id: 3,
@@ -56,11 +52,9 @@ const sampleBikes = [
     color: "Red",
     seats: 2,
     price: 175000,
-    emi: 4800,
     location: "Bangalore",
     seller: "Certified Dealer",
-    badges: ["Certified", "Top Model"],
-    features: ["ABS", "Digital Console", "LED Headlights", "Alloy Wheels"]
+    badges: ["Certified", "Top Model"]
   },
   {
     id: 4,
@@ -75,7 +69,6 @@ const sampleBikes = [
     color: "Grey",
     seats: 2,
     price: 65000,
-    emi: 1800,
     location: "Chennai",
     seller: "Individual",
     badges: ["Well Maintained"],
@@ -94,11 +87,9 @@ const sampleBikes = [
     color: "Black",
     seats: 2,
     price: 105000,
-    emi: 2900,
     location: "Pune",
     seller: "Certified Dealer",
-    badges: ["Certified"],
-    features: ["ABS", "Digital Console", "Alloy Wheels"]
+    badges: ["Certified"]
   },
   {
     id: 6,
@@ -113,11 +104,9 @@ const sampleBikes = [
     color: "White",
     seats: 2,
     price: 85000,
-    emi: 2300,
     location: "Hyderabad",
     seller: "Individual",
-    badges: ["Eco-friendly"],
-    features: ["Digital Console", "LED Headlights"]
+    badges: ["Eco-friendly"]
   }
 ];
 
