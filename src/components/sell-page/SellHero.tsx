@@ -107,10 +107,10 @@ const SellHero: React.FC<SellHeroProps> = ({
               </span>
             </div>
           </div>
-          {/* Steps card with consistent spacing - MODIFIED FOR MOBILE */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl flex flex-col md:flex-row w-full overflow-x-auto overflow-y-hidden max-w-full justify-start md:justify-center md:gap-0 px-2 md:px-4 py-2 mb-10 mx-auto md:mx-0 snap-x">
+          {/* Steps card with consistent spacing */}
+          <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl flex flex-col md:flex-row items-stretch justify-center md:gap-0 px-2 md:px-4 py-2 w-full max-w-4xl mb-10 mx-auto md:mx-0 overflow-x-auto dark:bg-[#1F2633]/40">
             {/* Step Pills with uniform dimensions and spacing */}
-            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] snap-start max-w-[220px] relative group">
+            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] max-w-[220px] relative group">
               <span className="w-6 h-6 text-orange-500">
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="6" rx="3" />
@@ -119,7 +119,7 @@ const SellHero: React.FC<SellHeroProps> = ({
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
               </span>
-              <span className="font-medium text-white text-sm md:text-base whitespace-nowrap">Describe Your Vehicle</span>
+              <span className="font-medium text-white">Describe Your Vehicle</span>
               <span className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2">
                 <svg width="28" height="20" fill="none" viewBox="0 0 28 20">
                   <path d="M4 10H24M18 4l6 6-6 6" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
@@ -128,7 +128,7 @@ const SellHero: React.FC<SellHeroProps> = ({
             </div>
             
             {/* Keep the other two step pills with consistent styling */}
-            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] snap-start max-w-[220px] relative group">
+            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] max-w-[220px] relative group">
               <span className="w-6 h-6 text-orange-500">
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-3-3.87" />
@@ -137,7 +137,7 @@ const SellHero: React.FC<SellHeroProps> = ({
                   <path d="M19 8a2 2 0 1 1-2 2" />
                 </svg>
               </span>
-              <span className="font-medium text-white text-sm md:text-base whitespace-nowrap">Get Buyer Interest</span>
+              <span className="font-medium text-white">Get Buyer Interest</span>
               <span className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2">
                 <svg width="28" height="20" fill="none" viewBox="0 0 28 20">
                   <path d="M4 10H24M18 4l6 6-6 6" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
@@ -145,14 +145,14 @@ const SellHero: React.FC<SellHeroProps> = ({
               </span>
             </div>
             
-            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] snap-start max-w-[220px] relative group">
+            <div className="flex items-center justify-center space-x-3 px-4 py-3 min-w-[130px] max-w-[220px] relative group">
               <span className="w-6 h-6 text-orange-500">
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 12l2 2 4-4" />
                   <circle cx="12" cy="12" r="10" />
                 </svg>
               </span>
-              <span className="font-medium text-white text-sm md:text-base whitespace-nowrap">Finalize the Deal</span>
+              <span className="font-medium text-white">Finalize the Deal</span>
             </div>
           </div>
         </div>
