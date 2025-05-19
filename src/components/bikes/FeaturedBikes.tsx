@@ -71,8 +71,7 @@ const sampleBikes = [
     price: 65000,
     location: "Chennai",
     seller: "Individual",
-    badges: ["Well Maintained"],
-    features: ["Alloy Wheels", "Keyless Start"]
+    badges: ["Well Maintained"]
   },
   {
     id: 5,
