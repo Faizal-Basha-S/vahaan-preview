@@ -72,38 +72,40 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   }, []);
   
   const handleGetPrice = () => {
-  // Step 1: Ensure city is selected
-  if (!selectedCity) {
-    toast.error("Please select your city before proceeding.");
-    return;
-  }
-
-  // Step 2: Save vehicle type and selected city
-  localStorage.setItem("vehicle", vehicleType);
-  handleUserSelection("city", selectedCity);
-
-  // Step 3: Check if user is logged in
-  if (!currentUser) {
-    // Store form data for post-login use
-    const formData = {
-      vehicleType,
-      brand: selectedBrand,
-      year: selectedYear,
-      model: selectedModel,
-      variant: selectedVariant,
-      kilometers,
-      city: selectedCity,
-      currentPage: "city"
-    };
-    localStorage.setItem("vehicleFormData", JSON.stringify(formData));
-
-    // Open the sign-in modal safely
-    setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("openSignInModal"));
-    }, 0);
-
-    return;
-  }
+    // Check if city is selected
+    if (!selectedCity) {
+      toast.error("Please select your city before proceeding.");
+      return;
+    }
+    
+    // Store the vehicle type in localStorage before navigating
+    localStorage.setItem("vehicle", vehicleType);
+    
+    // Save city to sellFormData
+    handleUserSelection("city", selectedCity);
+    
+    // Check if user is logged in
+    if (!currentUser) {
+      // Store form data for use after login
+      localStorage.setItem('vehicleFormData', JSON.stringify({
+        vehicleType,
+        brand: selectedBrand,
+        year: selectedYear,
+        model: selectedModel,
+        variant: selectedVariant,
+        kilometers,
+        city: selectedCity,
+        currentPage: 'city'
+      }));
+      
+      // Dispatch custom event to open the sign-in modal
+      window.dispatchEvent(new CustomEvent('openSignInModal'));
+      return;
+    } else {
+      // Navigate to appointment page
+      navigate('/appointment');
+    }
+  };
 
   // Step 4: Navigate to appointment page if user is logged in
   navigate("/appointment");
