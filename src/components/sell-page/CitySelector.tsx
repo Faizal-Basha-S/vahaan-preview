@@ -72,45 +72,40 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   }, []);
   
   const handleGetPrice = () => {
-  // 1. Check if city is selected
-  if (!selectedCity) {
-    toast.error("Please select your city before proceeding.");
-    return;
-  }
-
-  // 2. Save current vehicle type and city
-  localStorage.setItem("vehicle", vehicleType);
-  handleUserSelection("city", selectedCity);
-
-  // 3. If user is NOT logged in
-  if (!currentUser) {
-    const formData = {
-      vehicleType,
-      brand: selectedBrand,
-      year: selectedYear,
-      model: selectedModel,
-      variant: selectedVariant,
-      kilometers,
-      city: selectedCity,
-      currentPage: "city"
-    };
-
-    localStorage.setItem("vehicleFormData", JSON.stringify(formData));
-
-    console.log("[handleGetPrice] User not logged in — dispatching 'openSignInModal'");
-
-    // Dispatch the event in the next event loop tick
-    setTimeout(() => {
-      const event = new CustomEvent("openSignInModal");
-      window.dispatchEvent(event);
-    }, 0);
-
-    return;
-  }
-
-  // 4. If user IS logged in, proceed to appointment
-  navigate("/appointment");
-};
+    // Check if city is selected
+    if (!selectedCity) {
+      toast.error("Please select your city before proceeding.");
+      return;
+    }
+    
+    // Store the vehicle type in localStorage before navigating
+    localStorage.setItem("vehicle", vehicleType);
+    
+    // Save city to sellFormData
+    handleUserSelection("city", selectedCity);
+    
+    // Check if user is logged in
+    if (!currentUser) {
+      // Store form data for use after login
+      localStorage.setItem('vehicleFormData', JSON.stringify({
+        vehicleType,
+        brand: selectedBrand,
+        year: selectedYear,
+        model: selectedModel,
+        variant: selectedVariant,
+        kilometers,
+        city: selectedCity,
+        currentPage: 'city'
+      }));
+      
+      // Dispatch custom event to open the sign-in modal
+      window.dispatchEvent(new CustomEvent('openSignInModal'));
+      return;
+    } else {
+      // Navigate to appointment page
+      navigate('/appointment');
+    }
+  };
 
   return (
     <div className="space-y-6">
