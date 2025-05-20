@@ -96,7 +96,7 @@ const BuyBikes = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
       )}
       
-      <div className={`container mx-auto px-4 ${isMobile ? 'pt-16' : 'pt-24'} ${pageBlocked ? 'pointer-events-none opacity-40 blur-[1px] select-none' : ''}`}>
+      <div className={`container mx-auto px-4 ${isMobile ? 'pt-6' : 'pt-24'} ${pageBlocked ? 'pointer-events-none opacity-40 blur-[1px] select-none' : ''}`}>
         
         {/* Search Bar and Location Input */}
         <div className="mb-6 pl-0">
