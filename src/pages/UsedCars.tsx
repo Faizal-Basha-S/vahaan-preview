@@ -27,7 +27,7 @@ const UsedCars = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 pt-10 lg:pt-24">
+      <div className="container mx-auto px-4 pt-8 lg:pt-24">
         <EconomyHeroSection />
 
         <div className="w-full">
