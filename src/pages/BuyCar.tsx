@@ -91,7 +91,7 @@ const BuyCar = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
       )}
       
-      <div className="container mx-auto px-4 pt-24">
+      <div className="container mx-auto px-4 pt-6 lg:pt-24">
         
         {/* Search Bar and Location Input */}
         <div className="mb-6 pl-0">
