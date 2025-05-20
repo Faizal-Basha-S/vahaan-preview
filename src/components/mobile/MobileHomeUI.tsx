@@ -63,7 +63,7 @@ const MobileHomeUI = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel Container */}
-      <div className="w-full bg-light dark:bg-[#CECECE] border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] pt-8 pb-5">
+      <div className="w-full bg-light border-white shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] pt-8 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
           <div className="relative h-[200px] rounded-xl">
@@ -170,7 +170,7 @@ const MobileHomeUI = () => {
 
       {/* Content Container */}
       <div className="bg-light">
-      <div className="w-full bg-[#fff9fc] dark:bg-[#CECECE] pt-9 rounded-t-3xl border-t-2 border-[#8d8d8d] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
+      <div className="w-full bg-[#fff9fc] pt-9 rounded-t-3xl border-t-2 border-grey shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
         <div className="px-6 mb-8">
           <div className="grid grid-cols-2 gap-7">
