@@ -69,7 +69,7 @@ const steps = [
 
 const WhySellWithUs: React.FC = () => {
   return (
-    <section className="py-20 bg-[#F5F8FB] dark:bg-[#000000]">
+    <section className="py-20 px-5 lg-px-none bg-[#F5F8FB] dark:bg-[#000000]">
       <div className="container max-w-7xl mx-auto px-2 md:px-6">
         <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
           {/* Steps and heading */}
