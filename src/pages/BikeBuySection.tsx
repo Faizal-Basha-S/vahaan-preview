@@ -26,7 +26,7 @@ const BikeBuySection = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 pt-24">
+      <div className="container mx-auto px-4 pt-6 lg:pt-24">
         <BikeHeroSection />
 
         <div className="w-full">
