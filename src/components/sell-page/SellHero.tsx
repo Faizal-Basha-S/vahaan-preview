@@ -64,7 +64,7 @@ const SellHero: React.FC<SellHeroProps> = ({
       {/* Main container */}
       <div className="relative z-20 flex flex-col md:flex-row container max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-12 items-center md:items-stretch w-full gap-8 lg:gap-4">
         {/* Left side: Content */}
-        <div className="flex-1 w-full md:w-1/2 pt-2 md:pt-16 lg:pt-24 lg:flex lg:flex-col lg:justify-center">
+        <div className="flex-10 lg:flex-1 w-full md:w-1/2 pt-2 md:pt-16 lg:pt-24 lg:flex lg:flex-col lg:justify-center">
           <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 tracking-tight leading-tight">
             Post Your Ad & <br/> Get the Best Price
           </h1>
@@ -157,7 +157,7 @@ const SellHero: React.FC<SellHeroProps> = ({
           </div>
         </div>
         {/* Right side: Scrollable form/toggle card with adjusted dimensions */}
-        <div className="flex-1 w-full md:w-[480px] lg:w-[520px] flex items-center justify-center md:justify-end mb-12 md:mb-0">
+        <div className="flex-10 lg:flex-1 w-full md:w-[480px] lg:w-[520px] flex items-center justify-center md:justify-end mb-12 md:mb-0">
           <Card 
             className="shadow-lg rounded-2xl border border-white/40 bg-white/25 backdrop-blur-lg w-full max-w-full overflow-hidden dark:border-white/20 dark:bg-white/10"
             style={isManualEntryClicked && window.innerWidth >= 768 ? cardStyles : {}}
