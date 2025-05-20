@@ -64,11 +64,11 @@ const SellHero: React.FC<SellHeroProps> = ({
       {/* Main container */}
       <div className="relative z-20 flex flex-col md:flex-row container max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-12 items-center md:items-stretch w-full gap-8 md:gap-4">
         {/* Left side: Content */}
-        <div className="flex-1 w-full md:w-1/2 pt-10 md:pt-16 lg:pt-24 flex flex-col justify-center">
+        <div className="flex-1 w-full md:w-1/2 pt-2 md:pt-16 lg:pt-24 flex flex-col justify-center">
           <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 tracking-tight leading-tight">
             Post Your Ad & <br/> Get the Best Price
           </h1>
-          <p className="text-base sm:text-lg text-gray-200 font-medium mb-8 mt-6">
+          <p className="text-base sm:text-lg text-gray-200 font-medium mb-1 mt-1 lg:mb-8 lg:mt-6">
             Choose <span className="font-bold text-[#F97316]">VahaanXchange</span> and Drive the Best Deal!
           </p>
           {/* Feature icons with consistent spacing and sizing - HIDDEN ON MOBILE */}
