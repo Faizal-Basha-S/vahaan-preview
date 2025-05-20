@@ -288,59 +288,22 @@ const MobileHomeUI = () => {
             </ScrollArea>
           </div>
 
-          {/* Cars by Category with Images */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-3">Cars by Category</h2>
-            <ScrollArea className="w-full whitespace-nowrap pb-4">
-              <div className="flex space-x-4">
-                <Link to="/used-cars?category=suv" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
-                        alt="SUV" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">SUV</span>
-                    </div>
-                  </div>
-                </Link>
-                
-                <Link to="/used-cars?category=hatchback" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1471444928139-48c5bf13b240?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80" 
-                        alt="Hatchback" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">Hatchback</span>
-                    </div>
-                  </div>
-                </Link>
-                
-                <Link to="/used-cars?category=sedan" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" 
-                        alt="Sedan" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">Sedan</span>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </ScrollArea>
+          {/* Featured Cars */}
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <FeaturedCars />
+          
+          <div className="mt-10 text-center">
+            <Link 
+              to="/search" 
+              className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+            >
+              View all listings
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </div>
-
+        </div>
+      </section>
           {/* Bikes by Category with Images */}
           <div className="mb-8">
             <h2 className="text-lg font-semibold mb-3">Bikes by Category</h2>
