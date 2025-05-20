@@ -9,6 +9,15 @@ import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
 import FeaturedCars from "../components/cars/FeaturedCars";
+import { 
+  ArrowRight, 
+  Car, 
+  DollarSign, 
+  Handshake, 
+  Shield, 
+  Lock, 
+  Tag 
+} from "lucide-react";
 
 const MobileHomeUI = () => {
   const [activeSlide, setActiveSlide] = useState(0);
