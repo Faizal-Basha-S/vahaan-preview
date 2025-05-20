@@ -401,8 +401,10 @@ const MobileHomeUI = () => {
             <SpecialSellSection />
             
             {/* Download Our App Section */}
+            {/*
             <h2 className="text-lg font-semibold mb-3">Download Our App</h2>
             <AppDownloadSection />
+            */}
             
             {/* Review Section */}
             <ReviewsSection />
