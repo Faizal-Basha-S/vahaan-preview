@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
-import FeaturedCars from "../components/cars/FeaturedCars";
+import FeaturedCars from "../cars/FeaturedCars";
 import { 
   ArrowRight, 
   Car, 
