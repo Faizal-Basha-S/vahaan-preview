@@ -11,6 +11,7 @@ import ReviewsSection from "./ReviewsSection";
 import CarCard from "@/components/cars/CarCard";
 // Import the component and the sample data directly from the module
 import FeaturedCarsComponent, { sampleCars } from "@/components/cars/FeaturedCars";
+import FeaturedCarsComponent, { sampleBikes } from "@/components/bikes/FeaturedBikes";
 import { 
   ArrowRight, 
   Car, 
@@ -327,58 +328,32 @@ const MobileHomeUI = () => {
             </div>
           </section>
 
-          {/* Bikes by Category with Images */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-3">Bikes by Category</h2>
-            <ScrollArea className="w-full whitespace-nowrap pb-4">
-              <div className="flex space-x-4">
-                <Link to="/bike-buy-section?category=commuter" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                        alt="Commuter" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">Commuter</span>
-                    </div>
+          {/* Featured Bikes */}
+          <section className="py-12 md:py-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Scrollable carousel below 1024px */}
+              <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
+                {Array.isArray(sampleBikes) && sampleBikes.map((car) => (
+                  <div
+                    key={bike.id}
+                    className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
+                  >
+                    <BikeCard bike={bike} />
                   </div>
-                </Link>
-                
-                <Link to="/bike-buy-section?category=sports" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                        alt="Sports" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">Sports</span>
-                    </div>
-                  </div>
-                </Link>
-                
-                <Link to="/bike-buy-section?category=electric" className="w-40 flex-shrink-0">
-                  <div className="w-full rounded-md overflow-hidden shadow-sm">
-                    <AspectRatio ratio={16/9}>
-                      <img 
-                        src="https://images.unsplash.com/photo-1599662875904-9e8922e389df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                        alt="Electric" 
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div className="p-2 bg-white dark:bg-gray-800">
-                      <span className="text-sm font-medium">Electric</span>
-                    </div>
-                  </div>
+                ))}
+              </div>
+
+              <div className="mt-10 text-center">
+                <Link
+                  to="/bikes"
+                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+                >
+                  View all listings
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
-            </ScrollArea>
-          </div>
+            </div>
+          </section>
 
           {/* Special Mobile-Only Sections */}
           <div>
