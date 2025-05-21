@@ -310,7 +310,7 @@ const MobileHomeUI = () => {
                 {Array.isArray(sampleCars) && sampleCars.map((car) => (
                   <div
                     key={car.id}
-                    className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
+                    <div key={car.id} className="min-w-full snap-start flex-shrink-0 lg:min-w-0">
                   >
                     <CarCard car={car} />
                   </div>
