@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -8,7 +9,8 @@ import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
 import CarCard from "@/components/cars/CarCard";
-import FeaturedCars from "@/components/cars/FeaturedCars";
+// Import the component and the sample data directly from the module
+import FeaturedCarsComponent, { sampleCars } from "@/components/cars/FeaturedCars";
 import { 
   ArrowRight, 
   Car, 
@@ -303,7 +305,7 @@ const MobileHomeUI = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               {/* Scrollable carousel below 1024px */}
               <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
-                {FeaturedCars && Array.isArray(FeaturedCars.sampleCars) && FeaturedCars.sampleCars.map((car) => (
+                {Array.isArray(sampleCars) && sampleCars.map((car) => (
                   <div
                     key={car.id}
                     className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
@@ -401,3 +403,4 @@ const MobileHomeUI = () => {
 };
 
 export default MobileHomeUI;
+

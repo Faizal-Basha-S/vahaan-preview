@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import CarCard from "./CarCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Sample car data
-const sampleCars = [
+// Sample car data - now exported so it can be used by other components
+export const sampleCars = [
   {
     id: "1",
     title: "2021 BMW 3 Series",
