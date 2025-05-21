@@ -11,7 +11,7 @@ import ReviewsSection from "./ReviewsSection";
 import CarCard from "@/components/cars/CarCard";
 // Import the component and the sample data directly from the module
 import FeaturedCarsComponent, { sampleCars } from "@/components/cars/FeaturedCars";
-import FeaturedCarsComponent, { sampleBikes } from "@/components/bikes/FeaturedBikes";
+import FeaturedBikesComponent, { sampleBikes } from "@/components/bikes/FeaturedBikes";
 import { 
   ArrowRight, 
   Car, 
