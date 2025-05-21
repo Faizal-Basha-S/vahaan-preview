@@ -23,9 +23,6 @@ const YearSelector: React.FC<YearSelectorProps> = ({
     }
     return years;
   };
-  
-  // Generate the years array
-  const years = generateYears();
 
   return (
     <div className="space-y-6">
@@ -42,7 +39,7 @@ const YearSelector: React.FC<YearSelectorProps> = ({
       </div>
       
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 max-h-[400px] overflow-y-auto pr-1">
-        {Array.isArray(years) && years.map((year) => (
+        {generateYears().map((year) => (
           <Button
             key={year}
             variant="outline"
