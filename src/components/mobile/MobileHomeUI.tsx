@@ -9,6 +9,7 @@ import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
 import CarCard from "@/components/cars/CarCard";
+import BikeCard from "@/components/bikes/BikeCard";
 // Import the component and the sample data directly from the module
 import FeaturedCarsComponent, { sampleCars } from "@/components/cars/FeaturedCars";
 import FeaturedBikesComponent, { sampleBikes } from "@/components/bikes/FeaturedBikes";
