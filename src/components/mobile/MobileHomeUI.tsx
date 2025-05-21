@@ -307,7 +307,7 @@ const MobileHomeUI = () => {
             <h2 className="text-lg font-semibold mb-3">Premium Cars</h2>
             <div className="container-fluid mx-auto px-0 sm:px-6 lg:px-8">
               {/* Scrollable carousel below 1024px */}
-              <div className="flex gap-4 overflow-x-auto snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
+              <div className="flex gap-8 overflow-x-auto snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
                 {Array.isArray(sampleCars) && sampleCars.map((car) => (
                   <div
                     key={car.id}
@@ -335,7 +335,7 @@ const MobileHomeUI = () => {
             <h2 className="text-lg font-semibold mb-3">Premium Bikes</h2>
             <div className="container-fluid mx-auto px-0 sm:px-6 lg:px-8">
               {/* Scrollable carousel below 1024px */}
-              <div className="flex gap-4 overflow-x-auto snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
+              <div className="flex gap-8 overflow-x-auto snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
                 {Array.isArray(sampleBikes) && sampleBikes.map((bike) => (
                   <div
                     key={bike.id}
