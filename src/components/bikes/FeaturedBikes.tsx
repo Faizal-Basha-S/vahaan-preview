@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import BikeCard from "./BikeCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Sample bike data
-const sampleBikes = [
+// Sample bike data - now exported so it can be used by other components
+export const sampleBikes = [
   {
     id: 1,
     name: "Royal Enfield Classic 350",
