@@ -20,14 +20,18 @@ const VariantFilters: React.FC<VariantFiltersProps> = ({
   onSelectFuelType,
   onSelectTransmission,
 }) => {
+  // Ensure arrays are always arrays
+  const fuelTypes = Array.isArray(availableFuelTypes) ? availableFuelTypes : [];
+  const transmissions = Array.isArray(availableTransmissions) ? availableTransmissions : [];
+  
   return (
     <div className="space-y-4">
       {/* Only show fuel type filter if there are multiple options */}
-      {availableFuelTypes.length > 1 && (
+      {fuelTypes.length > 1 && (
         <div className="space-y-2">
           <div className="text-sm font-medium">Fuel Type</div>
           <ToggleGroup type="single" value={selectedFuelType || ""} onValueChange={(value) => onSelectFuelType(value || null)}>
-            {availableFuelTypes.map((fuelType) => (
+            {fuelTypes.map((fuelType) => (
               <ToggleGroupItem 
                 key={fuelType} 
                 value={fuelType}
@@ -51,11 +55,11 @@ const VariantFilters: React.FC<VariantFiltersProps> = ({
       )}
 
       {/* Only show transmission filter if there are multiple options */}
-      {availableTransmissions.length > 1 && (
+      {transmissions.length > 1 && (
         <div className="space-y-2">
           <div className="text-sm font-medium">Transmission</div>
           <ToggleGroup type="single" value={selectedTransmission || ""} onValueChange={(value) => onSelectTransmission(value || null)}>
-            {availableTransmissions.map((transmission) => (
+            {transmissions.map((transmission) => (
               <ToggleGroupItem 
                 key={transmission} 
                 value={transmission}

@@ -64,10 +64,13 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
           }
           
           console.log("Fetched variants:", fetchedVariants);
-          setVariants(fetchedVariants);
+          // Ensure fetchedVariants is always an array
+          setVariants(Array.isArray(fetchedVariants) ? fetchedVariants : []);
         } catch (error) {
           console.error("Error loading variants:", error);
           toast.error(`Failed to load ${vehicleType} variants. Please try again.`);
+          // Initialize with empty array on error
+          setVariants([]);
         } finally {
           setIsLoading(false);
         }
@@ -96,10 +99,14 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
             transmissions = [];
           }
           
-          setAvailableFuelTypes(fuelTypes);
-          setAvailableTransmissions(transmissions);
+          // Ensure arrays are always arrays
+          setAvailableFuelTypes(Array.isArray(fuelTypes) ? fuelTypes : []);
+          setAvailableTransmissions(Array.isArray(transmissions) ? transmissions : []);
         } catch (error) {
           console.error("Error loading filter options:", error);
+          // Initialize with empty arrays on error
+          setAvailableFuelTypes([]);
+          setAvailableTransmissions([]);
         }
       }
     };
@@ -107,14 +114,17 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
     loadFilterOptions();
   }, [vehicleType, selectedModelId]);
 
-  // Filter variants based on search term
-  const filteredVariants = variants.filter(variant => 
-    variant.variant_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter variants based on search term - ensure variants is an array before filtering
+  const filteredVariants = Array.isArray(variants) 
+    ? variants.filter(variant => 
+        variant.variant_name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   // Reset selected variant if it's no longer in filtered results
   useEffect(() => {
-    if (selectedVariant && !filteredVariants.some(v => v.variant_name === selectedVariant)) {
+    if (selectedVariant && Array.isArray(filteredVariants) && filteredVariants.length > 0 && 
+        !filteredVariants.some(v => v.variant_name === selectedVariant)) {
       onSelectVariant("");
     }
   }, [selectedFuelType, selectedTransmission, selectedVariant, onSelectVariant, filteredVariants]);
@@ -145,7 +155,7 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
       </div>
       
       {/* Variant filters - Only show for cars or if bike has multiple fuel types */}
-      {(vehicleType === "car" || availableFuelTypes.length > 1) && (
+      {(vehicleType === "car" || (Array.isArray(availableFuelTypes) && availableFuelTypes.length > 1)) && (
         <VariantFilters 
           availableFuelTypes={availableFuelTypes}
           availableTransmissions={availableTransmissions}
@@ -165,7 +175,7 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
         </div>
       ) : (
         <div className="flex flex-col space-y-3">
-          {filteredVariants.length > 0 ? (
+          {Array.isArray(filteredVariants) && filteredVariants.length > 0 ? (
             filteredVariants.map((variant) => (
               <Button
                 key={variant.id}
