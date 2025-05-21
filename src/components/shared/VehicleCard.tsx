@@ -69,7 +69,7 @@ const VehicleCard = ({ vehicle }: VehicleCardProps) => {
 
   return (
     <Link to={detailRoute} className="block h-full">
-      <Card className="overflow-hidden h-full hover:shadow-md transition-shadow duration-300">
+      <Card className="overflow-hidden h-[360px] w-full sm:h-[380px] hover:shadow-md transition-shadow duration-300 lg:h-full">
         {/* Image Container */}
         <div className="relative overflow-hidden aspect-[16/9]">
           <img 
