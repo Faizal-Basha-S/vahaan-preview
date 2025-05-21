@@ -300,20 +300,32 @@ const MobileHomeUI = () => {
 
           {/* Featured Cars */}
       <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <FeaturedCars />
-          
-          <div className="mt-10 text-center">
-            <Link 
-              to="/search" 
-              className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
-            >
-              View all listings
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    {/* Scrollable carousel below 1024px */}
+    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
+      {featuredCars.map((car) => (
+        <div
+          key={car.id}
+          className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
+        >
+          <CarCard car={car} />
         </div>
-      </section>
+      ))}
+    </div>
+
+    <div className="mt-10 text-center">
+      <Link
+        to="/search"
+        className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+      >
+        View all listings
+        <ArrowRight className="ml-2 h-4 w-4" />
+      </Link>
+    </div>
+  </div>
+</section>
+
           {/* Bikes by Category with Images */}
           <div className="mb-8">
             <h2 className="text-lg font-semibold mb-3">Bikes by Category</h2>
