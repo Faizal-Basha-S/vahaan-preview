@@ -304,7 +304,7 @@ const MobileHomeUI = () => {
     
     {/* Scrollable carousel below 1024px */}
     <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
-      {featuredCars.map((car) => (
+      {FeaturedCars.map((car) => (
         <div
           key={car.id}
           className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
