@@ -8,7 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import SpecialSellSection from "./SpecialSellSection";
 import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
-import FeaturedCars from "../cars/FeaturedCars";
+import CarCard from "@/components/cars/CarCard";
+import { FeaturedCars as featuredCarsData } from "@/components/cars/FeaturedCars";
 import { 
   ArrowRight, 
   Car, 
@@ -299,32 +300,31 @@ const MobileHomeUI = () => {
           </div>
 
           {/* Featured Cars */}
-      <section className="py-12 md:py-16">
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-    
-    {/* Scrollable carousel below 1024px */}
-    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
-      {FeaturedCars.map((car) => (
-        <div
-          key={car.id}
-          className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
-        >
-          <CarCard car={car} />
-        </div>
-      ))}
-    </div>
+          <section className="py-12 md:py-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Scrollable carousel below 1024px */}
+              <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
+                {Array.isArray(featuredCarsData) && featuredCarsData.map((car) => (
+                  <div
+                    key={car.id}
+                    className="min-w-[260px] max-w-sm flex-shrink-0 snap-start lg:min-w-0 lg:max-w-full"
+                  >
+                    <CarCard car={car} />
+                  </div>
+                ))}
+              </div>
 
-    <div className="mt-10 text-center">
-      <Link
-        to="/search"
-        className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
-      >
-        View all listings
-        <ArrowRight className="ml-2 h-4 w-4" />
-      </Link>
-    </div>
-  </div>
-</section>
+              <div className="mt-10 text-center">
+                <Link
+                  to="/search"
+                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+                >
+                  View all listings
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </section>
 
           {/* Bikes by Category with Images */}
           <div className="mb-8">
