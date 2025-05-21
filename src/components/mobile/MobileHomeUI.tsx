@@ -309,7 +309,7 @@ const MobileHomeUI = () => {
               <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none">
                 {Array.isArray(sampleCars) && sampleCars.map((car) => (
                   <div key={car.id} className="min-w-full snap-start flex-shrink-0 lg:min-w-0">
-                  >
+                  
                     <CarCard car={car} />
                   </div>
                 ))}
