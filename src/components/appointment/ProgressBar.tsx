@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Progress } from "@/components/ui/progress";
 
 interface ProgressBarProps {
   currentStep: number;
@@ -14,9 +13,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], tota
     Array(totalSteps || 0).fill(0).map((_, index) => `Step ${index + 1}`);
   
   return (
-    <div className="w-full">
-      {/* The flex container will be scrollable on mobile but wrap on lg+ screens */}
-      <div className="flex items-center justify-between min-w-max lg:flex-wrap lg:justify-around lg:min-w-0">
+    <div className="w-full mb-8">
+      <div className="flex items-center justify-between">
         {displaySteps.map((step, index) => (
           <React.Fragment key={index}>
             {/* Step circle */}
