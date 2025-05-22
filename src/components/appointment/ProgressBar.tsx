@@ -15,7 +15,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], tota
   
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between lg:flex-wrap lg:justify-around min-w-max lg:min-w-0">
+      {/* The flex container will be scrollable on mobile but wrap on lg+ screens */}
+      <div className="flex items-center justify-between min-w-max lg:flex-wrap lg:justify-around lg:min-w-0">
         {displaySteps.map((step, index) => (
           <React.Fragment key={index}>
             {/* Step circle */}
