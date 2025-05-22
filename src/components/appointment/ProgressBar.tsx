@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Progress } from "@/components/ui/progress";
 
 interface ProgressBarProps {
   currentStep: number;
@@ -13,8 +14,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], tota
     Array(totalSteps || 0).fill(0).map((_, index) => `Step ${index + 1}`);
   
   return (
-    <div className="w-full mb-8">
-      <div className="flex items-center justify-between">
+    <div className="w-full">
+      <div className="flex items-center justify-between lg:flex-wrap lg:justify-around min-w-max lg:min-w-0">
         {displaySteps.map((step, index) => (
           <React.Fragment key={index}>
             {/* Step circle */}
