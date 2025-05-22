@@ -184,13 +184,20 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
       >
         <Button 
           variant="default"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
+          className="bg-blue-500 lg:block hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
+        >
+          Sign In
+        </Button>
+        <Button 
+          variant="default"
+          className="bg-blue-500 lg:hidden hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
+          onClick={handleShowAuthModal}
         >
           Sign In
         </Button>
         
         {showDropdown && (
-          <div className="absolute right-0 top-full z-50 mt-2 w-64 sm:w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
+          <div className="lg:block absolute right-0 top-full z-50 mt-2 w-64 sm:w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
             
             <div className="space-y-3">
               {menuOptions.map((option) => (
