@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import OTPInput from "./OTPInput";
 import { auth } from "@/lib/firebase";
 import SignInHero from "./SignInHero";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PhoneAuthModalProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
   const [modalOpen, setModalOpen] = useState(isOpen);
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
   const eventListenerAdded = useRef(false);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
   
   // Handle external open modal requests with a ref to prevent duplicate listeners
   useEffect(() => {
@@ -213,12 +215,28 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  // Handle Enter key press for phone input
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && phoneNumber.length >= 10 && !isLoading) {
+      e.preventDefault();
+      handleSendOTP();
+    }
+  };
+
+  // Handle Enter key press for OTP input
+  const handleOtpKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && otp.length === 6 && !isLoading) {
+      e.preventDefault();
+      handleVerifyOTP();
+    }
+  };
+
   return (
     <Dialog open={modalOpen} onOpenChange={(open) => !open && handleModalClose()}>
-      <DialogContent className="flex h-[600px] max-w-[900px] overflow-hidden rounded-lg p-0" id="phone-auth-modal">
+      <DialogContent className="flex flex-col lg:flex-row h-auto lg:h-[600px] max-w-[900px] overflow-hidden rounded-lg p-0" id="phone-auth-modal">
         <SignInHero />
         
-        <div className="flex w-1/2 flex-1 flex-col overflow-y-auto px-8 py-6">
+        <div className="flex flex-1 flex-col overflow-y-auto w-full lg:w-1/2 px-8 py-6">
           <div className="mb-6 flex items-center justify-between">
             <button
               onClick={handleModalClose}
@@ -253,9 +271,11 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
                           const value = e.target.value.replace(/\D/g, '');
                           setPhoneNumber(value);
                         }}
+                        onKeyDown={handlePhoneKeyDown}
                         className="flex-1 rounded-l-none"
                         maxLength={10}
                         disabled={isLoading}
+                        ref={phoneInputRef}
                       />
                     </div>
                   </div>
@@ -315,6 +335,7 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
                       onChange={setOtp}
                       maxLength={6}
                       disabled={isLoading}
+                      onKeyDown={handleOtpKeyDown}
                     />
                   </div>
                   
@@ -325,7 +346,7 @@ const PhoneAuthModal: React.FC<PhoneAuthModalProps> = ({ isOpen, onClose }) => {
                   >
                     {isLoading ? (
                       <>
-                        <Loader className="h-4 w-4 animate-spin" />
+                        <Loader className="mr-2 h-4 w-4 animate-spin" />
                         Verifying...
                       </>
                     ) : (

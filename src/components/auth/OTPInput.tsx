@@ -8,6 +8,7 @@ interface OTPInputProps {
   maxLength?: number;
   disabled?: boolean;
   className?: string;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
 const OTPInput: React.FC<OTPInputProps> = ({
@@ -15,7 +16,8 @@ const OTPInput: React.FC<OTPInputProps> = ({
   onChange,
   maxLength = 6,
   disabled = false,
-  className
+  className,
+  onKeyDown
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   
@@ -57,6 +59,11 @@ const OTPInput: React.FC<OTPInputProps> = ({
   };
   
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    // Handle the parent onKeyDown prop if it exists
+    if (onKeyDown && e.key === 'Enter') {
+      onKeyDown(e);
+    }
+    
     // Move to previous input on backspace if current input is empty
     if (e.key === 'Backspace' && !value[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
