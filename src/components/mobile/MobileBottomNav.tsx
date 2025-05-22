@@ -21,8 +21,11 @@ const MobileBottomNav = () => {
     if (!currentUser) {
       e.preventDefault();
       setShowAuthModal(true);
+    } else {
+      // Directly navigate to profile page if user is logged in
+      e.preventDefault();
+      navigate("/profile");
     }
-    // If user is logged in, navigate normally via the Link component
   };
 
   const handleFavouritesClick = (e: React.MouseEvent) => {
@@ -98,21 +101,21 @@ const MobileBottomNav = () => {
           <span className="text-xs">Favourites</span>
         </a>
         
-        <div onClick={handleProfileClick} className="w-1/5">
-          <Link 
-            to={currentUser ? "/profile" : "#"} 
-            className={`flex flex-col items-center justify-center w-full h-full ${
-              isActive("/profile") || isActive("/contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
-            }`}
-          >
-            <img 
-              src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_profile_icon.png" 
-              alt="Profile" 
-              className="h-6 w-6 mb-1" 
-            />
-            <span className="text-xs">Profile</span>
-          </Link>
-        </div>
+        {/* Updated: Profile now uses onClick handler */}
+        <a 
+          href="#"
+          onClick={handleProfileClick}
+          className={`flex flex-col items-center justify-center w-1/5 h-full ${
+            isActive("/profile") || isActive("/contact") ? "text-primary" : "text-gray-500 dark:text-gray-400"
+          }`}
+        >
+          <img 
+            src="https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/vahaanxchange-uploads/Mobile/navbar_profile_icon.png" 
+            alt="Profile" 
+            className="h-6 w-6 mb-1" 
+          />
+          <span className="text-xs">Profile</span>
+        </a>
       </div>
 
       {/* Auth Modal for mobile sign-in */}

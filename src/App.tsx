@@ -25,13 +25,14 @@ import Terms from "./pages/Terms";
 import AdminUploads from "@/pages/AdminUploads";
 import Appointment from "@/pages/appointment";
 import AboutUs from "./pages/AboutUs";
+import Profile from "./pages/Profile"; // Add this new import
 
-// Import new pages
+// Import other pages
 import Favourites from "./pages/Favourites";
 import Appointments from "./pages/Appointments";
 import Bookings from "./pages/Bookings";
 import Partner from "./pages/Partner";
-import Buy from "./pages/Buy"; // Import the new Buy page
+import Buy from "./pages/Buy";
 
 const queryClient = new QueryClient();
 
@@ -74,7 +75,8 @@ function App() {
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/partner" element={<Partner />} />
               <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/buy" element={<Buy />} /> {/* New Buy page route */}
+              <Route path="/buy" element={<Buy />} />
+              <Route path="/profile" element={<Profile />} /> {/* Add profile page route */}
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
