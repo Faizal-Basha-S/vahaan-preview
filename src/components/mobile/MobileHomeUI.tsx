@@ -263,7 +263,7 @@ const MobileHomeUI = () => {
                 
                 <Link to="/search?budget=10 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">10 Lakhs</span>
                   </div>
                 </Link>
                 
