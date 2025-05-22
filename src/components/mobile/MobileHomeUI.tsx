@@ -256,20 +256,20 @@ const MobileHomeUI = () => {
             <ScrollArea className="w-full whitespace-nowrap pb-2">
               <div className="flex space-x-4">
                 <Link to="/search?budget=5 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">5 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/search?budget=10 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
                     <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/search?budget=15 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">15 Lakhs</span>
                   </div>
                 </Link>
               </div>
@@ -282,20 +282,20 @@ const MobileHomeUI = () => {
             <ScrollArea className="w-full whitespace-nowrap pb-2">
               <div className="flex space-x-4">
                 <Link to="/bikes?budget=5 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">5 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/bikes?budget=10 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">10 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/bikes?budget=15 Lakhs" className="flex flex-col items-center">
-                <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
+                <div className="w-24 h-12 border border-grey bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
+                    <span className="text-sm font-medium text-gray-800 dark:text-white">15 Lakhs</span>
                   </div>
                 </Link>
               </div>
