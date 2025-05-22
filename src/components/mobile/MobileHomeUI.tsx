@@ -67,7 +67,7 @@ const MobileHomeUI = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel Container */}
-      <div className="w-full bg-light dark:bg-[#1d243c] pt-8 pb-5">
+      <div className="w-full bg-light dark:bg-[#19163b] pt-8 pb-5">
         {/* Mobile Hero Carousel */}
         <div className="relative w-full mb-6 overflow-hidden px-4 lg:hidden">
           <div className="relative h-[200px] rounded-xl">
@@ -173,7 +173,7 @@ const MobileHomeUI = () => {
       </div>
 
       {/* Content Container */}
-      <div className="bg-light dark:bg-[#1d243c]">
+      <div className="bg-light dark:bg-[#19163b]">
       <div className="w-full bg-[#fff9fc] dark:bg-black pt-9 rounded-t-3xl border-t-2 border-grey shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.1)]">
         {/* Quick Access Cards */}
         <div className="px-6 mb-8">
@@ -257,19 +257,19 @@ const MobileHomeUI = () => {
               <div className="flex space-x-4">
                 <Link to="/search?budget=5 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/search?budget=10 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/search?budget=15 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
                   </div>
                 </Link>
               </div>
@@ -283,19 +283,19 @@ const MobileHomeUI = () => {
               <div className="flex space-x-4">
                 <Link to="/bikes?budget=5 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">5 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/bikes?budget=10 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">10 Lakhs</span>
                   </div>
                 </Link>
                 
                 <Link to="/bikes?budget=15 Lakhs" className="flex flex-col items-center">
                 <div className="w-24 h-12 bg-white dark:bg-[#1F2633] rounded-lg flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(0,0,0,0.1),inset_0_2px_4px_-2px_rgba(255,255,255,0.1)] border border-white">
-                    <span className="text-sm border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
+                    <span className="text-sm border border-grey font-medium text-gray-800 dark:text-white">15 Lakhs</span>
                   </div>
                 </Link>
               </div>
