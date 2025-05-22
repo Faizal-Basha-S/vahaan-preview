@@ -1,11 +1,10 @@
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
-import { toast } from "react-hot-toast";
 import { format } from 'date-fns';
+import { toast } from "sonner";
+import { addDays, isWeekend } from "date-fns";
 
 import {
   Form,
@@ -33,15 +32,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, isWeekend } from "date-fns";
 import { DateRange } from "react-day-picker";
-import { VehicleSchema, vehicleSchema } from "@/lib/validators/vehicle";
-import Layout from "@/components/layout";
-import { FloatingVideoButton } from "@/components/ui/floating-video-button";
-import { VideoGuideModal } from "@/components/ui/video-guide-modal";
+import Layout from "@/components/layout/Layout";
 import ProgressBar from "@/components/appointment/ProgressBar";
+import FloatingVideoButton from "@/components/appointment/FloatingVideoButton";
+import VideoGuideModal from "@/components/appointment/VideoGuideModal";
+import { CalendarIcon } from "lucide-react";
 
 // Define all step types
 type AppointmentStep = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -69,8 +65,6 @@ const Appointment: React.FC = () => {
   const [appointmentData, setAppointmentData] = useState<StepData>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
-  const router = useRouter();
-  const { data: session } = useSession();
 
   // Define steps for the progress bar
   const steps = [
@@ -80,6 +74,16 @@ const Appointment: React.FC = () => {
     "Preferred Time",
     "Confirm Details",
   ];
+
+  // Form validation schema using zod
+  const vehicleSchema = z.object({
+    vehicleType: z.string().min(1, "Vehicle type is required"),
+    make: z.string().min(1, "Make is required"),
+    model: z.string().min(1, "Model is required"),
+    year: z.string().min(1, "Year is required"),
+  });
+
+  type VehicleSchema = z.infer<typeof vehicleSchema>;
 
   // Zod form validator
   const form = useForm<VehicleSchema>({
@@ -104,9 +108,9 @@ const Appointment: React.FC = () => {
 
       // Move to the next step
       setProgressStep((prev) => (prev + 1) as AppointmentStep);
-      toast.success("Vehicle details saved!");
+      toast("Vehicle details saved!");
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -161,7 +165,11 @@ const Appointment: React.FC = () => {
                     <FormItem>
                       <FormLabel>Make</FormLabel>
                       <FormControl>
-                        <Input placeholder="Vehicle Make" {...field} />
+                        <Input 
+                          placeholder="Vehicle Make" 
+                          {...field} 
+                          style={{fontSize: '16px'}} // Prevents zoom on mobile
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -174,7 +182,11 @@ const Appointment: React.FC = () => {
                     <FormItem>
                       <FormLabel>Model</FormLabel>
                       <FormControl>
-                        <Input placeholder="Vehicle Model" {...field} />
+                        <Input 
+                          placeholder="Vehicle Model" 
+                          {...field} 
+                          style={{fontSize: '16px'}} // Prevents zoom on mobile
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -187,7 +199,11 @@ const Appointment: React.FC = () => {
                     <FormItem>
                       <FormLabel>Year</FormLabel>
                       <FormControl>
-                        <Input placeholder="Vehicle Year" {...field} />
+                        <Input 
+                          placeholder="Vehicle Year" 
+                          {...field} 
+                          style={{fontSize: '16px'}} // Prevents zoom on mobile
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -195,7 +211,7 @@ const Appointment: React.FC = () => {
                 />
                 <Button type="submit" disabled={isLoading}>
                   {isLoading && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    <span className="mr-2 h-4 w-4 animate-spin">⟳</span>
                   )}
                   Next
                 </Button>
@@ -244,10 +260,10 @@ const PersonalDetailsForm: React.FC<{ onNext: () => void; onPrev: () => void }> 
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Personal details saved!");
+      toast("Personal details saved!");
       onNext();
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -259,20 +275,35 @@ const PersonalDetailsForm: React.FC<{ onNext: () => void; onPrev: () => void }> 
       <div className="space-y-4">
         <div>
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-          <input type="text" id="firstName" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+          <input 
+            type="text" 
+            id="firstName" 
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+            style={{fontSize: '16px'}} // Prevents zoom on mobile
+          />
         </div>
         <div>
           <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-          <input type="text" id="lastName" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+          <input 
+            type="text" 
+            id="lastName" 
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+            style={{fontSize: '16px'}} // Prevents zoom on mobile
+          />
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+          <input 
+            type="email" 
+            id="email" 
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+            style={{fontSize: '16px'}} // Prevents zoom on mobile
+          />
         </div>
         <div className="flex justify-between">
           <Button variant="outline" onClick={onPrev}>Previous</Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <span className="mr-2 h-4 w-4 animate-spin">⟳</span>}
             Next
           </Button>
         </div>
@@ -294,10 +325,10 @@ const PreferredDateForm: React.FC<{ onNext: () => void; onPrev: () => void }> = 
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Preferred date saved!");
+      toast("Preferred date saved!");
       onNext();
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -347,7 +378,7 @@ const PreferredDateForm: React.FC<{ onNext: () => void; onPrev: () => void }> = 
         <div className="flex justify-between">
           <Button variant="outline" onClick={onPrev}>Previous</Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <span className="mr-2 h-4 w-4 animate-spin">⟳</span>}
             Next
           </Button>
         </div>
@@ -365,10 +396,10 @@ const PreferredTimeForm: React.FC<{ onNext: () => void; onPrev: () => void }> = 
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Preferred time saved!");
+      toast("Preferred time saved!");
       onNext();
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -380,7 +411,11 @@ const PreferredTimeForm: React.FC<{ onNext: () => void; onPrev: () => void }> = 
       <div className="space-y-4">
         <div>
           <label htmlFor="time" className="block text-sm font-medium text-gray-700">Select a Time</label>
-          <select id="time" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+          <select 
+            id="time" 
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            style={{fontSize: '16px'}} // Prevents zoom on mobile
+          >
             <option>9:00 AM</option>
             <option>10:00 AM</option>
             <option>11:00 AM</option>
@@ -392,7 +427,7 @@ const PreferredTimeForm: React.FC<{ onNext: () => void; onPrev: () => void }> = 
         <div className="flex justify-between">
           <Button variant="outline" onClick={onPrev}>Previous</Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <span className="mr-2 h-4 w-4 animate-spin">⟳</span>}
             Next
           </Button>
         </div>
@@ -416,10 +451,10 @@ const ConfirmDetails: React.FC<ConfirmDetailsProps> = ({ appointmentData, onNext
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      toast.success("Appointment confirmed!");
+      toast("Appointment confirmed!");
       onNext();
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -437,7 +472,7 @@ const ConfirmDetails: React.FC<ConfirmDetailsProps> = ({ appointmentData, onNext
         <div className="flex justify-between">
           <Button variant="outline" onClick={onPrev}>Previous</Button>
           <Button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+            {isSubmitting && <span className="mr-2 h-4 w-4 animate-spin">⟳</span>}
             Confirm Appointment
           </Button>
         </div>
