@@ -49,7 +49,7 @@ const UsedCars = () => {
           
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
               {mockCarListings.slice(0, 4).map(car => (
-                <div key={car.id} className="p-2 sm-lex-shrink-0 sm-snap-start md-lex-shrink-0 md-snap-start">
+                <div key={car.id} className="p-2">
                   <CarCard car={car} />
                 </div>
               ))}
