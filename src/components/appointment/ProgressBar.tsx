@@ -36,7 +36,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, steps = [], tota
                   <span>{index + 1}</span>
                 )}
               </div>
-              <span className="mt-2 text-xs text-center">{step}</span>
+              <span className="mt-2 hidden lg:inline-block text-xs text-center">{step}</span>
             </div>
             
             {/* Connector line (not for the last item) */}
