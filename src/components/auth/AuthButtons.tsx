@@ -184,7 +184,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
       >
         <Button 
           variant="default"
-          className="bg-blue-500 lg:block hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
+          className="bg-blue-500 hidden lg:inline-block hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-colors duration-300"
         >
           Sign In
         </Button>
