@@ -197,7 +197,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
         </Button>
         
         {showDropdown && (
-          <div className="lg:block absolute right-0 top-full z-50 mt-2 w-64 sm:w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
+          <div className="hidden lg:inline-block absolute right-0 top-full z-50 mt-2 w-64 sm:w-80 rounded-md bg-white dark:bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 p-4">
             
             <div className="space-y-3">
               {menuOptions.map((option) => (
