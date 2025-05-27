@@ -96,8 +96,8 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
     
     Array.from(files).forEach(file => {
       if (isVideo) {
-        // Check video file type
-        if (!file.type.match('video/mp4|video/webm|video/ogg')) {
+        // Check video file type - added .mov support as requested
+        if (!file.type.match('video/mp4|video/webm|video/ogg|video/quicktime')) {
           invalidFiles.push(`${file.name} (invalid format)`);
           return;
         }
@@ -190,7 +190,9 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
           // Create a unique filename to avoid conflicts
           const timestamp = new Date().getTime();
           const fileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
-          const filePath = `${basePath}/${category.toLowerCase()}/${fileName}`;
+          // Use 'walkaround' folder for video uploads as specified in requirements
+          const categoryPath = isVideo ? 'walkaround' : category.toLowerCase();
+          const filePath = `${basePath}/${categoryPath}/${fileName}`;
 
           
           const { data, error } = await supabase.storage
@@ -294,7 +296,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
             {isVideoCategory 
-              ? 'MP4, WebM or OGG, max 30MB per file (1 file only)'
+              ? 'MP4, MOV, WebM or OGG, max 30MB per file (1 file only)'
               : 'JPG or PNG, max 5MB per file (up to 10 files)'}
           </p>
           <label htmlFor={`file-upload-${selectedCategory}`} className="cursor-pointer">
@@ -307,7 +309,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
               type="file"
               className="sr-only"
               accept={isVideoCategory 
-                ? "video/mp4,video/webm,video/ogg" 
+                ? "video/mp4,video/webm,video/ogg,video/quicktime" 
                 : "image/jpeg,image/png,image/jpg"}
               multiple={!isVideoCategory}
               onChange={handleFileChange}
