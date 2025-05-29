@@ -10,6 +10,7 @@ import AppDownloadSection from "./AppDownloadSection";
 import ReviewsSection from "./ReviewsSection";
 import CarCard from "@/components/cars/CarCard";
 import BikeCard from "@/components/bikes/BikeCard";
+import FloatingWhatsappButton from "@/components/appointment/FloatingWhatsappButton";
 // Import the component and the sample data directly from the module
 import FeaturedCarsComponent, { sampleCars } from "@/components/cars/FeaturedCars";
 import FeaturedBikesComponent, { sampleBikes } from "@/components/bikes/FeaturedBikes";
@@ -376,6 +377,7 @@ const MobileHomeUI = () => {
         </div>
       </div>
       </div>
+      <FloatingWhatsappButton />
     </div>
   );
 };
