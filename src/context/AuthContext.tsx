@@ -10,6 +10,7 @@ import {
 import { auth, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "@/hooks/use-toast";
+import { userService } from "@/services/userService";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -52,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Handle auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       
       if (user) {
@@ -83,6 +84,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setIsAdmin(ADMIN_PHONE_NUMBERS.includes(formattedPhone));
           }
         }
+
+        // Handle Supabase integration for new sign-in
+        if (user.phoneNumber) {
+          const cleanPhoneNumber = user.phoneNumber.replace('+91', '');
+          
+          // Store clean phone number in localStorage
+          localStorage.setItem("phoneNumber", cleanPhoneNumber);
+          
+          // Check if user already exists in Supabase
+          const existingUser = await userService.getUserByPhone(cleanPhoneNumber);
+          
+          if (!existingUser) {
+            // Insert new user and get ID
+            const userId = await userService.insertUser(cleanPhoneNumber);
+            if (userId) {
+              localStorage.setItem("userId", userId.toString());
+              console.log("User inserted into Supabase with ID:", userId);
+            }
+          } else {
+            // User exists, store the existing ID
+            localStorage.setItem("userId", existingUser.id.toString());
+            if (existingUser.name) {
+              localStorage.setItem("userName", existingUser.name);
+            }
+            console.log("Existing user found with ID:", existingUser.id);
+          }
+        }
         
         // Check if we need to process any stored form data after sign-in
         const savedFormData = localStorage.getItem('vehicleFormData');
@@ -110,6 +138,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         setUserProfile(null);
         setIsAdmin(false);
+        // Clear localStorage on sign out
+        localStorage.removeItem("phoneNumber");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userName");
       }
       
       setLoading(false);
@@ -174,7 +206,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       // Save to localStorage
       localStorage.setItem(`userProfile_${currentUser.uid}`, JSON.stringify(updatedProfile));
+      localStorage.setItem("userName", name);
       setUserProfile(updatedProfile);
+
+      // Update in Supabase using stored userId
+      const userId = localStorage.getItem("userId");
+      if (userId) {
+        const success = await userService.updateUserName(parseInt(userId), name);
+        if (success) {
+          console.log("User name updated in Supabase successfully");
+        } else {
+          console.error("Failed to update user name in Supabase");
+        }
+      }
       
       toast({
         title: "Profile updated",

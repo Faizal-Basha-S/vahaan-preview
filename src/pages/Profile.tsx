@@ -24,18 +24,22 @@ const Profile = () => {
     if (!currentUser) {
       navigate("/");
     } else {
-      // Load saved values from localStorage or use defaults from userProfile
-      const savedName = localStorage.getItem(`userProfile_name_${currentUser.uid}`);
-      const savedPhone = localStorage.getItem(`userProfile_phone_${currentUser.uid}`);
+      // Load values from localStorage
+      const savedName = localStorage.getItem("userName") || 
+                       localStorage.getItem(`userProfile_name_${currentUser.uid}`) || 
+                       userProfile?.displayName || "";
+      const savedPhone = localStorage.getItem("phoneNumber") || 
+                        localStorage.getItem(`userProfile_phone_${currentUser.uid}`) || 
+                        userProfile?.phoneNumber?.replace('+91', '') || "";
       const savedLastUpdated = localStorage.getItem(`userProfile_lastUpdated_${currentUser.uid}`);
       
-      setDisplayName(savedName || userProfile?.displayName || "");
-      setPhoneNumber(savedPhone || userProfile?.phoneNumber?.replace('+91', '') || "");
+      setDisplayName(savedName);
+      setPhoneNumber(savedPhone);
       setLastUpdated(savedLastUpdated || null);
     }
   }, [currentUser, userProfile, navigate]);
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     if (!currentUser) return;
     
     // Validate name (only alphabets, spaces and dots)
@@ -50,15 +54,16 @@ const Profile = () => {
     
     // Save to localStorage
     localStorage.setItem(`userProfile_name_${currentUser.uid}`, displayName);
+    localStorage.setItem("userName", displayName);
     
     // Update last updated timestamp
     const now = new Date().toISOString();
     localStorage.setItem(`userProfile_lastUpdated_${currentUser.uid}`, now);
     setLastUpdated(now);
     
-    // Also update in Auth context if available
+    // Update in Auth context and Supabase
     if (updateUserProfile) {
-      updateUserProfile(displayName);
+      await updateUserProfile(displayName);
     }
     
     // Show success toast
@@ -87,6 +92,7 @@ const Profile = () => {
     
     // Save to localStorage
     localStorage.setItem(`userProfile_phone_${currentUser.uid}`, phoneNumber);
+    localStorage.setItem("phoneNumber", phoneNumber);
     
     // Update last updated timestamp
     const now = new Date().toISOString();
