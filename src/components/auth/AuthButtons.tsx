@@ -40,7 +40,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
     { 
       id: 1, 
       title: "Profile", 
-      icon: <Star className="h-5 w-5 text-gray-600" />,
+      icon: <User className="h-5 w-5 text-gray-600" />,
       path: "/profile"
     },
     { 
