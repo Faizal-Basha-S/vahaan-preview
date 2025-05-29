@@ -22,7 +22,7 @@ const FloatingWhatsappButton = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-62 right-6 z-50">
+    <div className="fixed bottom-42 right-6 z-50">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
