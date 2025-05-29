@@ -17,7 +17,6 @@ const FloatingWhatsappButton = () => {
   }, []);
 
   const handleClick = () => {
-    navigate("/ai");
   };
 
   if (!visible) return null;
