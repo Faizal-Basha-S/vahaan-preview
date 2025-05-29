@@ -16,7 +16,7 @@ export const userService = {
         .from('user_details')
         .insert({ phone_number: phoneNumber })
         .select('id')
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error inserting user:', error);
