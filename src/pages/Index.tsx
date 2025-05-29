@@ -67,6 +67,7 @@ const Index = () => {
     return (
       <Layout>
         <MobileHomeUI />
+        <FloatingWhatsappButton />
         <AIFloatingButton />
       </Layout>
     );
@@ -406,7 +407,7 @@ const Index = () => {
         </div>
       </section>
       {/* Floating WhatsApp Button */}
-      <FloatingWhatsappButton onClick={() => {}} />
+      <FloatingWhatsappButton />
       <AIFloatingButton />
     </Layout>
   );
