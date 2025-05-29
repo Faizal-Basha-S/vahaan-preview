@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
@@ -39,10 +40,8 @@ const Index = () => {
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const isMobile = useIsMobile();
-  const setIsWhatsappModalOpen = useState(false);
 
   useEffect(() => {
-    setIsWhatsappModalOpen(true);
     if (!api) return;
 
     setCount(api.scrollSnapList().length);
@@ -406,8 +405,8 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* Floating Video Button */}
-      <FloatingWhatsappButton onClick={() => setIsWhatsappModalOpen(true)} />
+      {/* Floating WhatsApp Button */}
+      <FloatingWhatsappButton onClick={() => {}} />
       <AIFloatingButton />
     </Layout>
   );
