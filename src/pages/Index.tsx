@@ -39,8 +39,10 @@ const Index = () => {
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const isMobile = useIsMobile();
+  const setIsWhatsappModalOpen = useState(false);
 
   useEffect(() => {
+    setIsWhatsappModalOpen(true);
     if (!api) return;
 
     setCount(api.scrollSnapList().length);
@@ -405,7 +407,7 @@ const Index = () => {
         </div>
       </section>
       {/* Floating Video Button */}
-      <FloatingWhatsappButton onClick={() => setIsVideoModalOpen(true)} />
+      <FloatingWhatsappButton onClick={() => setIsWhatsappModalOpen(true)} />
       <AIFloatingButton />
     </Layout>
   );
