@@ -7,7 +7,7 @@ interface FloatingVideoButtonProps {
   onClick: () => void;
 }
 
-const FloatingVideoButton: React.FC<FloatingVideoButtonProps> = ({ onClick }) => {
+const FloatingWhatsappButton: React.FC<FloatingVideoButtonProps> = ({ onClick }) => {
   return (
     <div className="fixed bottom-62 right-6 z-50">
       <TooltipProvider>
@@ -40,4 +40,4 @@ const FloatingVideoButton: React.FC<FloatingVideoButtonProps> = ({ onClick }) =>
   );
 };
 
-export default FloatingVideoButton;
+export default FloatingWhatsappButton;
