@@ -1,5 +1,5 @@
 
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 
 export interface UserDetails {
   id: number;
@@ -23,7 +23,7 @@ export const userService = {
         return null;
       }
 
-      return data?.id || null;
+      return data?.id ? Number(data.id) : null;
     } catch (error) {
       console.error('Error inserting user:', error);
       return null;
@@ -64,7 +64,7 @@ export const userService = {
         return null;
       }
 
-      return data;
+      return data as UserDetails;
     } catch (error) {
       console.error('Error fetching user:', error);
       return null;
