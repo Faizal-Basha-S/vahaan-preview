@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -377,10 +376,8 @@ const MobileHomeUI = () => {
         </div>
       </div>
       </div>
-      <FloatingWhatsappButton />
     </div>
   );
 };
 
 export default MobileHomeUI;
-

@@ -4,7 +4,6 @@ import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
 import FeaturedBikes from "../components/bikes/FeaturedBikes";
 import Layout from "../components/layout/Layout";
-import FloatingWhatsappButton from "@/components/appointment/FloatingWhatsappButton";
 import { 
   ArrowRight, 
   Car, 
@@ -67,7 +66,6 @@ const Index = () => {
     return (
       <Layout>
         <MobileHomeUI />
-        <FloatingWhatsappButton />
         <AIFloatingButton />
       </Layout>
     );
@@ -406,8 +404,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* Floating WhatsApp Button */}
-      <FloatingWhatsappButton />
       <AIFloatingButton />
     </Layout>
   );

@@ -6,6 +6,7 @@ import ScrollToTopButton from "../ui/ScrollToTopButton";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MobileHeader from "../mobile/MobileHeader";
 import MobileBottomNav from "../mobile/MobileBottomNav";
+import FloatingWhatsappButton from "@/components/appointment/FloatingWhatsappButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Layout = ({ children, mobilePadding = true }) => {
@@ -48,6 +49,9 @@ const Layout = ({ children, mobilePadding = true }) => {
         <MobileBottomNav />
         
         <ScrollToTopButton />
+        
+        {/* Global FloatingWhatsappButton - appears on all pages */}
+        <FloatingWhatsappButton />
       </div>
     </TooltipProvider>
   );
