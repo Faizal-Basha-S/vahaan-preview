@@ -35,8 +35,8 @@ const FloatingWhatsappButton = () => {
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                width="25" 
-                height="25" 
+                width="34" 
+                height="34" 
                 fill="currentColor" 
                 viewBox="0 0 16 16"
               >
