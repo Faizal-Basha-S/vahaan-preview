@@ -39,19 +39,25 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
   const menuOptions: MenuOption[] = [
     { 
       id: 1, 
+      title: "Profile", 
+      icon: <Star className="h-5 w-5 text-gray-600" />,
+      path: "/profile"
+    },
+    { 
+      id: 2, 
       title: "Favourites", 
       icon: <Star className="h-5 w-5 text-gray-600" />,
       path: "/favourites"
     },
     { 
-      id: 2, 
+      id: 3, 
       title: "My Appointments", 
       icon: <Calendar className="h-5 w-5 text-gray-600" />,
       path: "/appointments",
       badge: "SELL" 
     },
     { 
-      id: 3, 
+      id: 4, 
       title: "My Bookings", 
       icon: <Car className="h-5 w-5 text-gray-600" />,
       path: "/bookings",
@@ -153,9 +159,9 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className }) => {
                 onClick={() => handleMenuItemClick(option.path)}
               >
                 <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center">
-                    <span className="mr-2">{option.icon}</span>
-                    <span>{option.title}</span>
+                  <div className="flex items-center gap-2">
+                    {option.icon}
+                    <span className="text-sm font-medium">{option.title}</span>
                   </div>
                   {option.badge && (
                     <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">{option.badge}</span>
