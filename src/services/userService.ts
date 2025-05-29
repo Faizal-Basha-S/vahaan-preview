@@ -57,7 +57,7 @@ export const userService = {
         .from('user_details')
         .select('*')
         .eq('phone_number', phoneNumber)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching user:', error);
