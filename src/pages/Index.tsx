@@ -3,6 +3,7 @@ import Hero from "../components/home/Hero";
 import FeaturedCars from "../components/cars/FeaturedCars";
 import FeaturedBikes from "../components/bikes/FeaturedBikes";
 import Layout from "../components/layout/Layout";
+import FloatingVideoButton from "@/components/appointment/FloatingVideoButton";
 import { 
   ArrowRight, 
   Car, 
@@ -403,7 +404,8 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
+      {/* Floating Video Button */}
+      <FloatingWhatsappButton onClick={() => setIsVideoModalOpen(true)} />
       <AIFloatingButton />
     </Layout>
   );
