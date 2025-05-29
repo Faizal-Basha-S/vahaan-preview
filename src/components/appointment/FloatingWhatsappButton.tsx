@@ -11,7 +11,7 @@ const FloatingWhatsappButton = () => {
     // Show the button after 3 seconds
     const timer = setTimeout(() => {
       setVisible(true);
-    }, 500);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
