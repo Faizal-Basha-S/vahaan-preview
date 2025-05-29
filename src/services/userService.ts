@@ -2,7 +2,7 @@
 import { supabase } from '@/lib/supabaseClient';
 
 export interface UserDetails {
-  id: number;
+  id: string;
   phone_number: string;
   name?: string;
   created_at?: string;
@@ -10,7 +10,7 @@ export interface UserDetails {
 
 export const userService = {
   // Insert phone number and return the generated ID
-  async insertUser(phoneNumber: string): Promise<number | null> {
+  async insertUser(phoneNumber: string): Promise<string | null> {
     try {
       const { data, error } = await supabase
         .from('user_details')
@@ -23,7 +23,7 @@ export const userService = {
         return null;
       }
 
-      return data?.id ? Number(data.id) : null;
+      return data?.id || null;
     } catch (error) {
       console.error('Error inserting user:', error);
       return null;
@@ -31,7 +31,7 @@ export const userService = {
   },
 
   // Update user name by ID
-  async updateUserName(userId: number, name: string): Promise<boolean> {
+  async updateUserName(userId: string, name: string): Promise<boolean> {
     try {
       const { error } = await supabase
         .from('user_details')

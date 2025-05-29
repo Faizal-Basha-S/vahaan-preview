@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { 
   User,
@@ -99,12 +98,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // Insert new user and get ID
             const userId = await userService.insertUser(cleanPhoneNumber);
             if (userId) {
-              localStorage.setItem("userId", userId.toString());
+              localStorage.setItem("userId", userId);
               console.log("User inserted into Supabase with ID:", userId);
             }
           } else {
             // User exists, store the existing ID
-            localStorage.setItem("userId", existingUser.id.toString());
+            localStorage.setItem("userId", existingUser.id);
             if (existingUser.name) {
               localStorage.setItem("userName", existingUser.name);
             }
@@ -212,7 +211,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Update in Supabase using stored userId
       const userId = localStorage.getItem("userId");
       if (userId) {
-        const success = await userService.updateUserName(parseInt(userId), name);
+        const success = await userService.updateUserName(userId, name);
         if (success) {
           console.log("User name updated in Supabase successfully");
         } else {
