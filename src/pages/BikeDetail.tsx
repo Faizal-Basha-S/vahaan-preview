@@ -408,7 +408,7 @@ const BikeDetail = () => {
     
     return (
       <div className="bg-gray-50 py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto pb-4 pt-4 lg:pt-24">
           <h2 className="text-2xl font-semibold mb-6">Similar Bikes to {bike?.name}</h2>
           
           <Carousel className="w-full">
