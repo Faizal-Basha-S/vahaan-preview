@@ -31,9 +31,10 @@ const BikeDetail = () => {
   // Improved mock image categorization
   const mockImages = {
     exterior: [
-      'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1535674571091-05c9ca0cceda?w=800&auto=format&fit=crop',
+      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/front/r15_v3_front.jpg',
+      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/left/r15_v3_left.jpg',
+      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/right/r15_v3_right.jpg',
+      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/rear/r15_v3_back.jpg",
     ],
     interior: [
       'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop',
