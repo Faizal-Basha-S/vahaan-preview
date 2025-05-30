@@ -3,7 +3,7 @@ export const mockBikeListings = [
   {
     id: 1,
     name: "yamaha r15 v3",
-    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+    image: "https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/right/r15_v3_right.jpg",
     year: 2020,
     kmDriven: 20000,
     fuelType: "Petrol",
