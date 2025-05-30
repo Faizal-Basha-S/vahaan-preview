@@ -34,7 +34,7 @@ const BikeDetail = () => {
       'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/front/r15_v3_front.jpg',
       'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/left/r15_v3_left.jpg',
       'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/right/r15_v3_right.jpg',
-      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/rear/r15_v3_back.jpg",
+      'https://kujjqfvicrazqitxkdwh.supabase.co/storage/v1/object/public/seller-uploads/temp/bike/rear/r15_v3_back.jpg',
     ],
     interior: [
       'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop',
