@@ -25,8 +25,7 @@ export const fetchModelsByBrandAndYear = async (
   const { data, error } = await supabase
     .from('models')
     .select('id, brand_id, model_name, launch_year')
-    .eq('brand_id', brandId)
-    .lte('launch_year', parseInt(year));
+    .eq('brand_id', brandId);
   
   if (error) {
     console.error('Error fetching models:', error);
