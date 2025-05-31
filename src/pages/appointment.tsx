@@ -1522,7 +1522,7 @@ const Appointment: React.FC = () => {
           
           <div>
             <label className="block text-sm font-medium mb-1">
-              Body Type <span className="text-red-500">*</span>
+              Body Type 
             </label>
             <Select 
               value={data.body_type || ""}
