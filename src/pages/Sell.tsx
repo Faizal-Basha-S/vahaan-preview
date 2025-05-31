@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import VideoGuideModal from "@/components/appointment/VideoGuideModal";
+import FloatingVideoButton from "@/components/appointment/FloatingVideoButton";
 import CityModal from "@/components/cars/CityModal";
 import VehicleTypeToggle from "@/components/sell-page/VehicleTypeToggle";
 import RegistrationForm from "@/components/sell-page/RegistrationForm";
@@ -51,6 +53,9 @@ const Sell = () => {
   const { currentUser } = useAuth();
   const [currentStep, setCurrentStep] = useState<Step>("initial");
   
+  // Video guide modal state
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  
   // Brand selection state
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [selectedBrandId, setSelectedBrandId] = useState<string>("");
@@ -67,6 +72,17 @@ const Sell = () => {
   const [kilometers, setKilometers] = useState<string>("");
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
   const [isManualEntryClicked, setIsManualEntryClicked] = useState(false);
+
+  // Get vehicle type from localStorage on component mount
+  useEffect(() => {
+    // Only show video modal on initial page load
+    setIsVideoModalOpen(true);
+    
+    const storedVehicleType = localStorage.getItem("vehicle");
+    if (storedVehicleType === "car" || storedVehicleType === "bike") {
+      setVehicleType(storedVehicleType);
+    }
+  }, []);
 
   // Load EmailJS script
   useEffect(() => {
@@ -354,7 +370,16 @@ const Sell = () => {
         <CityPresence />
         <FAQSection />
       </div>
-
+        
+      {/* Video Guide Modal */}
+      <VideoGuideModal 
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+      />
+      
+      {/* Floating Video Button */}
+      <FloatingVideoButton onClick={() => setIsVideoModalOpen(true)} />
+      
       <CityModal 
         isOpen={isCityModalOpen} 
         onClose={() => setIsCityModalOpen(false)} 
