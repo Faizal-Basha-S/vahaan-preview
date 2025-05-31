@@ -260,7 +260,12 @@ const missingCategories = mandatoryCategories.filter(
       <div className="flex overflow-x-auto space-x-3 pb-3 mb-4">
          
 {allCategories.map(category => (
-  <Button key={category} ...>
+  <Button
+            key={category}
+            variant={selectedCategory === category ? "default" : "outline"}
+            onClick={() => setSelectedCategory(category)}
+            className="px-4 py-2 flex items-center whitespace-nowrap"
+          >
     {category}
     {mandatoryCategories.includes(category) && (
       <span className="text-red-500 ml-1">*</span>
