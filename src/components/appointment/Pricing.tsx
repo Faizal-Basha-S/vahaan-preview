@@ -140,6 +140,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
             if (i === 2 && parsedData.loan_status) {
               data.loanStatus = parsedData.loan_status;
             }
+            if (i === 1 && parsedData.insurance_validity) {
+              data.insurance_validity = parsedData.insurance_validity;
+            }
             if (i === 1 && parsedData.battery_health) {
               data.batteryHealth = parsedData.battery_health;
             }
@@ -301,6 +304,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       ownership_type: stepData.appointment_step2_data?.ownership_type || null,
       fuel_type: stepData.appointment_step2_data?.fuel_type || localStorage.getItem('fuel_type') || null,
       color: stepData.appointment_step2_data?.color || localStorage.getItem('color') || null,
+      insurance_validity: stepData.appointment_step2_data?.insurance_validity || localStorage.getItem('insurance_validity') || null,
       transmission_type: stepData.appointment_step2_data?.transmission_type || localStorage.getItem('transmission') || null,
       modifications: stepData.appointment_step2_data?.modifications || null,
       battery_health: stepData.appointment_step2_data?.battery_health || localStorage.getItem('battery_health') || null,
@@ -329,7 +333,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
       model: localStorage.getItem('model') || null,
       variant: localStorage.getItem('variant') || null,
       kilometers_driven: parseIntOrNull('kilometers') || null,
-      city: localStorage.getItem('selectedCity') || null,
+      city: localStorage.getItem('selectedCity') || null,  
+      user_id: localStorage.getItem('userId') || null,  
       photos: parseJSON('uploadedFileUrls') || {}
     };
 
