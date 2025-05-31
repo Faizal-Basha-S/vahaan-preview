@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Upload, Image, FileVideo } from "lucide-react";
@@ -14,13 +15,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
   const vehicle = localStorage.getItem("vehicle") || "car";
   const carCategories = ["Exterior", "Interior", "Tyres", "Features", "Defects", "Odometer"];
   const bikeCategories = ["Front", "Rear", "Left", "Right", "Defects", "Odometer"];
-  // AFTER: Explicit mandatory/optional lists
-  const mandatoryCategories = vehicle === "bike" 
-    ? ["Front", "Rear", "Left", "Right"] 
-    : ["Exterior", "Interior"];
-
-  const optionalCategories = ["Defects", "Odometer"];
-  const allCategories = [...mandatoryCategories, ...optionalCategories];
+  const categories = vehicle === "bike" ? bikeCategories : carCategories;
   
   // Separate video category for walkaround videos
   const videoCategory = "Walkaround";
@@ -165,10 +160,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
   const uploadPhotosToSupabase = async () => {
     // Check if at least one photo is uploaded for each category including Walkaround video
     const allCategories = [...categories, videoCategory];
-    // AFTER: Only validate mandatory categories
-const missingCategories = mandatoryCategories.filter(
-  category => uploadedPhotos[category].length === 0
-);
+    const missingCategories = allCategories.filter(category => uploadedPhotos[category].length === 0);
     
     if (missingCategories.length > 0) {
       toast.error(`Please upload at least one item for each category: ${missingCategories.join(", ")}`);
@@ -258,20 +250,21 @@ const missingCategories = mandatoryCategories.filter(
       
       {/* Category buttons */}
       <div className="flex overflow-x-auto space-x-3 pb-3 mb-4">
-         
-{allCategories.map(category => (
-  <Button
+        {categories.map(category => (
+          <Button
             key={category}
             variant={selectedCategory === category ? "default" : "outline"}
             onClick={() => setSelectedCategory(category)}
             className="px-4 py-2 flex items-center whitespace-nowrap"
           >
-    {category}
-    {mandatoryCategories.includes(category) && (
-      <span className="text-red-500 ml-1">*</span>
-    )}
-  </Button>
-))}
+            {category}
+            {uploadedPhotos[category].length > 0 && (
+              <span className="ml-2 text-xs bg-white dark:bg-gray-800 text-primary rounded-full w-5 h-5 flex items-center justify-center">
+                {uploadedPhotos[category].length}
+              </span>
+            )}
+          </Button>
+        ))}
         
         {/* Walkaround video button */}
         <Button
