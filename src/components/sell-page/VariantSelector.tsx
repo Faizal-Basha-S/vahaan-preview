@@ -39,6 +39,7 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
   const [availableFuelTypes, setAvailableFuelTypes] = useState<string[]>([]);
   const [availableTransmissions, setAvailableTransmissions] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [customVariantInput, setCustomVariantInput] = useState("");
   
   // Load variants from Supabase when model changes or filters change
   useEffect(() => {
@@ -107,6 +108,28 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
     loadFilterOptions();
   }, [vehicleType, selectedModelId]);
 
+  // Handle variant selection and update localStorage
+  const handleVariantSelect = (variant: string) => {
+    // Update localStorage
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, variant: variant };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+    
+    onSelectVariant(variant);
+  };
+
+  // Handle custom variant input next button
+  const handleCustomVariantNext = () => {
+    if (customVariantInput.trim()) {
+      // Update localStorage with custom variant
+      const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+      const updatedData = { ...existingData, variant: customVariantInput.trim() };
+      localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+      
+      onSelectVariant(customVariantInput.trim());
+    }
+  };
+
   // Filter variants based on search term
   const filteredVariants = variants.filter(variant => 
     variant.variant_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -131,6 +154,24 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h3 className="text-xl font-medium">Select Variant</h3>
+      </div>
+      
+      {/* Custom variant input with Next button */}
+      <div className="flex gap-2">
+        <Input
+          type="text"
+          placeholder="Enter custom variant name..."
+          value={customVariantInput}
+          onChange={(e) => setCustomVariantInput(e.target.value)}
+          className="flex-1"
+        />
+        <Button
+          onClick={handleCustomVariantNext}
+          disabled={!customVariantInput.trim()}
+          className="px-6"
+        >
+          Next
+        </Button>
       </div>
       
       {/* Search input */}
@@ -171,7 +212,7 @@ const VariantSelector: React.FC<VariantSelectorProps> = ({
                 key={variant.id}
                 variant="outline"
                 className={`h-auto py-3 w-full ${selectedVariant === variant.variant_name ? 'border-primary border-2' : ''}`}
-                onClick={() => onSelectVariant(variant.variant_name)}
+                onClick={() => handleVariantSelect(variant.variant_name)}
               >
                 <div className="w-full flex items-center justify-between">
                   <span className="text-sm font-medium">{variant.variant_name}</span>

@@ -30,6 +30,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [models, setModels] = useState<Model[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [customModelInput, setCustomModelInput] = useState("");
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -59,9 +60,26 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
     fetchModels();
   }, [vehicleType, selectedBrandId, selectedYear]);
 
-  // Handle model selection with ID
+  // Handle model selection with ID and update localStorage
   const handleModelSelect = (model: string, modelId?: string) => {
+    // Update localStorage
+    const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+    const updatedData = { ...existingData, model: model };
+    localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+    
     onSelectModel(model, modelId);
+  };
+
+  // Handle custom model input next button
+  const handleCustomModelNext = () => {
+    if (customModelInput.trim()) {
+      // Update localStorage with custom model
+      const existingData = JSON.parse(localStorage.getItem("sellFormData") || "{}");
+      const updatedData = { ...existingData, model: customModelInput.trim() };
+      localStorage.setItem("sellFormData", JSON.stringify(updatedData));
+      
+      onSelectModel(customModelInput.trim());
+    }
   };
 
   // Filter models based on search term
@@ -81,6 +99,24 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h3 className="text-xl font-medium">Select Model</h3>
+      </div>
+      
+      {/* Custom model input with Next button */}
+      <div className="flex gap-2">
+        <Input
+          type="text"
+          placeholder="Enter custom model name..."
+          value={customModelInput}
+          onChange={(e) => setCustomModelInput(e.target.value)}
+          className="flex-1"
+        />
+        <Button
+          onClick={handleCustomModelNext}
+          disabled={!customModelInput.trim()}
+          className="px-6"
+        >
+          Next
+        </Button>
       </div>
       
       {/* Search input */}
