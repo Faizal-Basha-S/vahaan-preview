@@ -361,13 +361,13 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
 
       if (error) {
         console.error('❌ Supabase insert error:', error.message, error.details);
-        toast.error(`Failed to publish listing: ${error.message}`);
+        toast.error(`Failed to ad posting: ${error.message}`);
         setIsSubmitting(false);
         return;
       }
 
       console.log('✅ Successfully inserted:', insertedData);
-      toast.success("Your listing has been published successfully!");
+      toast.success("Your ad has been posted successfully!");
       
       // Reset confirmation view and submitting state
       setIsConfirmationView(false);
