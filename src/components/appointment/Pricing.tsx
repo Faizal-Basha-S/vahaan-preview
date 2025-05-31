@@ -461,7 +461,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
           className="w-full py-2 bg-green-600 hover:bg-green-700"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Publishing..." : "Listing publish successfully"}
+          {isSubmitting ? "Posting your ad..." : "Start Posting"}
         </Button>
         
         <Button
