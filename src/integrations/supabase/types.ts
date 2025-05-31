@@ -27,6 +27,162 @@ export type Database = {
         }
         Relationships: []
       }
+      bike_buyer_listings: {
+        Row: {
+          aadhaar_number: string | null
+          accessories: string | null
+          body_type: string | null
+          brand: string | null
+          cc: number | null
+          color: string | null
+          discounted: string | null
+          e_vehicle_battery_health: string | null
+          ev_charger_included: string | null
+          features: string | null
+          fitness_certificate: string | null
+          fuel_type: string | null
+          gncap_rating: number | null
+          id: string
+          insurance_validity: string | null
+          kms_driven: number | null
+          load_capacity: number | null
+          loan_status: string | null
+          major_replacement: string | null
+          mileage: number | null
+          model: string | null
+          modifications: string | null
+          number_of_owners: number | null
+          pan_number: string | null
+          phone_number: string | null
+          photos: Json | null
+          recommended: string | null
+          registration_number: string | null
+          rto: string | null
+          rto_state: string | null
+          seats: number | null
+          sell_price: number | null
+          seller_name: string | null
+          tag: string | null
+          tyre_condition: string | null
+          user_id: string | null
+          variant: string | null
+          vehicle_battery: string | null
+          vehicle_city: string | null
+          vehicle_id: string | null
+          vehicle_location_city: string | null
+          warranty_details: string | null
+          warranty_status: string | null
+          year: number | null
+        }
+        Insert: {
+          aadhaar_number?: string | null
+          accessories?: string | null
+          body_type?: string | null
+          brand?: string | null
+          cc?: number | null
+          color?: string | null
+          discounted?: string | null
+          e_vehicle_battery_health?: string | null
+          ev_charger_included?: string | null
+          features?: string | null
+          fitness_certificate?: string | null
+          fuel_type?: string | null
+          gncap_rating?: number | null
+          id?: string
+          insurance_validity?: string | null
+          kms_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacement?: string | null
+          mileage?: number | null
+          model?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          pan_number?: string | null
+          phone_number?: string | null
+          photos?: Json | null
+          recommended?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
+          seats?: number | null
+          sell_price?: number | null
+          seller_name?: string | null
+          tag?: string | null
+          tyre_condition?: string | null
+          user_id?: string | null
+          variant?: string | null
+          vehicle_battery?: string | null
+          vehicle_city?: string | null
+          vehicle_id?: string | null
+          vehicle_location_city?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
+          year?: number | null
+        }
+        Update: {
+          aadhaar_number?: string | null
+          accessories?: string | null
+          body_type?: string | null
+          brand?: string | null
+          cc?: number | null
+          color?: string | null
+          discounted?: string | null
+          e_vehicle_battery_health?: string | null
+          ev_charger_included?: string | null
+          features?: string | null
+          fitness_certificate?: string | null
+          fuel_type?: string | null
+          gncap_rating?: number | null
+          id?: string
+          insurance_validity?: string | null
+          kms_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacement?: string | null
+          mileage?: number | null
+          model?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          pan_number?: string | null
+          phone_number?: string | null
+          photos?: Json | null
+          recommended?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
+          seats?: number | null
+          sell_price?: number | null
+          seller_name?: string | null
+          tag?: string | null
+          tyre_condition?: string | null
+          user_id?: string | null
+          variant?: string | null
+          vehicle_battery?: string | null
+          vehicle_city?: string | null
+          vehicle_id?: string | null
+          vehicle_location_city?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_user_id_bike_buyer"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_vehicle_id_bike"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "bike_seller_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bike_model: {
         Row: {
           brand_id: string | null
@@ -74,7 +230,8 @@ export type Database = {
           ev_charger_included: string | null
           fitness_certificate: string | null
           fuel_type: string | null
-          id: number
+          id: string
+          insurance_validity: string | null
           kilometers_driven: number | null
           load_capacity: number | null
           loan_status: string | null
@@ -97,6 +254,7 @@ export type Database = {
           seller_phone_number: string | null
           tire_condition: string | null
           transmission_type: string | null
+          user_id: string | null
           variant: string | null
           vehicle_battery: string | null
           vehicle_type: string | null
@@ -118,7 +276,8 @@ export type Database = {
           ev_charger_included?: string | null
           fitness_certificate?: string | null
           fuel_type?: string | null
-          id?: never
+          id?: string
+          insurance_validity?: string | null
           kilometers_driven?: number | null
           load_capacity?: number | null
           loan_status?: string | null
@@ -141,6 +300,7 @@ export type Database = {
           seller_phone_number?: string | null
           tire_condition?: string | null
           transmission_type?: string | null
+          user_id?: string | null
           variant?: string | null
           vehicle_battery?: string | null
           vehicle_type?: string | null
@@ -162,7 +322,8 @@ export type Database = {
           ev_charger_included?: string | null
           fitness_certificate?: string | null
           fuel_type?: string | null
-          id?: never
+          id?: string
+          insurance_validity?: string | null
           kilometers_driven?: number | null
           load_capacity?: number | null
           loan_status?: string | null
@@ -185,6 +346,7 @@ export type Database = {
           seller_phone_number?: string | null
           tire_condition?: string | null
           transmission_type?: string | null
+          user_id?: string | null
           variant?: string | null
           vehicle_battery?: string | null
           vehicle_type?: string | null
@@ -192,7 +354,15 @@ export type Database = {
           warranty_status?: string | null
           year?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_user_id_bike"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_details"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       bike_variant: {
         Row: {
@@ -244,6 +414,171 @@ export type Database = {
         }
         Relationships: []
       }
+      car_buyer_listings: {
+        Row: {
+          aadhaar_number: string | null
+          accessories: string | null
+          airbags: number | null
+          body_type: string | null
+          brand: string | null
+          cc: number | null
+          color: string | null
+          cylinders: number | null
+          discounted: string | null
+          e_vehicle_battery_health: string | null
+          ev_charger_included: string | null
+          features: string | null
+          fitness_certificate: string | null
+          fuel_type: string | null
+          gncap_rating: number | null
+          id: string
+          insurance_validity: string | null
+          kms_driven: number | null
+          load_capacity: number | null
+          loan_status: string | null
+          major_replacement: string | null
+          mileage: number | null
+          model: string | null
+          modifications: string | null
+          number_of_owners: number | null
+          pan_number: string | null
+          phone_number: string | null
+          photos: Json | null
+          recommended: string | null
+          registration_number: string | null
+          rto: string | null
+          rto_state: string | null
+          seats: number | null
+          sell_price: number | null
+          seller_name: string | null
+          tag: string | null
+          transmission: string | null
+          tyre_condition: string | null
+          user_id: string | null
+          variant: string | null
+          vehicle_battery: string | null
+          vehicle_city: string | null
+          vehicle_id: string | null
+          vehicle_location_city: string | null
+          warranty_details: string | null
+          warranty_status: string | null
+          year: number | null
+        }
+        Insert: {
+          aadhaar_number?: string | null
+          accessories?: string | null
+          airbags?: number | null
+          body_type?: string | null
+          brand?: string | null
+          cc?: number | null
+          color?: string | null
+          cylinders?: number | null
+          discounted?: string | null
+          e_vehicle_battery_health?: string | null
+          ev_charger_included?: string | null
+          features?: string | null
+          fitness_certificate?: string | null
+          fuel_type?: string | null
+          gncap_rating?: number | null
+          id?: string
+          insurance_validity?: string | null
+          kms_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacement?: string | null
+          mileage?: number | null
+          model?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          pan_number?: string | null
+          phone_number?: string | null
+          photos?: Json | null
+          recommended?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
+          seats?: number | null
+          sell_price?: number | null
+          seller_name?: string | null
+          tag?: string | null
+          transmission?: string | null
+          tyre_condition?: string | null
+          user_id?: string | null
+          variant?: string | null
+          vehicle_battery?: string | null
+          vehicle_city?: string | null
+          vehicle_id?: string | null
+          vehicle_location_city?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
+          year?: number | null
+        }
+        Update: {
+          aadhaar_number?: string | null
+          accessories?: string | null
+          airbags?: number | null
+          body_type?: string | null
+          brand?: string | null
+          cc?: number | null
+          color?: string | null
+          cylinders?: number | null
+          discounted?: string | null
+          e_vehicle_battery_health?: string | null
+          ev_charger_included?: string | null
+          features?: string | null
+          fitness_certificate?: string | null
+          fuel_type?: string | null
+          gncap_rating?: number | null
+          id?: string
+          insurance_validity?: string | null
+          kms_driven?: number | null
+          load_capacity?: number | null
+          loan_status?: string | null
+          major_replacement?: string | null
+          mileage?: number | null
+          model?: string | null
+          modifications?: string | null
+          number_of_owners?: number | null
+          pan_number?: string | null
+          phone_number?: string | null
+          photos?: Json | null
+          recommended?: string | null
+          registration_number?: string | null
+          rto?: string | null
+          rto_state?: string | null
+          seats?: number | null
+          sell_price?: number | null
+          seller_name?: string | null
+          tag?: string | null
+          transmission?: string | null
+          tyre_condition?: string | null
+          user_id?: string | null
+          variant?: string | null
+          vehicle_battery?: string | null
+          vehicle_city?: string | null
+          vehicle_id?: string | null
+          vehicle_location_city?: string | null
+          warranty_details?: string | null
+          warranty_status?: string | null
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_user_id_car_buyer"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_vehicle_id_car"
+            columns: ["vehicle_id"]
+            isOneToOne: true
+            referencedRelation: "car_seller_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       car_seller_listings: {
         Row: {
           aadhaar_number: string | null
@@ -259,7 +594,8 @@ export type Database = {
           ev_charger_included: string | null
           fitness_certificate: string | null
           fuel_type: string | null
-          id: number
+          id: string
+          insurance_validity: string | null
           kilometers_driven: number | null
           load_capacity: number | null
           loan_status: string | null
@@ -282,6 +618,7 @@ export type Database = {
           seller_phone_number: string | null
           tire_condition: string | null
           transmission_type: string | null
+          user_id: string | null
           variant: string | null
           vehicle_battery: string | null
           vehicle_type: string | null
@@ -303,7 +640,8 @@ export type Database = {
           ev_charger_included?: string | null
           fitness_certificate?: string | null
           fuel_type?: string | null
-          id?: never
+          id?: string
+          insurance_validity?: string | null
           kilometers_driven?: number | null
           load_capacity?: number | null
           loan_status?: string | null
@@ -326,6 +664,7 @@ export type Database = {
           seller_phone_number?: string | null
           tire_condition?: string | null
           transmission_type?: string | null
+          user_id?: string | null
           variant?: string | null
           vehicle_battery?: string | null
           vehicle_type?: string | null
@@ -347,7 +686,8 @@ export type Database = {
           ev_charger_included?: string | null
           fitness_certificate?: string | null
           fuel_type?: string | null
-          id?: never
+          id?: string
+          insurance_validity?: string | null
           kilometers_driven?: number | null
           load_capacity?: number | null
           loan_status?: string | null
@@ -370,6 +710,7 @@ export type Database = {
           seller_phone_number?: string | null
           tire_condition?: string | null
           transmission_type?: string | null
+          user_id?: string | null
           variant?: string | null
           vehicle_battery?: string | null
           vehicle_type?: string | null
@@ -377,7 +718,15 @@ export type Database = {
           warranty_status?: string | null
           year?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_user_id_car"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_details"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       favourites: {
         Row: {
@@ -401,7 +750,15 @@ export type Database = {
           item_type?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "favourites_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_details"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       models: {
         Row: {
@@ -450,6 +807,24 @@ export type Database = {
           file_path?: string
           id?: string
           uploaded_at?: string | null
+        }
+        Relationships: []
+      }
+      user_details: {
+        Row: {
+          id: string
+          name: string | null
+          phone_number: number | null
+        }
+        Insert: {
+          id?: string
+          name?: string | null
+          phone_number?: number | null
+        }
+        Update: {
+          id?: string
+          name?: string | null
+          phone_number?: number | null
         }
         Relationships: []
       }
