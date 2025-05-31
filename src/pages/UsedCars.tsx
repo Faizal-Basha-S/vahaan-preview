@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -6,24 +5,55 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Car, Calendar, Fuel, Tag, ChevronLeft, ChevronRight } from "lucide-react";
 import EconomyHeroSection from "@/components/cars/EconomyHeroSection";
-import CarCard from "@/components/cars/CarCard";
-import { mockCarListings } from "@/data/mockCarListings";
+import { useCarData } from "@/hooks/useVehicleData";
+import UnifiedVehicleCard from "@/components/shared/UnifiedVehicleCard";
 import PopularBrands from "@/components/cars/PopularBrands";
 import { getCityImageUrl } from "@/utils/cityImages";
-import { indianCities } from "@/utils/cityList";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 const UsedCars = () => {
+  const { cars: recommendedCars, loading: loadingRecommended } = useCarData('recommended', 4);
+  const { cars: discountedCars, loading: loadingDiscounted } = useCarData('discounted', 4);
+  
   const bodyTypes = ["SUV", "Hatchback", "Sedan", "MUV", "Convertible", "Coupe"];
   const budgetRanges = ["Under 5 Lakh", "5-10 Lakh", "10-15 Lakh", "15-20 Lakh", "Above 20 Lakh"];
   const popularCities = ["Ahmedabad", "Bangalore", "Chandigarh", "Chennai", "Delhi NCR", "Gurgaon", "Hyderabad", "Jaipur", "Mumbai", "New Delhi", "Noida", "Pune"];
   const fuelTypes = ["Petrol", "Diesel", "CNG", "Electric", "LPG"];
+
+  const renderCarSection = (title: string, cars: any[], loading: boolean, viewAllLink: string) => (
+    <section className="mb-12 px-0 sm:px-4">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
+        <Link to={viewAllLink} className="text-blue-600 dark:text-blue-400 hover:underline">
+          View All
+        </Link>
+      </div>
+    
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-64 p-2"></div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+          {cars.map(car => (
+            <div key={car.id} className="p-2">
+              <UnifiedVehicleCard vehicle={car} type="car" />
+            </div>
+          ))}
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        <Button variant="outline" size="icon" className="rounded-full">
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon" className="rounded-full">
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </section>
+  );
 
   return (
     <Layout>
@@ -39,57 +69,8 @@ const UsedCars = () => {
             </div>
           </section>
 
-          <section className="mb-12 px-0 sm:px-4">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Recommended Cars</h2>
-              <Link to="/search" className="text-blue-600 dark:text-blue-400 hover:underline">
-                View All
-              </Link>
-            </div>
-          
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
-              {mockCarListings.slice(0, 4).map(car => (
-                <div key={car.id} className="p-2">
-                  <CarCard car={car} />
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </section>
-          
-          <section className="mb-12 px-0 sm:px-4">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Discounted Cars</h2>
-              <Link to="/search" className="text-blue-600 dark:text-blue-400 hover:underline">
-                View All
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
-              {mockCarListings.slice().reverse().slice(0, 4).map(car => (
-                <div key={`discount-${car.id}`} className="p-2">
-                  <CarCard car={{ ...car, price: car.price * 0.9, featured: true }} />
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </section>
+          {renderCarSection("Recommended Cars", recommendedCars, loadingRecommended, "/search")}
+          {renderCarSection("Discounted Cars", discountedCars, loadingDiscounted, "/search")}
 
           <section className="mb-12">
             <h2 className="text-xl sm:text-2xl font-bold mb-6">Shop by Budget</h2>

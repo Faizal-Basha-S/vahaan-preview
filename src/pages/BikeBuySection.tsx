@@ -5,24 +5,55 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Bike, Calendar, Fuel, Tag, Users, Shield, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import BikeHeroSection from "@/components/bikes/BikeHeroSection";
-import BikeCard from "@/components/bikes/BikeCard";
-import { mockBikeListings } from "@/components/bikes/mockBikeListings";
+import { useBikeData } from "@/hooks/useVehicleData";
+import UnifiedVehicleCard from "@/components/shared/UnifiedVehicleCard";
 import PopularBrands from "@/components/bikes/PopularBrands";
 import { getCityImageUrl } from "@/utils/cityImages";
-import { indianCities } from "@/utils/cityList";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 const BikeBuySection = () => {
+  const { bikes: recommendedBikes, loading: loadingRecommended } = useBikeData('recommended', 4);
+  const { bikes: discountedBikes, loading: loadingDiscounted } = useBikeData('discounted', 4);
+  
   const bodyTypes = ["Sport", "Cruiser", "Commuter", "Scooter", "Adventure", "Off-Road"];
   const budgetRanges = ["Under 50K", "50K-1 Lakh", "1-1.5 Lakh", "1.5-2 Lakh", "Above 2 Lakh"];
   const popularCities = ["Ahmedabad", "Bangalore", "Chandigarh", "Chennai", "Delhi NCR", "Gurgaon", "Hyderabad", "Jaipur", "Mumbai", "New Delhi", "Noida", "Pune"];
   const fuelTypes = ["Petrol", "Electric", "CNG"];
+
+  const renderBikeSection = (title: string, bikes: any[], loading: boolean, viewAllLink: string) => (
+    <section className="mb-12 px-0 sm:px-4">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
+        <Link to={viewAllLink} className="text-blue-600 dark:text-blue-400 hover:underline">
+          View All
+        </Link>
+      </div>
+    
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-64 p-2"></div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
+          {bikes.map(bike => (
+            <div key={bike.id} className="p-2">
+              <UnifiedVehicleCard vehicle={bike} type="bike" />
+            </div>
+          ))}
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        <Button variant="outline" size="icon" className="rounded-full">
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon" className="rounded-full">
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </section>
+  );
 
   return (
     <Layout>
@@ -38,57 +69,8 @@ const BikeBuySection = () => {
             </div>
           </section>
 
-          <section className="mb-12 px-0 sm:px-4">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Recommended Bikes</h2>
-              <Link to="/bikes" className="text-blue-600 dark:text-blue-400 hover:underline">
-                View All
-              </Link>
-            </div>
-          
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
-              {mockBikeListings.slice(0, 4).map(bike => (
-                <div key={bike.id} className="p-2">
-                  <BikeCard bike={bike} />
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </section>
-          
-          <section className="mb-12 px-0 sm:px-4">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Discounted Bikes</h2>
-              <Link to="/bikes" className="text-blue-600 dark:text-blue-400 hover:underline">
-                View All
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible">
-              {mockBikeListings.slice().reverse().slice(0, 4).map(bike => (
-                <div key={`discount-${bike.id}`} className="p-2">
-                  <BikeCard bike={{ ...bike, price: Math.round(bike.price * 0.9), badges: [...bike.badges, "On Sale"] }} />
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </section>
+          {renderBikeSection("Recommended Bikes", recommendedBikes, loadingRecommended, "/bikes")}
+          {renderBikeSection("Discounted Bikes", discountedBikes, loadingDiscounted, "/bikes")}
 
           <section className="mb-12">
             <h2 className="text-xl sm:text-2xl font-bold mb-6">Shop by Budget</h2>

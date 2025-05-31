@@ -1,107 +1,70 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   Calendar, MapPin, Fuel, Heart, Phone, Gauge, 
-  ChevronRight, Star, Share, ThumbsUp
+  ChevronRight, Star, Share, ThumbsUp, Lock, BatteryCharging
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import { mockCarListings } from '@/data/mockCarListings';
-import { CarType } from '@/types/car';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import DetailNavBar from '@/components/cars/DetailNavBar';
-import SimilarCarsSection from '@/components/cars/SimilarCarsSection';
-import CarOverviewSection from '@/components/cars/CarOverviewSection';
-import CarPhotosSection from '@/components/cars/CarPhotosSection';
-import InspectionReportSection from '@/components/cars/InspectionReportSection';
-import FAQSection from '@/components/cars/FAQSection';
-import DetailTabs from '@/components/cars/DetailTabs';
-import FloatingNavBar from '@/components/cars/FloatingNavBar';
-import SimilarCarsCarousel from '@/components/cars/SimilarCarsCarousel';
+import { useVehicleDetails } from '@/hooks/useVehicleData';
 
 const CarDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [car, setCar] = useState<CarType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { vehicle: car, loading, error } = useVehicleDetails(id || '', 'car');
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const navRef = useRef<HTMLDivElement>(null);
-  const contentRefs = {
-    overview: useRef<HTMLDivElement>(null),
-    photos: useRef<HTMLDivElement>(null),
-    inspection: useRef<HTMLDivElement>(null),
-    faq: useRef<HTMLDivElement>(null)
+  const [activePhotoCategory, setActivePhotoCategory] = useState<string>('');
+  
+  const formatIndianCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
   };
   
-  const mockImages = [
-    'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1542282088-fe8426682b8f?w=800&auto=format&fit=crop',
-  ];
-  
-  useEffect(() => {
-    const fetchCar = async () => {
-      setIsLoading(true);
-      try {
-        const foundCar = mockCarListings.find(car => car.id === id);
-        
-        if (foundCar) {
-          setCar(foundCar);
-        } else {
-          console.error('Car not found');
-        }
-      } catch (error) {
-        console.error('Error fetching car:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchCar();
-  }, [id]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsNavVisible(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (navRef.current) {
-      observer.observe(navRef.current);
+  const getFuelIcon = (fuelType: string) => {
+    if (fuelType?.toLowerCase().includes('electric')) {
+      return <BatteryCharging className="h-5 w-5 text-muted-foreground mb-1" />;
     }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
+    return <Fuel className="h-5 w-5 text-muted-foreground mb-1" />;
   };
 
   const handleBookmark = () => {
     setIsBookmarked(prev => !prev);
   };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'overview':
-        return <CarOverviewSection car={car} />;
-      case 'photos':
-        return <CarPhotosSection images={mockImages} carTitle={car.title} />;
-      case 'inspection':
-        return <InspectionReportSection />;
-      case 'faq':
-        return <FAQSection car={car} />;
-      default:
-        return null;
-    }
+  const getPhotoCategories = () => {
+    if (!car?.photos || typeof car.photos !== 'object') return {};
+    return car.photos as Record<string, string[]>;
   };
 
-  if (isLoading) {
+  const photoCategories = getPhotoCategories();
+  const categoryNames = Object.keys(photoCategories);
+
+  useEffect(() => {
+    if (categoryNames.length > 0 && !activePhotoCategory) {
+      setActivePhotoCategory(categoryNames[0]);
+    }
+  }, [categoryNames, activePhotoCategory]);
+
+  const handleImageClick = (imageUrl: string) => {
+    window.open(imageUrl, '_blank');
+  };
+
+  const getMainImage = () => {
+    const categories = Object.values(photoCategories);
+    for (const category of categories) {
+      if (Array.isArray(category) && category.length > 0) {
+        return category[0];
+      }
+    }
+    return "/placeholder.svg";
+  };
+
+  if (loading) {
     return (
       <Layout>
         <div className="container mx-auto p-4 flex justify-center items-center min-h-[50vh]">
@@ -115,7 +78,7 @@ const CarDetail = () => {
     );
   }
   
-  if (!car) {
+  if (error || !car) {
     return (
       <Layout>
         <div className="container mx-auto p-4 text-center">
@@ -138,53 +101,139 @@ const CarDetail = () => {
             <ChevronRight className="h-3 w-3 mx-2" />
             <Link to="/search" className="hover:underline">Used Cars</Link>
             <ChevronRight className="h-3 w-3 mx-2" />
-            <span className="text-foreground font-medium truncate">{car.title}</span>
+            <span className="text-foreground font-medium truncate">{car.brand} {car.model}</span>
           </div>
           
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="w-full lg:w-2/3">
+              {/* Main Image */}
               <div className="bg-white rounded-2xl overflow-hidden mb-8 shadow-sm">
-                <Carousel>
-                  <CarouselContent>
-                    {mockImages.map((img, idx) => (
-                      <CarouselItem key={idx}>
-                        <div className="aspect-[16/9] bg-gray-100 dark:bg-gray-800">
+                <div className="aspect-[16/9] bg-gray-100 dark:bg-gray-800">
+                  <img 
+                    src={getMainImage()} 
+                    alt={`${car.brand} ${car.model}`} 
+                    className="w-full h-full object-cover cursor-pointer"
+                    onClick={() => handleImageClick(getMainImage())}
+                  />
+                </div>
+              </div>
+              
+              {/* Overview Section */}
+              <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
+                <h2 className="text-2xl font-bold mb-6">Overview</h2>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                  <div className="flex flex-col items-center text-center">
+                    <Calendar className="h-6 w-6 text-muted-foreground mb-2" />
+                    <span className="text-sm text-muted-foreground">Year</span>
+                    <span className="font-semibold">{car.year}</span>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center">
+                    {getFuelIcon(car.fuel_type)}
+                    <span className="text-sm text-muted-foreground">Fuel Type</span>
+                    <span className="font-semibold">{car.fuel_type || 'N/A'}</span>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center">
+                    <Gauge className="h-6 w-6 text-muted-foreground mb-2" />
+                    <span className="text-sm text-muted-foreground">Engine</span>
+                    <span className="font-semibold">{car.cc ? `${car.cc}cc` : 'N/A'}</span>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center">
+                    <Gauge className="h-6 w-6 text-muted-foreground mb-2" />
+                    <span className="text-sm text-muted-foreground">KM Driven</span>
+                    <span className="font-semibold">{car.kms_driven?.toLocaleString() || 0}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-sm">Registration Number</h3>
+                        <div className="flex items-center mt-1">
+                          <span className="blur-sm select-none pointer-events-none">UP-14-CD-2706</span>
+                          <Lock className="h-4 w-4 ml-2 text-muted-foreground" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-sm">Seller Contact</h3>
+                        <div className="flex items-center mt-1">
+                          <span className="blur-sm select-none pointer-events-none">+91 9898989898</span>
+                          <Lock className="h-4 w-4 ml-2 text-muted-foreground" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {car.features && (
+                  <div className="mt-6">
+                    <h3 className="font-semibold mb-3">Features</h3>
+                    <p className="text-muted-foreground">{car.features}</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* Photos Section */}
+              {categoryNames.length > 0 && (
+                <div className="bg-white rounded-2xl p-6 shadow-sm">
+                  <h2 className="text-2xl font-bold mb-6">Photos</h2>
+                  
+                  {/* Category Tabs */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {categoryNames.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setActivePhotoCategory(category)}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          activePhotoCategory === category
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                        }`}
+                      >
+                        {category} ({photoCategories[category]?.length || 0})
+                      </button>
+                    ))}
+                  </div>
+                  
+                  {/* Photo Grid */}
+                  {activePhotoCategory && photoCategories[activePhotoCategory] && (
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {photoCategories[activePhotoCategory].map((photo, index) => (
+                        <div 
+                          key={index}
+                          className="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                          onClick={() => handleImageClick(photo)}
+                        >
                           <img 
-                            src={img} 
-                            alt={`${car.title} view ${idx + 1}`} 
+                            src={photo} 
+                            alt={`${activePhotoCategory} ${index + 1}`}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <div className="absolute bottom-4 right-4 bg-white dark:bg-black/70 px-3 py-1 rounded-full text-xs">
-                    1/4 Photos
-                  </div>
-                  <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
-                  <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
-                </Carousel>
-              </div>
-              
-              <div ref={navRef}>
-                <DetailTabs 
-                  activeTab={activeTab}
-                  onTabChange={handleTabChange}
-                />
-              </div>
-              
-              <div className="transition-all duration-300 ease-in-out">
-                {renderTabContent()}
-              </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             
+            {/* Sidebar */}
             <div className="w-full lg:w-1/3">
               <div className="sticky top-20">
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h1 className="text-xl font-bold">
-                        {car.year} {car.title}
+                        {car.year} {car.brand} {car.model}
                       </h1>
                       <div className="flex gap-2">
                         <Button size="icon" variant="ghost" className="h-8 w-8">
@@ -203,11 +252,11 @@ const CarDetail = () => {
                     
                     <div className="flex items-center text-sm text-muted-foreground mb-4">
                       <MapPin className="h-4 w-4 mr-2" />
-                      <span>{car.location}</span>
+                      <span>{car.vehicle_city}</span>
                     </div>
                     
-                    <div className="text-2xl font-bold text-black">
-                      ₹{car.price.toLocaleString()}
+                    <div className="text-2xl font-bold text-primary mb-4">
+                      {formatIndianCurrency(car.sell_price)}
                     </div>
                     
                     <Separator className="mb-4" />
@@ -222,13 +271,13 @@ const CarDetail = () => {
                       <div className="flex flex-col items-center text-center">
                         <Gauge className="h-5 w-5 text-muted-foreground mb-1" />
                         <span className="text-xs text-muted-foreground">KM Driven</span>
-                        <span className="text-sm font-medium">{car.mileage.toLocaleString()}</span>
+                        <span className="text-sm font-medium">{car.kms_driven?.toLocaleString() || 0}</span>
                       </div>
                       
                       <div className="flex flex-col items-center text-center">
-                        <Fuel className="h-5 w-5 text-muted-foreground mb-1" />
+                        {getFuelIcon(car.fuel_type)}
                         <span className="text-xs text-muted-foreground">Fuel</span>
-                        <span className="text-sm font-medium">{car.fuelType || car.fuel || 'Petrol'}</span>
+                        <span className="text-sm font-medium">{car.fuel_type || 'N/A'}</span>
                       </div>
                     </div>
                     
@@ -268,19 +317,7 @@ const CarDetail = () => {
             </div>
           </div>
         </div>
-        
-        <SimilarCarsCarousel 
-          currentCarId={car.id}
-          currentCarTitle={car.title}
-          similarCars={mockCarListings.filter(c => c.id !== id).slice(0, 6)}
-        />
       </div>
-      
-      <FloatingNavBar
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-        isTopNavVisible={isNavVisible}
-      />
     </Layout>
   );
 };

@@ -1,16 +1,9 @@
 
 import React from "react";
-import VehicleCard from "@/components/shared/VehicleCard";
+import UnifiedVehicleCard from "@/components/shared/UnifiedVehicleCard";
 
 const CarCard = ({ car }: { car: any }) => {
-  const vehicleData = {
-    ...car,
-    type: 'car',
-    transmission: car.transmission || 'Unknown',
-    fuelType: car.fuelType || car.fuel || 'Unknown'
-  };
-  
-  return <VehicleCard vehicle={vehicleData} />;
+  return <UnifiedVehicleCard vehicle={car} type="car" />;
 };
 
 export default CarCard;
