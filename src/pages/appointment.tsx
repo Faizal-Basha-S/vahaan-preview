@@ -145,7 +145,7 @@ const Appointment: React.FC = () => {
     // Validate based on current step
     switch (currentStep) {
       case 0: // Basic Vehicle Info
-        if (!currentFormData.registration_number || !currentFormData.rto || !currentFormData.body_type) {
+        if (!currentFormData.registration_number || !currentFormData.rto) {
           toast.error("Please fill all mandatory fields marked with *");
           return false;
         }
