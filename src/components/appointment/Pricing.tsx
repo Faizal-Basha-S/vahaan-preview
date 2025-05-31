@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check, BadgeDollarSign, Car, Handshake, Shield, Lock, Tag } from "lucide-react";
@@ -36,7 +35,8 @@ interface ConfirmationData {
   warrantyStatus: string | null;
   loanStatus: string | null;
   batteryHealth: string | null;
-  seller_price: string | null; // Added this field to fix the error
+  seller_price: string | null;
+  insurance_validity: string | null;
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatures }) => {
@@ -67,6 +67,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
     loanStatus: null,
     batteryHealth: null,
     seller_price: null,
+    insurance_validity: null,
   });
   
   // State for document checkboxes
@@ -105,7 +106,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, expectedPrice, selectedFeatur
         warrantyStatus: localStorage.getItem('warranty_status'),
         loanStatus: localStorage.getItem('loan_status'),
         batteryHealth: localStorage.getItem('battery_health'),
-        seller_price: localStorage.getItem('seller_price'), // Added this property to fix the error
+        seller_price: localStorage.getItem('seller_price'),
+        insurance_validity: localStorage.getItem('insurance_validity'),
       };
       
       // Also get data from sellFormData

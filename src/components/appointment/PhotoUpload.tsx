@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Upload, Image, FileVideo } from "lucide-react";
@@ -16,6 +15,14 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
   const carCategories = ["Exterior", "Interior", "Tyres", "Features", "Defects", "Odometer"];
   const bikeCategories = ["Front", "Rear", "Left", "Right", "Defects", "Odometer"];
   const categories = vehicle === "bike" ? bikeCategories : carCategories;
+  
+  // Define mandatory vs optional categories
+  const mandatoryCategories = vehicle === "bike" 
+    ? ["Front", "Rear", "Left", "Right"] 
+    : ["Exterior", "Interior", "Tyres", "Features"];
+  
+  const optionalCategories = ["Defects", "Odometer"];
+  const allCategories = [...mandatoryCategories, ...optionalCategories];
   
   // Separate video category for walkaround videos
   const videoCategory = "Walkaround";
@@ -158,12 +165,11 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
   };
   
   const uploadPhotosToSupabase = async () => {
-    // Check if at least one photo is uploaded for each category including Walkaround video
-    const allCategories = [...categories, videoCategory];
-    const missingCategories = allCategories.filter(category => uploadedPhotos[category].length === 0);
+    // Updated validation logic - only check mandatory categories
+    const missingMandatory = mandatoryCategories.filter(category => uploadedPhotos[category].length === 0);
     
-    if (missingCategories.length > 0) {
-      toast.error(`Please upload at least one item for each category: ${missingCategories.join(", ")}`);
+    if (missingMandatory.length > 0) {
+      toast.error(`Upload required for: ${missingMandatory.join(", ")}`);
       return false;
     }
     
@@ -175,15 +181,18 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
       const uploadedFileNames: Record<string, string[]> = {};
       const uploadedFileUrls: Record<string, string[]> = {};
       
-      // Initialize categories
-      allCategories.forEach(category => {
+      // Initialize all categories (including optional ones)
+      const uploadCategories = [...categories, videoCategory];
+      uploadCategories.forEach(category => {
         uploadedFileNames[category] = [];
         uploadedFileUrls[category] = [];
       });
       
-      // Upload files for each category
-      for (const category of allCategories) {
+      // Upload files for each category that has files
+      for (const category of uploadCategories) {
         const files = uploadedPhotos[category];
+        if (files.length === 0) continue; // Skip empty categories
+        
         const isVideo = category === "Walkaround";
         
         // Use Promise.all for parallel uploads
@@ -258,6 +267,9 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onBack, onNext }) => {
             className="px-4 py-2 flex items-center whitespace-nowrap"
           >
             {category}
+            {mandatoryCategories.includes(category) && (
+              <span className="text-red-500 ml-1">*</span>
+            )}
             {uploadedPhotos[category].length > 0 && (
               <span className="ml-2 text-xs bg-white dark:bg-gray-800 text-primary rounded-full w-5 h-5 flex items-center justify-center">
                 {uploadedPhotos[category].length}
